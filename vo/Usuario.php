@@ -51,6 +51,7 @@ interface UsuarioDao {
     public function salvar(Usuario $usuario);
     public function buscarTodos();
     public function buscarPorId($id);
+    public function buscarPorEmail($email);
     public function atualizar(Usuario $usuario);
     public function deletar($id);
 }
