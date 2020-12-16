@@ -1,0 +1,125 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css";
+
+/* preset */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* logomarca */
+
+#logomarca{
+    width: 50px;
+    height: 50px;
+}
+
+/* container principal */
+.jf-container{
+    width: 100% !important;
+    height: 100vh !important;
+}
+
+/* container main */
+.hero_main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main{
+    padding: 50px;
+    background-color: lightgreen;
+}
+
+/* container login */
+
+.required::after{
+    content: "*";
+    color: red;
+}
+
+.container-acesso{
+    display: flex;
+    flex-direction: column;
+}
+
+/* container lista jobs */
+
+.container-job{
+    margin-top: 100px;
+    width: 100%;
+}
+#vertical-navbar{
+    width: 300px;
+    position: fixed;
+    left: 0;
+    bottom: 20px;
+    height: 100%;
+    transition: 1s all;
+}
+#job-list{
+    width: 100%;
+    height: 100;
+    margin-left: 300px;
+}
+
+.cursor_pointer{
+    cursor: pointer;
+    color: red;
+    position: fixed;
+    top: 100px;
+    left: 300px;
+    transition: 1s all;
+}
+
+#close_navbar:checked ~ #vertical-navbar{
+    left: -300px;
+    transition: 1s all;
+}
+#close_navbar:checked ~ #job-list{
+    margin-left: 0 !important;
+}
+
+#close_navbar:checked ~ .cursor_pointer{
+    left: 5px;
+    color: green !important;
+    transition: 1s all;
+}
+#servico_img_user{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+
+/* media query 100px */
+
+@media(max-width: 1000px){
+    #hero_svg{
+        display: none;
+    }
+    .padding-md{
+        padding: 5px !important;
+    }
+    #vertical-navbar{
+        left: -300px ;
+    }
+    #job-list{
+        margin-left: 0 ;
+    }
+    .cursor_pointer{
+        display: none;
+    }
+}
+
+/* media query 768px */
+
+@media(max-width: 768px){
+    #img_not_found{
+        width: 100px;
+        height: 100px;
+        margin: 0;
+    }
+}
