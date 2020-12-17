@@ -37,7 +37,7 @@ var loginComponent = {
                 <div class="form-group mt-5">
                     <button type="submit" class="btn btn-md btn-primary btn-block rounded-pill">Entrar</button>
                     <a class="btn btn-md btn-light btn-block rounded-pill"
-                        :href="url_cadastro">Cadastrar-se</a>
+                        :href="url_cadastro">Cadastre-se</a>
                 </div>
             </form>
         </div>
