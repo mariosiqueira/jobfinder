@@ -1,9 +1,9 @@
 var cadastroComponent = {
     props: {
         action_cadastro: {
-            // required: true,
+            required: true,
             type: String,
-            default: ""
+            // default: ""
         },
         url_cadastro: {
             required: true,
@@ -29,20 +29,19 @@ var cadastroComponent = {
                     </div>
                     <div class="col-md-12 form-group">
                         <label for="email" class="required">E-mail</label>
-                        <input type="text" class="form-control" placeholder="usuario@email.com">
+                        <input type="text" class="form-control" placeholder="usuario@email.com" name="email">
                     </div>
                     <div class="col-md-12 form-group">
                         <label for="senha" class="required">Senha</label>
-                        <input type="password" class="form-control" placeholder="**********">
+                        <input type="password" name="senha" id="senha" class="form-control" placeholder="**********">
                     </div>
                     <div class="col-md-12 form-group">
-                        <label for="senha" class="required">Confirmar senha</label>
-                        <input type="password" class="form-control" placeholder="**********">
+                        <label for="contra-senha" class="required">Confirmar senha</label>
+                        <input type="password" name="contra-senha" id="contra-senha" class="form-control" placeholder="**********" >
                     </div>
                 </div>
                 <div class="form-group mt-5">
-                    <a class="btn btn-md btn-light btn-block rounded-pill"
-                        :href='url_cadastro'>Cadastrar</a>
+                    <input class="btn btn-md btn-light btn-block rounded-pill" type="submit" value="Cadastrar">
                 </div>
                 <div class="text-right">
                     <span>já é cadastrado?</span>
