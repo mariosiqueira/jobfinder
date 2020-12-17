@@ -15,7 +15,8 @@ $routes_navigation = [
     "/jobfinder/jobs" => "jobs.php",
     "/jobfinder/jobs/show/$jobs_show" => "single_job.php",
     "/jobfinder/notFound" => "pageNotFound.php",
-    "/jobfinder/usuarios/criar" => "../controller/action_cadastro.php"
+    "/jobfinder/usuarios/criar" => "../controller/action_cadastro.php",
+    "/jobfinder/usuarios/logar" => "../controller/action_login.php",
 ]; 
 
 $routes = (Object) [ //rotas nomeadas e suas respectivas url's
@@ -26,6 +27,7 @@ $routes = (Object) [ //rotas nomeadas e suas respectivas url's
     "jobs"=> "http://$_SERVER[HTTP_HOST]/jobfinder/jobs",
     "jobs_show"=> "http://$_SERVER[HTTP_HOST]/jobfinder/jobs/show/$jobs_show",
     "action_cadastro" => "http://$_SERVER[HTTP_HOST]/jobfinder/usuarios/criar",
+    "action_login" => "http://$_SERVER[HTTP_HOST]/jobfinder/usuarios/logar",
 ];
 
 $req = $_SERVER['REQUEST_URI']; //pega a url 
