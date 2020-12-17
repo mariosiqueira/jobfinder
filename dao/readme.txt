@@ -1,1 +1,0 @@
-Diretório para colocar os DAOs das entidades da aplicação

@@ -1,1 +1,0 @@
-Diretório do projeto Jobfinder da disciplina de Desenvolvimento de Projeto Web do IFPE - Campus Afogados.

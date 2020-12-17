@@ -1,1 +1,0 @@
-Diretório onde ficarão todas as classes e interfaces do projeto.
