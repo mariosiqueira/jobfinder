@@ -20,11 +20,12 @@ class UsuarioDaoMysql implements UsuarioDao {
 
     public function salvar(Usuario $usuario){
         //É melhor quebrar a query de inserção de dados, por questão de segurança. Onde tem :nome, :telefone...serão as máscaras para inserir os valores pelo bindValue
-        $sql = $this->pdo->prepare("INSERT INTO usuarios (nome, telefone, email, senha) VALUES (:nome, :telefone, :email, :senha)");
+        $sql = $this->pdo->prepare("INSERT INTO usuarios (nome, telefone, email, senha, foto_perfil) VALUES (:nome, :telefone, :email, :senha, :foto_perfil)");
         $sql->bindValue(":nome", $usuario->getNome());
         $sql->bindValue(":telefone", $usuario->getTelefone());
         $sql->bindValue(":email", $usuario->getEmail());
         $sql->bindValue(":senha", $usuario->getSenha());
+        $sql->bindValue(":foto_perfil", $usuario->getFotoPerfil());
         $sql->execute();
 
         $usuario->setId($this->pdo->lastInsertId());
@@ -38,17 +39,18 @@ class UsuarioDaoMysql implements UsuarioDao {
         if($sql->rowCount() > 0){
             $arrayDados = $sql->fetchAll(); //Pega todos os dados dos usuários encontrados e joga no arrayDados
             
-            foreach($arrayDados as $dado){
+            foreach($arrayDados as $dadoUsuario){
                 /**
                  * Deve-se construir objetos do tipo Usuario e preenchê-los com os dados 
                  * advindos do banco com a consulta para adicionar ao arrayUsuarios e retornar
                  * **/
                 $usuario = new Usuario();
-                $usuario->setId($dado['id']);
-                $usuario->setNome($dado['nome']);
-                $usuario->setTelefone($dado['telefone']);
-                $usuario->setEmail($dado['email']);
-                $usuario->setSenha($dado['senha']);
+                $usuario->setId($dadoUsuario['id']);
+                $usuario->setNome($dadoUsuario['nome']);
+                $usuario->setTelefone($dadoUsuario['telefone']);
+                $usuario->setEmail($dadoUsuario['email']);
+                $usuario->setSenha($dadoUsuario['senha']);
+                $usuario->setFotoPerfil($dadoUsuario['foto_perfil']);
 
                 $arrayUsuarios[] = $usuario; //Adiciona o usuário construído e preenchido no arrayUsuários que ao final da iteração será devolvido para quem chamou o método.
             }
@@ -72,6 +74,7 @@ class UsuarioDaoMysql implements UsuarioDao {
             $usuario->setTelefone($dadoUsuario['telefone']);
             $usuario->setEmail($dadoUsuario['email']);
             $usuario->setSenha($dadoUsuario['senha']);
+            $usuario->setFotoPerfil($dadoUsuario['foto_perfil']);
 
             return $usuario;
         } else {
@@ -98,6 +101,7 @@ class UsuarioDaoMysql implements UsuarioDao {
             $usuario->setTelefone($dadoUsuario['telefone']);
             $usuario->setEmail($dadoUsuario['email']);
             $usuario->setSenha($dadoUsuario['senha']);
+            $usuario->setFotoPerfil($dadoUsuario['foto_perfil']);
 
             return $usuario;
 
@@ -112,12 +116,13 @@ class UsuarioDaoMysql implements UsuarioDao {
          * Todos os dados do usuário para serem atualizados no banco de dados 
          * estão no parâmetro usuario, só é preciso dar os gets nos atributos em cada bindValue
          */
-        $sql = $this->pdo->prepare("UPDATE usuarios SET nome = :nome, telefone = :telefone, email = :email, senha = :senha WHERE id = :id");
+        $sql = $this->pdo->prepare("UPDATE usuarios SET nome = :nome, telefone = :telefone, email = :email, senha = :senha, foto_perfil = :foto_perfil WHERE id = :id");
         $sql->bindValue(":id", $usuario->getId());
         $sql->bindValue(":nome", $usuario->getNome());
         $sql->bindValue(":telefone", $usuario->getTelefone());
         $sql->bindValue(":email", $usuario->getEmail());
         $sql->bindValue(":senha", $usuario->getSenha());
+        $sql->bindValue(":foto_perfil", $usuario->getFotoPerfil());
         $sql->execute();
 
         return true;
@@ -128,4 +133,5 @@ class UsuarioDaoMysql implements UsuarioDao {
         $sql->bindValue(':id', $id);
         $sql->execute();
     }
+
 }

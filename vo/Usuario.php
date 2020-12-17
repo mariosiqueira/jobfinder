@@ -5,6 +5,7 @@ class Usuario {
     private $telefone;
     private $email;
     private $senha;
+    private $fotoPerfil;
 
     public function getId(){
         return $this->id;
@@ -44,6 +45,14 @@ class Usuario {
 
     public function setSenha($senha){
         $this->senha = trim($senha);
+    }
+
+    public function getFotoPerfil(){
+        return $this->fotoPerfil;
+    }
+
+    public function setFotoPerfil($fotoPerfil){
+        $this->fotoPerfil = $fotoPerfil;
     }
 }
 
