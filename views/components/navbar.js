@@ -18,13 +18,14 @@ var navbarComponent = {
         perfilurl: {
             required: true,
             type: String
+        },
+        mensagens: {
+            required: true,
+            type: String
         }
     },
-    mounted(){
-        console.log(this.auth);
-    },
     template: `
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" id="navbar">
+        <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top" id="navbar">
             <a class="navbar-brand" :href="homeurl">
                 <img id="logomarca" :src="logomarca" alt="logomarca" />
                 <strong>JobFinder</strong>
@@ -35,6 +36,12 @@ var navbarComponent = {
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav ml-auto mr-5 mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a v-if="auth != 'false'" class="nav-link" :href="mensagens">
+                            <i class="fas fa-envelope    "></i>
+                            <span class="badge badge-danger">0</span>
+                        </a>
+                    </li>
                     <li class="nav-item active">
                         <a v-if="auth == 'false'" class="btn btn-outline-light text-uppercase font-weight-bold" :href="login">
                             acesso
