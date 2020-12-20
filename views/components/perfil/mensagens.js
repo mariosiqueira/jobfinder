@@ -5,18 +5,24 @@ var MessagesComponent = {
         },
         urlenviarmsg: { //url que a mensagem será enviada
             type: String
+        },
+        contatos: { //todas os usuarios que mandaram mensagem pra o usuário atual logado
+            required: true
         }
     },
     data() {
         return {
-            user_id: 1, //contratante_id
+            user_id: user.id, //contratante_id
             data: [],
+            data_ctts: [],
             mensagem: "", //mensagem
             from: "" //contratado_id
         }
     },
-    mounted(){
+    mounted() {
         this.msgs = JSON.parse(atob(this.mensagens));
+        this.data_ctts = JSON.parse(atob(this.contatos));
+        console.log(this.user_id);
     },
     template: `
     <div>
@@ -24,13 +30,9 @@ var MessagesComponent = {
         <div class="my-4"></div>
         <div class="row m-0 profile-msg">
             <div class="col-lg-3 list-contatos">
-                <p class="profile-msg-contatos" @click="loadMensagens('1')">
-                    <img class="profile-msg-contatos-img mr-1" src="https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg" />
-                    <span class="profile-msg-contatos-username">username</span>
-                </p>
-                <p class="profile-msg-contatos" @click="loadMensagens('2')">
-                    <img class="profile-msg-contatos-img mr-1" src="https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg" />
-                    <span class="profile-msg-contatos-username">username</span>
+                <p class="profile-msg-contatos" v-for="contato in data_ctts" :key="contato.id" @click="loadMensagens(contato.id)">
+                    <img class="profile-msg-contatos-img mr-1" :src="contato.foto_perfil" />
+                    <span class="profile-msg-contatos-username">{{contato.nome}}</span>
                 </p>
             </div>
             <div class="col-lg-9">
