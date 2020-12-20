@@ -2,13 +2,13 @@ var HomeComponent = {
 
     template: `
     <div>
-        <h1 class="text-muted text-uppercase">Olá, {{username}}.</h1>
+        <h1 class="text-muted text-uppercase">Olá, {{user.apelido}}.</h1>
         <div class="my-4"></div>
     </div>
     `,
     data() {
         return {
-            username: "username"
+            user: user //variável declarada no script do footer do layout app
         }
     },
     methods: {
