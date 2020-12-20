@@ -6,15 +6,33 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
         </script>
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/4.0.9/jquery.inputmask.bundle.min.js" integrity="sha512-VpQwrlvKqJHKtIvpL8Zv6819FkTJyE1DoVNH0L2RLn8hUPjRjkS/bCYurZs0DX9Ybwu9oHRHdBZR9fESaq8Z8A==" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/4.0.9/jquery.inputmask.bundle.min.js"
+            integrity="sha512-VpQwrlvKqJHKtIvpL8Zv6819FkTJyE1DoVNH0L2RLn8hUPjRjkS/bCYurZs0DX9Ybwu9oHRHdBZR9fESaq8Z8A=="
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.rawgit.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src='<?php echo $routes->home."views/components/navbar.js";?>'></script>
         <script src='<?php echo $routes->home."views/components/login.js";?>'></script>
         <script src='<?php echo $routes->home."views/components/cadastro.js";?>'></script>
         <script src='<?php echo $routes->home."views/components/filtro-jobs.js";?>'></script>
         <script src='<?php echo $routes->home."views/components/list-jobs.js";?>'></script>
+        <script src='<?php echo $routes->home."views/components/perfil.js";?>'></script>
+        <script src='<?php echo $routes->home."views/components/perfil-descricao.js";?>'></script>
+        <script src='<?php echo $routes->home."views/components/perfil/home.js";?>'></script>
+        <script src='<?php echo $routes->home."views/components/perfil/servicos.js";?>'></script>
+        <script src='<?php echo $routes->home."views/components/perfil/mensagens.js";?>'></script>
+        <script src='<?php echo $routes->home."views/components/perfil/configuracoes.js";?>'></script>
+        <script src='<?php echo $routes->home."views/components/perfil/servico_show.js";?>'></script>
+        <script src='<?php echo $routes->home."views/public/router.js";?>'></script>
         <script src='<?php echo $routes->home."views/public/app.js";?>'></script>
         <script>
             Inputmask('(99) 9 9999-9999').mask($('#telefone'))
+            $('#valor').maskMoney({
+                decimal: ',',
+                thousands: '.'
+            });
         </script>
-    </body>
-    </html>
+        </body>
+
+        </html>
