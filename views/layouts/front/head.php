@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="navbar" style="background-color:green">
+    <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top" id="navbar" style="background-color:green">
         <a class="navbar-brand" href="<?php echo $routes->home;?>">
             <img id="logomarca" src="<?php echo $routes->home."views/public/img/logomarca.png";?>" alt="logomarca" />
             <strong>JobFinder</strong>
