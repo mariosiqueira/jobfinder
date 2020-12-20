@@ -2,6 +2,7 @@
 class Usuario {
     private $id;
     private $nome;
+    private $apelido;
     private $telefone;
     private $email;
     private $senha;
@@ -21,6 +22,14 @@ class Usuario {
 
     public function setNome($nome){
         $this->nome = ucwords(trim($nome));
+    }
+
+    public function getApelido(){
+        return $this->apelido;
+    }
+
+    public function setApelido($apelido){
+        $this->apelido = $apelido;
     }
 
     public function getTelefone(){
@@ -59,8 +68,8 @@ class Usuario {
 interface UsuarioDao {
     public function salvar(Usuario $usuario);
     public function buscarTodos();
-    public function buscarPorId($id);
-    public function buscarPorEmail($email);
+    public function buscarPeloId($id);
+    public function buscarPeloEmail($email);
     public function atualizar(Usuario $usuario);
     public function deletar($id);
 }

@@ -1,7 +1,7 @@
 var loginComponent = {
     props: {
         action_login: {
-            // required: true,
+            required: true,
             type: String,
             default: ""
         },
@@ -37,7 +37,7 @@ var loginComponent = {
                 <div class="form-group mt-5">
                     <input class="btn btn-md btn-primary btn-block rounded-pill" type="submit" value="Entrar">
                     <a class="btn btn-md btn-light btn-block rounded-pill"
-                        :href="url_cadastro">Cadastrar-se</a>
+                        :href="url_cadastro">Cadastre-se</a>
                 </div>
             </form>
         </div>

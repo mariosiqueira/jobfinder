@@ -1,1 +1,0 @@
-Colocar todos os arquivos de bibliotecas que forem utilizadas no projeto.

@@ -20,8 +20,9 @@ class UsuarioDaoMysql implements UsuarioDao {
 
     public function salvar(Usuario $usuario){
         //É melhor quebrar a query de inserção de dados, por questão de segurança. Onde tem :nome, :telefone...serão as máscaras para inserir os valores pelo bindValue
-        $sql = $this->pdo->prepare("INSERT INTO usuarios (nome, telefone, email, senha, foto_perfil) VALUES (:nome, :telefone, :email, :senha, :foto_perfil)");
+        $sql = $this->pdo->prepare("INSERT INTO usuarios (nome, apelido, telefone, email, senha, foto_perfil) VALUES (:nome, :apelido,:telefone, :email, :senha, :foto_perfil)");
         $sql->bindValue(":nome", $usuario->getNome());
+        $sql->bindValue(":apelido", $usuario->getApelido());
         $sql->bindValue(":telefone", $usuario->getTelefone());
         $sql->bindValue(":email", $usuario->getEmail());
         $sql->bindValue(":senha", $usuario->getSenha());
@@ -37,9 +38,9 @@ class UsuarioDaoMysql implements UsuarioDao {
 
         $sql = $this->pdo->query("SELECT * FROM usuarios");
         if($sql->rowCount() > 0){
-            $arrayDados = $sql->fetchAll(); //Pega todos os dados dos usuários encontrados e joga no arrayDados
+            $arrayDadosUsuarios = $sql->fetchAll(); //Pega todos os dados dos usuários encontrados e joga no arrayDados
             
-            foreach($arrayDados as $dadoUsuario){
+            foreach($arrayDadosUsuarios as $dadoUsuario){
                 /**
                  * Deve-se construir objetos do tipo Usuario e preenchê-los com os dados 
                  * advindos do banco com a consulta para adicionar ao arrayUsuarios e retornar
@@ -47,6 +48,7 @@ class UsuarioDaoMysql implements UsuarioDao {
                 $usuario = new Usuario();
                 $usuario->setId($dadoUsuario['id']);
                 $usuario->setNome($dadoUsuario['nome']);
+                $usuario->setApelido($dadoUsuario['apelido']);
                 $usuario->setTelefone($dadoUsuario['telefone']);
                 $usuario->setEmail($dadoUsuario['email']);
                 $usuario->setSenha($dadoUsuario['senha']);
@@ -58,7 +60,7 @@ class UsuarioDaoMysql implements UsuarioDao {
         return $arrayUsuarios;
     }
 
-    public function buscarPorId($id){
+    public function buscarPeloId($id){
         $sql = $this->pdo->prepare("SELECT * FROM usuarios WHERE id = :id");
         $sql->bindValue(":id", $id);
         $sql->execute();
@@ -71,6 +73,7 @@ class UsuarioDaoMysql implements UsuarioDao {
             $usuario = new Usuario();
             $usuario->setId($dadoUsuario['id']);
             $usuario->setNome($dadoUsuario['nome']);
+            $usuario->setApelido($dadoUsuario['apelido']);
             $usuario->setTelefone($dadoUsuario['telefone']);
             $usuario->setEmail($dadoUsuario['email']);
             $usuario->setSenha($dadoUsuario['senha']);
@@ -83,7 +86,7 @@ class UsuarioDaoMysql implements UsuarioDao {
 
     }
 
-    public function buscarPorEmail($email){
+    public function buscarPeloEmail($email){
         $sql = $this->pdo->prepare("SELECT * FROM usuarios WHERE email = :email");
         $sql->bindValue(":email", $email);
         $sql->execute();
@@ -98,6 +101,7 @@ class UsuarioDaoMysql implements UsuarioDao {
 
             $usuario->setId($dadoUsuario['id']);
             $usuario->setNome($dadoUsuario['nome']);
+            $usuario->setApelido($dadoUsuario['apelido']);
             $usuario->setTelefone($dadoUsuario['telefone']);
             $usuario->setEmail($dadoUsuario['email']);
             $usuario->setSenha($dadoUsuario['senha']);
@@ -116,9 +120,10 @@ class UsuarioDaoMysql implements UsuarioDao {
          * Todos os dados do usuário para serem atualizados no banco de dados 
          * estão no parâmetro usuario, só é preciso dar os gets nos atributos em cada bindValue
          */
-        $sql = $this->pdo->prepare("UPDATE usuarios SET nome = :nome, telefone = :telefone, email = :email, senha = :senha, foto_perfil = :foto_perfil WHERE id = :id");
+        $sql = $this->pdo->prepare("UPDATE usuarios SET nome = :nome, apelido = :apelido, telefone = :telefone, email = :email, senha = :senha, foto_perfil = :foto_perfil WHERE id = :id");
         $sql->bindValue(":id", $usuario->getId());
         $sql->bindValue(":nome", $usuario->getNome());
+        $sql->bindValue(":apelido", $usuario->getApelido());
         $sql->bindValue(":telefone", $usuario->getTelefone());
         $sql->bindValue(":email", $usuario->getEmail());
         $sql->bindValue(":senha", $usuario->getSenha());

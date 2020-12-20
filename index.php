@@ -11,7 +11,7 @@ $routes_navigation = [
     "/jobfinder/login" => "login.php",
     "/jobfinder/register" => "cadastro.php",
     "/jobfinder/profile" => "perfil.php",
-    "/jobfinder/message" => "mensagens.php",
+    "/jobfinder/messages" => "mensagens.php",
     "/jobfinder/jobs" => "jobs.php",
     "/jobfinder/jobs/show/$jobs_show" => "single_job.php",
     "/jobfinder/notFound" => "pageNotFound.php",
@@ -22,6 +22,7 @@ $routes_navigation = [
 $routes = (Object) [ //rotas nomeadas e suas respectivas url's
     "home"=> "http://$_SERVER[HTTP_HOST]/jobfinder/",
     "perfil"=> "http://$_SERVER[HTTP_HOST]/jobfinder/profile",
+    "mensagens"=> "http://$_SERVER[HTTP_HOST]/jobfinder/messages",
     "login"=> "http://$_SERVER[HTTP_HOST]/jobfinder/login",
     "cadastro"=> "http://$_SERVER[HTTP_HOST]/jobfinder/register",
     "jobs"=> "http://$_SERVER[HTTP_HOST]/jobfinder/jobs",
@@ -45,7 +46,7 @@ function auth(){ //funçao pra verificar se o usuario está autenticado
     }
     return false;
 }
-function check_auth($routes){ //função pra verificar se o usuário estpa autenticado
+function check_auth($routes){ //função pra verificar se o usuário está autenticado
     if(!auth()){
         return header("location: $routes->login");
     }
