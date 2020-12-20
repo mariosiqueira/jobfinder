@@ -1,5 +1,7 @@
 <?php
-    // check_auth($routes);
+    check_auth($routes); //faz o check se o usuario está logado
+
+    // dados fake pra teste
     $data = [
         [
             "id"=>1,
@@ -72,6 +74,33 @@
             "valor"=>"800.00",           
         ],
     ];
+    $datactt = [
+        [
+            "id"=>1,
+            "nome"=> "username",
+            "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg",
+        ],
+        [
+            "id"=>2,
+            "nome"=> "username",
+            "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg",
+        ],
+        [
+            "id"=>3,
+            "nome"=> "username",
+            "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg",
+        ],
+        [
+            "id"=>4,
+            "nome"=> "username",
+            "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg",
+        ],
+        [
+            "id"=>5,
+            "nome"=> "username",
+            "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg",
+        ]
+    ];
     $datamsg = [
         [
             "id"=>1,
@@ -110,12 +139,17 @@
             "mensagem"=>"olá tudo bem?"
         ],
     ]
+
 ?>
 <?php require "layouts/app/head.php"?>
 <div class="row m-0 container-perfil">
     <perfil-descricao-component></perfil-descricao-component>
-    <perfil-component servicos='<?php echo json_encode($data);?>' 
-        mensagens='<?php echo json_encode($datamsg);?>'></perfil-component>
+    <perfil-component 
+        servicos='<?php echo json_encode($data);?>' 
+        mensagens='<?php echo json_encode($datamsg);?>' 
+        contatos='<?php echo json_encode($datactt);?>'
+    >
+    </perfil-component>
 </div>
 
 <!-- Modal alterar apelido -->
