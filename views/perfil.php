@@ -143,7 +143,10 @@
 ?>
 <?php require "layouts/app/head.php"?>
 <div class="row m-0 container-perfil">
-    <perfil-descricao-component></perfil-descricao-component>
+    <perfil-descricao-component
+        ation_profile_img="url_aqui"
+        avaliacao_usuario="3"
+    ></perfil-descricao-component>
     <perfil-component 
         servicos='<?php echo json_encode($data);?>' 
         mensagens='<?php echo json_encode($datamsg);?>' 
