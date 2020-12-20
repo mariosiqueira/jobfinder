@@ -5,17 +5,22 @@ var perfilComponent = {
         },
         mensagens:{
             required: true
+        },
+        contatos:{
+            required: true
         }
     },
     data() {
         return {
             data: [],
-            datamsg: []
+            datamsg: [],
+            datactt: [],
         }
     },
     mounted() {
         this.data = btoa(this.servicos);
         this.datamsg = btoa(this.mensagens);
+        this.datactt = btoa(this.contatos);
     },
     template: `
         <div class="col-lg-9 p-3">
@@ -33,7 +38,7 @@ var perfilComponent = {
                             Meus serviços
                         </span>
                     </router-link>
-                    <router-link :to="{ name: 'messages', query: { mensagens: datamsg }}" class="btn btn-outline-dark">
+                    <router-link :to="{ name: 'messages', query: { mensagens: datamsg, contatos: datactt }}" class="btn btn-outline-dark">
                         <i class="fas fa-envelope    "></i>
                         <span class="title-md">
                             Mensagens
