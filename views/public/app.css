@@ -92,8 +92,121 @@
     height: 50px;
     border-radius: 50%;
 }
+#perfil_img_user{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    cursor: pointer;
+}
 
+#choice-file{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    margin-top: -100px;
+    opacity: 0.8;
+    background-color: black;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    color: #fff;
+}
 
+#perfil_img_user:hover ~ #choice-file{
+    display: flex;
+
+}
+/* Container perfil */
+.container-perfil{
+    padding-top: 75px;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+}
+
+#list-services-profile{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow-y: scroll;
+}
+.profile-list-service{
+    margin-bottom: 100px;
+}
+.profile-list-service div{
+    margin: 10px 25px 0 0;
+}
+.profile-list-service li{
+    list-style: none;
+    padding: 20px;
+    margin: 10px 25px 0 0;
+    border-radius: 5px;
+    background-color: lightgray;
+}
+.edit_servico_perfil{
+    margin: 10px 25px 0 0;
+}
+
+#profile-msg{
+    width: 100%;
+    height: 100%;
+    margin-right: 20px;
+}
+.list-contatos{
+    width: 100%;
+    height: 300px;
+    overflow-y: scroll;
+}
+.profile-msg-contatos{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: lightgreen;
+    cursor: pointer;
+}
+.profile-msg-contatos-img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+.profile-msg-body{
+    width: 100%;
+    height: 300px;
+    background-color: lightgrey;
+    overflow-y: scroll;
+    padding: 10px;
+}
+.messages_body{
+    line-height: 20px;
+}
+
+.received{
+    width: 45%;
+    text-align: left;
+    margin: 10px 0;
+    border-radius: 0 10px 10px 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    font-weight: 400;
+    padding: 10px;
+    text-align: left;
+}
+
+.sended{
+    width: 45%;
+    margin: 10px 0 10px auto;
+    border-radius: 10px 0 10px 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    font-weight: 400;
+    padding: 10px;
+    text-align: right;
+}
 /* media query 100px */
 
 @media(max-width: 1000px){
@@ -111,6 +224,24 @@
     }
     .cursor_pointer{
         display: none;
+    }
+    .container-perfil{
+        position: absolute;
+    }
+    .title-md{
+        display: none;
+    }
+    #list-services-profile{
+        position: relative;
+    }
+    .profile-list-service{
+        margin-right: 10px;
+    }
+    .profile-list-service div{
+        margin: 0;
+    }
+    .profile-list-service li{
+        margin: 5px;
     }
 }
 
