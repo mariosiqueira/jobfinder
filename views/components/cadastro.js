@@ -1,9 +1,8 @@
 var cadastroComponent = {
     props: {
         action_cadastro: {
-            // required: true,
+            required: true,
             type: String,
-            default: ""
         },
         url_cadastro: {
             required: true,
@@ -17,7 +16,7 @@ var cadastroComponent = {
     template: `
     <div class="jf-container container-acesso justify-content-center" style="margin-top: 100px;">
         <div class="col-md-5 m-0 p-0 mx-auto">
-            <form :action="action_cadastro" method="post" class="p-5 padding-md rounded" style="background-color: lightgrey">
+            <form :action="action_cadastro" method="post" class="p-5 padding-md rounded shadow">
                 <div class="form-row">
                     <div class="col-md-12 form-group">
                         <label for="nome" class="required">Nome Completo</label>
@@ -41,8 +40,9 @@ var cadastroComponent = {
                     </div>
                 </div>
                 <div class="form-group mt-5">
-                    <a class="btn btn-md btn-light btn-block rounded-pill"
-                        :href='url_cadastro'>Cadastrar</a>
+                    <button type="submit" class="btn btn-md btn-primary font-weight-bold btn-block rounded-pill">
+                        Cadastrar
+                    </button>
                 </div>
                 <div class="text-right">
                     <span>já é cadastrado?</span>
