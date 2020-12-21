@@ -1,21 +1,21 @@
 var perfilDescricaoComponent = {
     props: {
-        ation_profile_img: {
+        action_profile_img: {
             type: String,
-            default: "http://localhost/jobfinder/controlador/usuario_imagem.php"
+            default: "http://localhost/jobfinder/controller/usuario_imagem.php"
         }
     },
     template: `
         <div class="col-lg-3 text-white" style="background-color:#343A40">
             <div class="d-flex flex-column justify-content-center align-items-center p-2 mt-3">
-                <form id="change_profile_pic" :action="ation_profile_img" method="post">
+                <form id="change_profile_pic" :action="action_profile_img" method="post" enctype="multipart/form-data">
                     <label for="img_profile">
                         <img src="https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg" alt="img profile user" id="perfil_img_user" />
                         <div id="choice-file">
                             <i class="fas fa-camera    "></i>
                         </div>
                     </label>
-                    <input class="d-none" type="file" id="img_profile" v-on:change="edit_profile_file" />
+                    <input class="d-none" type="file" id="img_profile" v-on:change="edit_profile_file" name = "foto_perfil"/>
                 </form>
                 <span class="text-uppercase font-weight-bold text-center">
                     Username
