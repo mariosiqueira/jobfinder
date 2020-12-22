@@ -1,9 +1,8 @@
 var loginComponent = {
     props: {
         action_login: {
-            // required: true,
+            required: true,
             type: String,
-            default: ""
         },
         url_cadastro: {
             required: true,
@@ -22,16 +21,18 @@ var loginComponent = {
             senhaValid: true,
         }
     },
-    methods:{
-        validadeInput(campoValid){
-            console.log(campoValid);
-            // if(!this.campoValid){
-            //     this.campoValid = false;
-            // }
-            // console.log(campoValid);
-
+    methods: {
+        validarEmail() {
+            if (!this.email) {
+                this.emailValid = false;
+            }
+        },
+        validarSenha() {
+            if (!this.senha) {
+                this.senhaValid = false;
+            }
         }
-    },  
+    },
     template: `
     <div class="jf-container container-acesso justify-content-center">
         <div class="col-md-5 m-0 p-0 mx-auto">
@@ -40,8 +41,7 @@ var loginComponent = {
                     <div class="col-md-12 form-group">
                         <label for="email" class="required">E-mail</label>
                         <input type="text" class="form-control" name="email" v-model="email" placeholder="usuario@email.com"
-                        @blur="validadeInput('this.emailValid')"
-                        :class="!email & !emailValid? ' is-invalid':''"
+                        @blur="validarEmail()" :class="!email & !emailValid? ' is-invalid':''"
                         >
                         <small class="invalid-feedback">
                             Este campo é obrigatório
@@ -49,7 +49,9 @@ var loginComponent = {
                     </div>
                     <div class="col-md-12 form-group">
                         <label for="senha" class="required">Senha</label>
-                        <input type="password" name="senha" v-model="senha" class="form-control" placeholder="**********">
+                        <input type="password" name="senha" v-model="senha" class="form-control" placeholder="**********"
+                        @blur="validarSenha()" :class="!senha & !senhaValid? ' is-invalid':''"
+                        >
                         <small class="invalid-feedback">
                             Este campo é obrigatório
                         </small>
