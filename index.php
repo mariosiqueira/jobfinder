@@ -17,6 +17,7 @@ $routes_navigation = [
     "/jobfinder/notFound" => "pageNotFound.php",
     "/jobfinder/usuarios/criar" => "../controller/action_cadastro.php",
     "/jobfinder/usuarios/logar" => "../controller/action_login.php",
+    "/jobfinder/logouturl" => "../controller/action_logout.php"
 ]; 
 
 $routes = (Object) [ //rotas nomeadas e suas respectivas url's
@@ -29,6 +30,7 @@ $routes = (Object) [ //rotas nomeadas e suas respectivas url's
     "jobs_show"=> "http://$_SERVER[HTTP_HOST]/jobfinder/jobs/show/$jobs_show",
     "action_cadastro" => "http://$_SERVER[HTTP_HOST]/jobfinder/usuarios/criar",
     "action_login" => "http://$_SERVER[HTTP_HOST]/jobfinder/usuarios/logar",
+    "logout" => "http://$_SERVER[HTTP_HOST]/jobfinder/logouturl",
 ];
 
 $req = $_SERVER['REQUEST_URI']; //pega a url 
@@ -46,7 +48,7 @@ function auth(){ //funçao pra verificar se o usuario está autenticado
     }
     return false;
 }
-function check_auth($routes){ //função pra verificar se o usuário está autenticado
+function check_auth($routes){ //função pra verificar se o usuário estpa autenticado
     if(!auth()){
         return header("location: $routes->login");
     }

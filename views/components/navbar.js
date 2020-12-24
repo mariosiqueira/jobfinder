@@ -22,6 +22,10 @@ var navbarComponent = {
         mensagens: {
             required: true,
             type: String
+        },
+        logouturl: {
+            required: true,
+            type: String
         }
     },
     template: `
@@ -36,21 +40,23 @@ var navbarComponent = {
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav ml-auto mr-5 mt-2 mt-lg-0">
-                    <li class="nav-item active">
-                        <a v-if="auth != 'false'" class="nav-link" :href="mensagens">
-                            <i class="fas fa-envelope    "></i>
-                            <span class="badge badge-danger">0</span>
-                        </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a v-if="auth == 'false'" class="btn btn-outline-light text-uppercase font-weight-bold" :href="login">
+                    <li class="nav-item active" v-if="auth == 'false'">
+                        <a class="btn btn-outline-light text-uppercase font-weight-bold" :href="login">
                             acesso
                             <i class="fas fa-lock    "></i>
                         </a>
-                        <a v-else class="btn btn-outline-light text-uppercase font-weight-bold" :href="perfilurl">
+                    </li>
+                    <li class="nav-item dropdown" v-else>
+                        <a class="btn btn-outline-light text-uppercase font-weight-bold dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-user" aria-hidden="true"></i>    
-                            Minha conta
+                            conta
                         </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" :href="perfilurl">Perfil</a>
+                            <form action="logouturl" method="post">
+                                <button class="dropdown-item">Sair</button>
+                            </form>
+                        </div>
                     </li>
                 </ul>
             </div>

@@ -11,9 +11,6 @@
             integrity="sha512-VpQwrlvKqJHKtIvpL8Zv6819FkTJyE1DoVNH0L2RLn8hUPjRjkS/bCYurZs0DX9Ybwu9oHRHdBZR9fESaq8Z8A=="
             crossorigin="anonymous"></script>
         <script src="https://cdn.rawgit.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js"></script>
-        <script>
-            var user = <?php echo isset($_SESSION['auth']) ? $_SESSION['auth']: "{apelido: null}";?>;
-        </script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src='<?php echo $routes->home."views/components/navbar.js";?>'></script>
         <script src='<?php echo $routes->home."views/components/login.js";?>'></script>
@@ -22,6 +19,13 @@
         <script src='<?php echo $routes->home."views/components/list-jobs.js";?>'></script>
         <script src='<?php echo $routes->home."views/components/perfil.js";?>'></script>
         <script src='<?php echo $routes->home."views/components/perfil-descricao.js";?>'></script>
+        <script>
+        <?php
+        require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/config/config.php'; //Importa o PDO
+        require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/UsuarioDaoMysql.php'; //Importa UsuarioDaoMysql para o CRUD
+        ?>
+        var user = <?php echo isset($_SESSION['auth']) ? json_encode(unserialize($_SESSION['auth'])): "{apelido: null}";?>;
+        </script>
         <script src='<?php echo $routes->home."views/components/perfil/home.js";?>'></script>
         <script src='<?php echo $routes->home."views/components/perfil/servicos.js";?>'></script>
         <script src='<?php echo $routes->home."views/components/perfil/mensagens.js";?>'></script>

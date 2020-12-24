@@ -143,7 +143,11 @@
 ?>
 <?php require "layouts/app/head.php"?>
 <div class="row m-0 container-perfil">
-    <perfil-descricao-component></perfil-descricao-component>
+    <perfil-descricao-component
+        ation_profile_img="controller/usuario_imagem.php"
+        avaliacao_usuario="3"
+        url='<?php echo $routes->home;?>' 
+    ></perfil-descricao-component>
     <perfil-component 
         servicos='<?php echo json_encode($data);?>' 
         mensagens='<?php echo json_encode($datamsg);?>' 
@@ -162,7 +166,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="post">
+                <form action="../jobfinder/controller/alterar_apelido.php" method="post">
                     <div class="col-md-12 form-group">
                         <label for="apelido" class="required">Apelido</label>
                         <input type="text" name="apelido" id="apelido" class="form-control">
