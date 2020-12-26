@@ -138,25 +138,27 @@
             "from"=>1,
             "mensagem"=>"olá tudo bem?"
         ],
+    ];
+    $categorias=[
+        (Object)["nome"=>"cat1"],
+        (Object)["nome"=>"cat2"],
+        (Object)["nome"=>"cat3"],
+        (Object)["nome"=>"cat4"],
+        (Object)["nome"=>"cat5"],
     ]
 
 ?>
 <?php require "layouts/app/head.php"?>
 <div class="row m-0 container-perfil">
-    <perfil-descricao-component
-        ation_profile_img="url_aqui"
-        avaliacao_usuario="3"
-    ></perfil-descricao-component>
-    <perfil-component 
-        servicos='<?php echo json_encode($data);?>' 
-        mensagens='<?php echo json_encode($datamsg);?>' 
-        contatos='<?php echo json_encode($datactt);?>'
-    >
+    <perfil-descricao-component ation_profile_img="url_aqui" avaliacao_usuario="3"></perfil-descricao-component>
+    <perfil-component servicos='<?php echo json_encode($data);?>' mensagens='<?php echo json_encode($datamsg);?>'
+        contatos='<?php echo json_encode($datactt);?>'>
     </perfil-component>
 </div>
 
 <!-- Modal alterar apelido -->
-<div class="modal fade" id="alterar_apelido" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<div class="modal fade" id="alterar_apelido" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -182,7 +184,8 @@
 </div>
 
 <!-- Modal adicionar servico -->
-<div class="modal fade" id="adicionar_servico" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<div class="modal fade" id="adicionar_servico" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-scollable modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -208,6 +211,14 @@
                         <div class="col-md-12 form-group">
                             <label for="valor">Valor</label>
                             <input type="text" class="form-control" id="valor">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="categorias" class="required">Categoria</label>
+                            <select multiple class="form-control" name="categoria[]" id="categorias" required>
+                                <?php foreach($categorias as $c): forea?>
+                                <option><?php echo $c->nome?></option>
+                                <?php endforeach ?>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group mt-4">
