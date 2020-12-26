@@ -11,24 +11,29 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top" id="navbar" style="background-color:green">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="navbar">
         <a class="navbar-brand" href="<?php echo $routes->home;?>">
             <img id="logomarca" src="<?php echo $routes->home."views/public/img/logomarca.png";?>" alt="logomarca" />
             <strong>JobFinder</strong>
         </a>
-        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-            aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+            aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavId">
             <ul class="navbar-nav ml-auto mr-5 mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link text-uppercase font-weight-bold" href="<?php echo $routes->perfil;?>">Cadastre um JOB <span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-uppercase font-weight-bold border-hover" onclick="scrollToDetail('footer')">Sobre nós
+                        <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link text-uppercase font-weight-bold" href="<?php echo $routes->jobs;?>">Pesquise por um JOB</a>
+                <li class="nav-item active mr-5">
+                    <a class="nav-link text-uppercase font-weight-bold border-hover"
+                        href="<?php echo $routes->jobs;?>">JOB's</a>
+                        <span class="sr-only">(current)</span></a>
+
                 </li>
+                <a href="<?php echo $routes->cadastro?>" id="cadastro" class="btn btn-outline-light ml-2 mb-2">Cadastre-se</a>
+                <a href="<?php echo $routes->login?>" class="btn ml-2 mb-2" style="background-color:DarkSlateGray; color:#fff">Login</a>
             </ul>
         </div>
     </nav>
-    
