@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 // tratamento da url de serviço 
 $jobs_show = isset($_GET['s']) ? "?s=$_GET[s]" : "";
@@ -36,7 +37,6 @@ if (array_key_exists($req, $routes_navigation)) { //verifica se a url requisitad
 }
 
 function auth(){ //funçao pra verificar se o usuario está autenticado
-    session_start();
     if(isset($_SESSION['auth'])){
         return true;
     }
