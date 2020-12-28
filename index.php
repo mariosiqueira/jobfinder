@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 // tratamento da url de serviço 
 $jobs_show = isset($_GET['s']) ? "?s=$_GET[s]" : "";
