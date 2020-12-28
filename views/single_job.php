@@ -51,7 +51,7 @@
             <input type="hidden" name="contratado_id" value="<?php echo 2?>">
             <div class="form-row">
                 <div class="col-md-12 form-group">
-                    <small class="text-muted text-uppercase">mensgem</small>
+                    <small class="text-muted text-uppercase">mensagem</small>
                     <textarea class="form-control" name="mensagem" rows="3"></textarea>
                 </div>
                 <div class="form-group text-right">

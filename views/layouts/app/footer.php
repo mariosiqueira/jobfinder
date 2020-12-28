@@ -20,10 +20,6 @@
         <script src='<?php echo $routes->home."views/components/perfil.js";?>'></script>
         <script src='<?php echo $routes->home."views/components/perfil-descricao.js";?>'></script>
         <script>
-        <?php
-        require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/config/config.php'; //Importa o PDO
-        require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/UsuarioDaoMysql.php'; //Importa UsuarioDaoMysql para o CRUD
-        ?>
         var user = <?php echo isset($_SESSION['auth']) ? json_encode(unserialize($_SESSION['auth'])): "{apelido: null}";?>;
         </script>
         <script src='<?php echo $routes->home."views/components/perfil/home.js";?>'></script>

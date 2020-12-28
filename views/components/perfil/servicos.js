@@ -56,7 +56,22 @@ var JobComponent = {
     methods: {
         click_servico(id) {
             alert(id)
-            $(`input[id='${id}']`).attr('checked', true)
+            $(`input[id='${id}']`).attr('checked', true);
+        },
+        //Método invocado pelo botão de apagar serviço. Para acessar o arquivo action_delete_servico.php utilizei axios para fazer essa requisião assíncrona.
+        deletarServico(id) {
+            alert("Tem certeza que deseja apagar este serviço?");
+            $(`input[id='${id}']`).attr('checked', true);
+
+            axios.get('/jobfinder/controller/action_delete_servico.php?id='+id) //get servico 
+            .then((res) => {
+                window.location.href = "/jobfinder/profile";
+                return window.location.href;
+            })
+            .catch(err => {
+                console.error("erro na requisição");
+                // alert();
+            })
         }
     }
 }

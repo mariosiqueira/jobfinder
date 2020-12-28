@@ -1,3 +1,7 @@
+<?php 
+require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/config/config.php'; //Importa o PDO
+require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/UsuarioDaoMysql.php'; //Importa UsuarioDaoMysql para o CRUD
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 

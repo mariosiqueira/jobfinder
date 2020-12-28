@@ -1,79 +1,6 @@
 <?php
-    check_auth($routes); //faz o check se o usuario está logado
+    check_auth($routes); //faz o check se o usuario está logado 
 
-    // dados fake pra teste
-    $data = [
-        [
-            "id"=>1,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00",           
-        ],
-        [
-            "id"=>2,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00",           
-        ],
-        [
-            "id"=>3,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00",           
-        ],
-        [
-            "id"=>4,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00",           
-        ],
-        [
-            "id"=>5,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00",           
-        ],
-        [
-            "id"=>6,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00",           
-        ],
-        [
-            "id"=>7,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00",           
-        ],
-        [
-            "id"=>8,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00",           
-        ],
-        [
-            "id"=>9,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00",           
-        ],
-        [
-            "id"=>10,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00",           
-        ],
-    ];
     $datactt = [
         [
             "id"=>1,
@@ -141,7 +68,46 @@
     ]
 
 ?>
-<?php require "layouts/app/head.php"?>
+
+<?php 
+require "layouts/app/head.php";
+require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/CategoriaDaoMysql.php'; //import da classe CategoriaDaoMysql pra buscar as categorias do banco de dados e mostrar na aplicação na hora de criar um novo serviço
+require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/ServicoDaoMysql.php'; //Import da classe ServicoDaoMysql para recuperar os serviços cadastrados pelo usuário da sessão e que serão exibidos no perfil dele
+
+//Recuperando as categorias cadastradas no banco de dados para exibir no modal de cadastro de serviço
+$categoriaDao = new CategoriaDaoMysql($pdo);
+$categorias = [];
+$arrayDadosObjetosCategorias = $categoriaDao->buscarTodas();
+foreach($arrayDadosObjetosCategorias as $dadoObjetoCategoria) {
+    $novaCategoria = new Categoria();
+    $novaCategoria->setId($dadoObjetoCategoria->getId());
+    $novaCategoria->setNome($dadoObjetoCategoria->getNome());
+    $categorias [] = $novaCategoria;
+}
+
+//Recuperando os serviços cadastrados pelo usuário da sessão
+$usuarioSessao = unserialize($_SESSION['auth']);
+$servicoDao = new ServicoDaoMysql($pdo);
+$data = [];
+
+$arrayDadosObjetosServico = $servicoDao->buscarServicoPeloIdDoUsuario($usuarioSessao->getId());
+if($arrayDadosObjetosServico != null) {
+    
+    foreach($arrayDadosObjetosServico as $dadoObjetoServico) {
+        $novoServico = new Servico();
+        $novoServico->setId($dadoObjetoServico->getId());
+        $novoServico->setTitulo($dadoObjetoServico->getTitulo());
+        $novoServico->setDescricao($dadoObjetoServico->getDescricao());
+        $novoServico->setEnderecoServico($dadoObjetoServico->getEnderecoServico());
+        $novoServico->setValor($dadoObjetoServico->getValor());
+        $novoServico->setUsuarioId($_SESSION['auth']);
+        $novoServico->setDataPostagem($dadoObjetoServico->getDataPostagem());
+        $data [] = $novoServico;
+    }
+}
+
+?>
+
 <div class="row m-0 container-perfil">
     <perfil-descricao-component
         ation_profile_img="controller/usuario_imagem.php"
@@ -183,7 +149,8 @@
 </div>
 
 <!-- Modal adicionar servico -->
-<div class="modal fade" id="adicionar_servico" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<div class="modal fade" id="adicionar_servico" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-scollable modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -192,23 +159,31 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="post">
+                <form action="../jobfinder/controller/action_cadastrar_servico_e_servico_categoria.php" method="post">
                     <div class="form-row">
                         <div class="col-md-12 form-group">
                             <label for="" class="required">Titulo</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control" name="titulo" required>
                         </div>
                         <div class="col-md-12 form-group">
                             <label for="" class="required">Descricao</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control" name="descricao" required>
                         </div>
                         <div class="col-md-12 form-group">
                             <label for="">Endereço</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="endereco_servico">
                         </div>
                         <div class="col-md-12 form-group">
                             <label for="valor">Valor</label>
-                            <input type="text" class="form-control" id="valor">
+                            <input type="text" class="form-control" id="valor" name="valor">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="categorias" class="required">Categoria</label>
+                            <select multiple class="form-control" name="categoria[]" id="categorias" required>
+                                <?php foreach($categorias as $categoria): forea?>
+                                <option><?php echo $categoria->getNome()?></option>
+                                <?php endforeach ?>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group mt-4">
@@ -216,6 +191,7 @@
                             Cadastrar
                         </button>
                     </div>
+                    <input type="hidden" name="usuario_id" value=<?= $usuarioSessao->getId() ?>>
                 </form>
             </div>
         </div>
