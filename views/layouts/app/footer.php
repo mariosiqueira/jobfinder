@@ -27,6 +27,7 @@
         <script src='<?php echo $routes->home."views/components/perfil/mensagens.js";?>'></script>
         <script src='<?php echo $routes->home."views/components/perfil/configuracoes.js";?>'></script>
         <script src='<?php echo $routes->home."views/components/perfil/servico_show.js";?>'></script>
+        <script src='<?php echo $routes->home."views/components/perfil/servico_close.js";?>'></script>
         <script src='<?php echo $routes->home."views/public/router.js";?>'></script>
         <script src='<?php echo $routes->home."views/public/app.js";?>'></script>
         <script>
@@ -35,6 +36,18 @@
                 decimal: ',',
                 thousands: '.'
             });
+            $(document).ready(function() {
+                $("#btnDeletarConta").attr('disabled', true)
+                
+                $("#inputDeletarConta").on('keyup', function(e) {
+                    var value = $("#inputDeletarConta").val();
+                    if(value == ""){
+                        $("#btnDeletarConta").attr('disabled', true)
+                    } else {
+                        $("#btnDeletarConta").attr('disabled', false)
+                    }
+                })
+            })
         </script>
         </body>
 
