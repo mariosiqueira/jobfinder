@@ -23,8 +23,9 @@
         <div class="collapse navbar-collapse" id="collapsibleNavId">
             <ul class="navbar-nav ml-auto mr-5 mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link text-uppercase font-weight-bold border-hover" onclick="scrollToDetail('footer')">Sobre nós
-                        <span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-uppercase font-weight-bold border-hover" style="cursor:pointer" onclick="scrollToDetail('footer')">Sobre nós
+                        <span class="sr-only">(current)</span>
+                    </a>
                 </li>
                 <li class="nav-item active mr-5">
                     <a class="nav-link text-uppercase font-weight-bold border-hover"
