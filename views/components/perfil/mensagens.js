@@ -24,14 +24,12 @@ var MessagesComponent = {
         this.data_ctts = JSON.parse(atob(this.contatos));
     },
     template: `
-    <div>
-        <h1 class="text-muted text-uppercase">Mensagens</h1>
-        <div class="my-4"></div>
+    <div class="mt-5">
         <div class="row m-0 profile-msg">
             <div class="col-lg-3 list-contatos">
                 <p class="profile-msg-contatos" v-for="contato in data_ctts" :key="contato.id" @click="loadMensagens(contato.id)">
                     <img class="profile-msg-contatos-img mr-1" :src="contato.foto_perfil" />
-                    <span class="profile-msg-contatos-username">{{contato.nome}}</span>
+                    <span class="profile-msg-contatos-username">{{contato.id +" " +contato.nome}}</span>
                 </p>
             </div>
             <div class="col-lg-9">
@@ -48,9 +46,9 @@ var MessagesComponent = {
                 </div>
                 <form @submit.prevent="sendMensagem()">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" v-model="mensagem" placeholder="Mensagem"  aria-describedby="send">
+                        <input type="text" class="form-control shadow-none" v-model="mensagem" placeholder="Mensagem" ref="mensagem" required>
                         <div class="input-group-append">
-                            <button class="btn btn-success" type="submit" id="send">
+                            <button class="btn btn-success shadow-none" type="submit" id="send">
                                 Enviar
                             </button>
                         </div>
@@ -85,30 +83,37 @@ var MessagesComponent = {
             });
             this.data = aux;
             this.scrolToBottom();
+            this.$refs.mensagem.focus();
+
         },
         sendMensagem() {
             if (this.from != "") {
-                this.data.push(
-                    {
-                        'contratante_id': this.user_id,
-                        'contratado_id': this.from,
-                        'mensagem': this.mensagem
-                    }
-                )
-                
-                // falta implementar o chat realtime com ratchet
 
-                // axios.post(this.urlenviarmsg) //retorna uma promise
-                //     .then(res => {  //se retornar sucesso ele entra no then
-                //         this.data.push(res);
-                //         this.scrolToBottom();
-                //     })
-                //     .catch(err => { //se retornar um erro ele entra no catch
-                //         console.error(err);
-                //     })
+                if (this.mensagem && this.mensagem != "") { //verifica se a mensagem não está vazia
+                    
+                    this.data.push(
+                        {
+                            'contratante_id': this.user_id,
+                            'contratado_id': this.from,
+                            'mensagem': this.mensagem
+                        }
+                    )
+                    
+                    // falta implementar o chat realtime com ratchet
 
-                this.scrolToBottom();
-                this.mensagem = ""; //reseta o valor d mensagem
+                    // axios.post(this.urlenviarmsg) //retorna uma promise
+                    //     .then(res => {  //se retornar sucesso ele entra no then
+                    //         this.data.push(res);
+                    //         this.scrolToBottom();
+                    //     })
+                    //     .catch(err => { //se retornar um erro ele entra no catch
+                    //         console.error(err);
+                    //     })
+
+                    this.scrolToBottom();
+                    this.mensagem = ""; //reseta o valor d mensagem
+                }
+
             } else {
                 alert("Entre em uma conversa!")
             }
