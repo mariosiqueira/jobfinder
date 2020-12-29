@@ -45,7 +45,7 @@ if (array_key_exists($req, $routes_navigation)) { //verifica se a url requisitad
 }
 
 function auth(){ //funçao pra verificar se o usuario está autenticado
-    session_start();
+    // session_start();
     if(isset($_SESSION['auth'])){
         return true;
     }

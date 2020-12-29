@@ -2,15 +2,9 @@ var servicoShow = {
     props: {
         url_get_servico: {
             type: String,
-        },
-        data_servico: {
-            titulo: String,
-            descricao: String,
-            endereco_servico: String,
-            valor: String
         }
     },
-    data() {
+    data() { 
         return {
             id: this.$route.params.id,
 
@@ -19,8 +13,6 @@ var servicoShow = {
             endereco_servico: '',
             valor: '',
 
-            // duracao_1: this.duracao.split(" ")[0],
-            // duracao_2: this.duracao.split(" ")[1],
         }
     },
     template: `
@@ -57,11 +49,10 @@ var servicoShow = {
         //Requisição assíncrona com axios para pegar todos os atributos pelo id do serviço selecionado para visualizar e preencher nos campos na aplicação.
         axios.get('/jobfinder/controller/get_data_servico.php?s='+this.id) //get servico 
             .then((res) => {
-                this.data_servico = res.data;
-                this.titulo = this.data_servico.titulo;
-                this.descricao = this.data_servico.descricao;
-                this.endereco_servico = this.data_servico.enderecoServico;
-                this.valor = this.data_servico.valor;
+                this.titulo = res.data.titulo;
+                this.descricao = res.data.descricao;
+                this.endereco_servico = res.data.enderecoServico;
+                this.valor = res.data.valor;
             })
             .catch(err => {
                 console.error("erro na requisição");

@@ -22,7 +22,6 @@ var MessagesComponent = {
     mounted() {
         this.msgs = JSON.parse(atob(this.mensagens));
         this.data_ctts = JSON.parse(atob(this.contatos));
-        console.log(this.user_id);
     },
     template: `
     <div>
@@ -39,9 +38,11 @@ var MessagesComponent = {
                 <div class="profile-msg-body" ref="profile_scrol">
                     <ul class="messages_body">
                         <li v-for="m in data" :key="m.id">
-                            <p :class="m.to == user_id ? 'sended' : 'received'">
-                                {{m.mensagem}} 
-                            </p>
+                            <div :class="m.contratante_id == user_id ? 'sended' : 'received'">
+                                <p :class="m.contratante_id == user_id ? 'msg-sended' : 'msg-received'">
+                                    {{m.mensagem}} 
+                                </p>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -78,7 +79,7 @@ var MessagesComponent = {
             this.from = id;
             let aux = [];
             this.msgs.forEach(e => {
-                if (e.to == id || e.from == id) {
+                if (e.contratante_id == id || e.contratado_id == id) {
                     aux.push(e);
                 }
             });
@@ -89,11 +90,13 @@ var MessagesComponent = {
             if (this.from != "") {
                 this.data.push(
                     {
-                        'to': this.user_id,
-                        'from': this.from,
+                        'contratante_id': this.user_id,
+                        'contratado_id': this.from,
                         'mensagem': this.mensagem
                     }
                 )
+                
+                // falta implementar o chat realtime com ratchet
 
                 // axios.post(this.urlenviarmsg) //retorna uma promise
                 //     .then(res => {  //se retornar sucesso ele entra no then

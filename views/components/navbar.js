@@ -22,10 +22,6 @@ var navbarComponent = {
         mensagens: {
             required: true,
             type: String
-        },
-        logouturl: {
-            required: true,
-            type: String
         }
     },
     template: `

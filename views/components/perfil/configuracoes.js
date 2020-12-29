@@ -25,13 +25,13 @@ var ConfigComponent = {
                 </button>
             </li>
             <li class="list-group-item list-group-item-success mr-4">
-                <button class="btn btn-link">
+                <button class="btn btn-link" data-toggle="modal" data-target="#termos_e_responsabilidade">
                     <i class="fas fa-file-alt    "></i>
                     Termos e responsabilidade
                 </button>
             </li>
             <li class="list-group-item list-group-item-danger text-right mr-4">
-                <button class="btn btn-link">
+                <button class="btn btn-link" data-toggle="modal" data-target="#deletar_conta">
                     <i class="fas fa-trash    "></i>
                     Deletar minha conta
                 </button>

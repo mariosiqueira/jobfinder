@@ -148,6 +148,48 @@ if($arrayDadosObjetosServico != null) {
     </div>
 </div>
 
+<!-- Modal termos e responsabilidade -->
+<div class="modal fade" id="termos_e_responsabilidade" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3 class="text-muted text-uppercase text-center mb-4">Termos e resonsabilidade</h3>
+                <div class="col-md-6 mx-auto form-group text-center">
+                    <p class="text-justify">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus consequatur aspernatur
+                        tempore alias sed, exercitationem sapiente doloremque aliquam magnam, nihil ipsam incidunt
+                        dolore voluptates necessitatibus eius beatae itaque, a optio!
+                    </p>
+                    <p class="text-justify">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus consequatur aspernatur
+                        tempore alias sed, exercitationem sapiente doloremque aliquam magnam, nihil ipsam incidunt
+                        dolore voluptates necessitatibus eius beatae itaque, a optio!
+                    </p>
+                    <p class="text-justify">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus consequatur aspernatur
+                        tempore alias sed, exercitationem sapiente doloremque aliquam magnam, nihil ipsam incidunt
+                        dolore voluptates necessitatibus eius beatae itaque, a optio!
+                    </p>
+                    <p class="text-justify">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus consequatur aspernatur
+                        tempore alias sed, exercitationem sapiente doloremque aliquam magnam, nihil ipsam incidunt
+                        dolore voluptates necessitatibus eius beatae itaque, a optio!
+                    </p>
+                    <p class="text-right">
+                        <strong>JOBFINDER</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Modal adicionar servico -->
 <div class="modal fade" id="adicionar_servico" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
     aria-hidden="true">
@@ -193,6 +235,33 @@ if($arrayDadosObjetosServico != null) {
                     </div>
                     <input type="hidden" name="usuario_id" value=<?= $usuarioSessao->getId() ?>>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deletar_conta" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
+    <div class="modal-dialog  modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-muted text-uppercase text-center">Deseja realmente deletar sua conta?</h4>
+                <form action="urldeletarconta" method="post" id="deletarConta">
+                    <div class="form-group mt">
+                        <span class="badge badge-danger p-2 mt-5 mb-2">Para deletar sua conta, você precisa confirmar sua senha</span>
+                        <input type="password" class="form-control shadow-none" name="senha" placeholder="Senha" id="inputDeletarConta" required />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary shadow-none" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger shadow-none" id="btnDeletarConta"               onclick="$('#deletarConta').submit()">Deletar</button>
             </div>
         </div>
     </div>
