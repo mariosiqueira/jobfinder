@@ -17,7 +17,8 @@ var servicoClose = {
             data: '', //data do momento em que é finalizado o serviço
             valor: '', //se houve mudança no valor do serviço na negociação deve ser editado no serviço, com o novo valor
             // o status do servico deve ser mudado para finalizado 
-            metodo_pagamento: '' //metodo de pagamento que foi usado nesse serviço
+            metodo_pagamento: '', //metodo de pagamento que foi usado nesse serviço
+            comentario: "" //comentario da avaliação
         }
     },
     template: `
@@ -26,7 +27,7 @@ var servicoClose = {
             <input type="hidden" name="servico_id" :value="servico_id" />
             <input type="hidden" name="contratante_id" :value="contratante_id" />
             <div class="form-row">
-                <div class="col-md-12 form-group">
+                <div class="col-md-8 form-group">
                     <label for="metodo_pagamento" class="required">Método pagameto</label>
                     <select class="form-control" id="metodo_pagamento" name="metodo_pagamento" v-model="metodo_pagamento" required>
                         <option value="dinheiro" selected>Dinheiro - Espécie</option>
@@ -34,6 +35,12 @@ var servicoClose = {
                         <option value="outro">Outro</option>
                     </select>
                 </div>
+                <div class="col-md-4 form-group">
+                    <label for="valor">Valor</label>
+                    <input type="text" class="form-control" v-model="valor" id="valor">
+                </div>
+            </div>
+            <div class="form-row">
                 <div class="col-md-12 form-group">
                     <label for="contratado" class="required">Contratado</label>
                     <select class="form-control" id="contratado" name="contratado_id" v-model="contratado_id" required>
@@ -42,16 +49,29 @@ var servicoClose = {
                         </option>
                     </select>
                 </div>
-                <div class="col-md-12 form-group">
-                    <label for="valor">Valor</label>
-                    <input type="text" class="form-control" v-model="valor" id="valor">
+                <div class="col-md-12 mt-4">
+                    <div class="star-rating">
+                        <input type="radio" id="5-stars" name="rating" value="5" />
+                        <label for="5-stars" class="star">&#9733;</label>
+                        <input type="radio" id="4-stars" name="rating" value="4" />
+                        <label for="4-stars" class="star">&#9733;</label>
+                        <input type="radio" checked id="3-stars" name="rating" value="3" />
+                        <label for="3-stars" class="star">&#9733;</label>
+                        <input type="radio" id="2-stars" name="rating" value="2" />
+                        <label for="2-stars" class="star">&#9733;</label>
+                        <input type="radio" id="1-star" name="rating" value="1" />
+                        <label for="1-star" class="star">&#9733;</label>
+                    </div>
                 </div>
+                <div class="col-md-12">
+                    <textarea class="form-control" name="comentario" rows="3" v-model="comentario">Comentário sobre o contratado</textarea>
+                </div>            
             </div>
             <div class="form-group mt-4">
-                <button type="submit" class="btn btn-dark btn-md btn-block rounded-pill" v-if="metodo_pagamento && contratado_id && valor">
+                <button type="submit" class="btn btn-dark btn-md btn-block rounded-pill text-uppercase" v-if="metodo_pagamento && contratado_id && valor && comentario">
                     Finalizar
                 </button>
-                <button type="button" class="btn btn-dark btn-md btn-block rounded-pill" disabled v-else>
+                <button type="button" class="btn btn-dark btn-md btn-block rounded-pill text-uppercase" disabled v-else>
                     Finalizar
                 </button>
             </div>
