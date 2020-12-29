@@ -22,21 +22,25 @@ var JobComponent = {
     template: `
     <div>
         <ul class="profile-list-service">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="form-inline">
-                    <select class="custom-select" v-model="filtro">
+            <div class="d-flex justify-content-between align-items-center px-1">
+                <div class="d-flex align-items-center m-0 p-0">
+                    <select class="form-control shadow-none m-0" v-model="filtro">
                         <option value="todos" selected>Todos</option>
                         <option value="aberto">Abertos</option>
                         <option value="finalizado">Finalizados</option>
                     </select>
-                    <button type="button" class="btn btn-primary rounded-pill ml-2" @click="filtrarDados()">
+                    <button type="button" class="btn btn-sm btn-primary rounded-pill d-flex m-0 ml-1 align-items-center" @click="filtrarDados()">
                         <i class="fas fa-filter    "></i>
-                        Filtrar
+                        <span class="ml-1">
+                            Filtrar
+                        </span>
                     </button>
                 </div>
                 <button class="btn btn-primary text-uppercase" data-toggle="modal" data-target="#adicionar_servico">
                     <i class="fas fa-plus    "></i>
-                    Novo
+                    <span class="title-md">
+                        Novo
+                    </span>
                 </button>
             </div>
             <div v-if="this.condicao" class="alert alert-warning" role="alert">
