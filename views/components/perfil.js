@@ -8,6 +8,9 @@ var perfilComponent = {
         },
         contatos: {
             required: true
+        },
+        avaliacoes: {
+            required: true
         }
     },
     data() {
@@ -15,12 +18,14 @@ var perfilComponent = {
             data: [],
             datamsg: [],
             datactt: [],
+            dataava: [],
         }
     },
     mounted() {
         this.data = btoa(this.servicos);
         this.datamsg = btoa(this.mensagens);
         this.datactt = btoa(this.contatos);
+        this.dataava = btoa(this.avaliacoes);
     },
     template: `
         <div class="col-lg-9 p-3">
@@ -48,6 +53,12 @@ var perfilComponent = {
                         <i class="fas fa-cog    "></i>
                         <span class="title-md">
                             Configurações
+                        </span>
+                    </router-link>
+                    <router-link :to="{ name: 'rating', query: { avaliacoes: dataava }}" class="shadow-none " :class="this.$route.path == '/rating' ? 'btn btn-outline-dark active': 'btn btn-outline-dark'">
+                        <i class="fas fa-star    "></i>
+                        <span class="title-md">
+                            Avaliações
                         </span>
                     </router-link>
                 </div>
