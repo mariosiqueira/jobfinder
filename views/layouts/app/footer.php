@@ -28,6 +28,7 @@
         <script src='<?php echo $routes->home."views/components/perfil/configuracoes.js";?>'></script>
         <script src='<?php echo $routes->home."views/components/perfil/servico_show.js";?>'></script>
         <script src='<?php echo $routes->home."views/components/perfil/servico_close.js";?>'></script>
+        <script src='<?php echo $routes->home."views/components/perfil/avaliacoes.js";?>'></script>
         <script src='<?php echo $routes->home."views/public/router.js";?>'></script>
         <script src='<?php echo $routes->home."views/public/app.js";?>'></script>
         <script>
