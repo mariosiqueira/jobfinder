@@ -30,6 +30,7 @@ function cadastrarServico($servicoDao, $categoriaDao, $servicoCategoriaDao) {
     $servico->setEnderecoServico($enderecoServico);
     $servico->setValor($valor);
     $servico->setUsuarioId($usuarioId);
+    $servico->setStatus("aberto");
 
     $servico = $servicoDao->salvar($servico);
 

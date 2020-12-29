@@ -20,12 +20,13 @@ class ServicoDaoMysql implements ServicoDao {
 
     public function salvar(Servico $servico){
         //é melhor quebrar a query de insersão de dados, por questão de segurança. Onde tem :titulo, :descricao...serão as máscaras para inserir os valores pelo bindValue
-        $sql = $this->pdo->prepare("INSERT INTO servicos (titulo, descricao, endereco_servico, valor, usuario_id) VALUES (:titulo, :descricao, :endereco_servico, :valor, :usuario_id)");
+        $sql = $this->pdo->prepare("INSERT INTO servicos (titulo, descricao, endereco_servico, valor, usuario_id, status_servico) VALUES (:titulo, :descricao, :endereco_servico, :valor, :usuario_id, :status_servico)");
         $sql->bindValue(":titulo", $servico->getTitulo());
         $sql->bindValue(":descricao", $servico->getDescricao());
         $sql->bindValue(":endereco_servico", $servico->getEnderecoServico());
         $sql->bindValue(":valor", $servico->getValor());
         $sql->bindValue(":usuario_id", $servico->getUsuarioId());
+        $sql->bindValue(":status_servico", $servico->getStatus());
         $sql->execute();
 
         $servico->setId($this->pdo->lastInsertId());
@@ -52,6 +53,7 @@ class ServicoDaoMysql implements ServicoDao {
                 $servico->setValor($dadoServico['valor']);
                 $servico->setUsuarioId($dadoServico['usuario_id']);
                 $servico->setDataPostagem($dadoServico['data_postagem']);
+                $servico->setStatus($dadoServico['status_servico']);
 
                 $arrayServicos[] = $servico; //Adiciona o serviço construído e preenchido no arrayServiços que ao final da iteração será devolvido para quem chamou o método.
             }
@@ -78,6 +80,7 @@ class ServicoDaoMysql implements ServicoDao {
             $servico->setValor($dadoServico['valor']);
             $servico->setUsuarioId($dadoServico['usuario_id']);
             $servico->setDataPostagem($dadoServico['data_postagem']);
+            $servico->setStatus($dadoServico['status_servico']);
 
             return $servico;
         } else {
@@ -103,6 +106,7 @@ class ServicoDaoMysql implements ServicoDao {
                 $servico->setValor($dadoServico['valor']);
                 $servico->setUsuarioId($dadoServico['usuario_id']);
                 $servico->setDataPostagem($dadoServico['data_postagem']);
+                $servico->setStatus($dadoServico['status_servico']);
 
                 $arrayServicos[] = $servico;
             }
@@ -115,7 +119,7 @@ class ServicoDaoMysql implements ServicoDao {
          * Todos os dados do serviço para serem atualizados no banco de dados
          * estão no parâmetro servicos, só é preciso dar os gets nos atributos em cada bindValue
          */
-        $sql = $this->pdo->prepare("UPDATE servicos SET titulo = :titulo, descricao = :descricao, endereco_servico = :endereco_servico, valor = :valor, usuario_id = :usuario_id, data_postagem = :data_postagem WHERE id = :id");
+        $sql = $this->pdo->prepare("UPDATE servicos SET titulo = :titulo, descricao = :descricao, endereco_servico = :endereco_servico, valor = :valor, usuario_id = :usuario_id, data_postagem = :data_postagem, status_servico = :status_servico WHERE id = :id");
         $sql->bindValue(":id", $servico->getId());
         $sql->bindValue(":titulo", $servico->getTitulo());
         $sql->bindValue(":descricao", $servico->getDescricao());
@@ -123,6 +127,7 @@ class ServicoDaoMysql implements ServicoDao {
         $sql->bindValue(":valor", $servico->getValor());
         $sql->bindValue(":usuario_id", $servico->getUsuarioId());
         $sql->bindValue(":data_postagem", $servico->getDataPostagem());
+        $sql->bindValue(":status_servico", $servico->getStatus());
         $sql->execute();
 
         return true;
@@ -132,6 +137,33 @@ class ServicoDaoMysql implements ServicoDao {
         $sql = $this->pdo->prepare("DELETE FROM servicos WHERE id = :id");
         $sql->bindValue(':id', $id);
         $sql->execute();
+    }
+
+    public function buscarServicoPeloStatus($status){ //Recupera todos os serviços com status de aberto ou fechado
+        $arrayServicos = [];
+        $sql = $this->pdo->prepare("SELECT * FROM servicos WHERE status_servico = :status_servico");
+        $sql->bindValue(':status_servico', $status);
+        $sql->execute();
+
+        if($sql->rowCount() > 0) {
+            $arrayDadosServiços = $sql->fetchAll(); //Pega todos os dados dos serviços encontrados e joga no arrayDados
+
+            foreach($arrayDadosServiços as $dadoServico) {
+                $servico = new Servico();
+                $servico->setId($dadoServico['id']);
+                $servico->setTitulo($dadoServico['titulo']);
+                $servico->setDescricao($dadoServico['descricao']);
+                $servico->setEnderecoServico($dadoServico['endereco_servico']);
+                $servico->setValor($dadoServico['valor']);
+                $servico->setUsuarioId($dadoServico['usuario_id']);
+                $servico->setDataPostagem($dadoServico['data_postagem']);
+                $servico->setStatus($dadoServico['status_servico']);
+
+                $arrayServicos[] = $servico; //adiciona um objeto do tipo serviço na lista de objetos de Serviço
+            }
+        }
+
+        return $arrayServicos;
     }
 
 }

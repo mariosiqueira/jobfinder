@@ -7,6 +7,7 @@ class Servico implements JsonSerializable {
     private $valor;
     private $usuarioId;
     private $dataPostagem;
+    private $status;
 
     public function jsonSerialize() {
         return [
@@ -16,7 +17,8 @@ class Servico implements JsonSerializable {
             'enderecoServico' => $this->enderecoServico,
             'valor' => $this->valor,
             'usuarioId' => $this->usuarioId,
-            'dataPostagem' => $this->dataPostagem
+            'dataPostagem' => $this->dataPostagem,
+            'status' => $this->status,
         ];
     }
 
@@ -75,6 +77,14 @@ class Servico implements JsonSerializable {
     public function setDataPostagem($dataPostagem){
         $this->dataPostagem = trim($dataPostagem);
     }
+
+    public function getStatus() {
+        return $this->status;
+    }
+
+    public function setStatus($status){
+        $this->status = trim($status);
+    }
 }
 
 interface ServicoDao {
@@ -84,4 +94,5 @@ interface ServicoDao {
     public function buscarServicoPeloIdDoUsuario($usuarioId);
     public function atualizar(Servico $servico);
     public function deletar($id);
+    public function buscarServicoPeloStatus($status);
 }

@@ -230,6 +230,7 @@ if($arrayDadosObjetosServico != null) {
         $novoServico->setValor($dadoObjetoServico->getValor());
         $novoServico->setUsuarioId($_SESSION['auth']);
         $novoServico->setDataPostagem($dadoObjetoServico->getDataPostagem());
+        $novoServico->setStatus($dadoObjetoServico->getStatus());
         $data [] = $novoServico;
     }
 }
