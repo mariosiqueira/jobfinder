@@ -1,12 +1,91 @@
 <?php
-    check_auth($routes); //faz o check se o usuario está logado 
+    check_auth($routes); //faz o check se o usuario está logado
 
-    $datactt = [
+    // dados fake pra teste
+    $data = [
         [
             "id"=>1,
-            "nome"=> "username",
-            "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg",
+            "titulo"=> "servico teste",
+            "descricao"=>"servico teste de teste categoria",
+            "endereco"=>"afogados da ingazeira, centro, 21",
+            "valor"=>"800.00", 
+            "status"=>"aberto"          
         ],
+        [
+            "id"=>2,
+            "titulo"=> "servico teste",
+            "descricao"=>"servico teste de teste categoria",
+            "endereco"=>"afogados da ingazeira, centro, 21",
+            "valor"=>"800.00", 
+            "status"=>"aberto"          
+        ],
+        [
+            "id"=>3,
+            "titulo"=> "servico teste",
+            "descricao"=>"servico teste de teste categoria",
+            "endereco"=>"afogados da ingazeira, centro, 21",
+            "valor"=>"800.00", 
+            "status"=>"aberto"          
+        ],
+        [
+            "id"=>4,
+            "titulo"=> "servico teste",
+            "descricao"=>"servico teste de teste categoria",
+            "endereco"=>"afogados da ingazeira, centro, 21",
+            "valor"=>"800.00", 
+            "status"=>"aberto"          
+        ],
+        [
+            "id"=>5,
+            "titulo"=> "servico teste",
+            "descricao"=>"servico teste de teste categoria",
+            "endereco"=>"afogados da ingazeira, centro, 21",
+            "valor"=>"800.00", 
+            "status"=>"finalizado"          
+        ],
+        [
+            "id"=>6,
+            "titulo"=> "servico teste",
+            "descricao"=>"servico teste de teste categoria",
+            "endereco"=>"afogados da ingazeira, centro, 21",
+            "valor"=>"800.00", 
+            "status"=>"finalizado"          
+        ],
+        [
+            "id"=>7,
+            "titulo"=> "servico teste",
+            "descricao"=>"servico teste de teste categoria",
+            "endereco"=>"afogados da ingazeira, centro, 21",
+            "valor"=>"800.00", 
+            "status"=>"finalizado"          
+        ],
+        [
+            "id"=>8,
+            "titulo"=> "servico teste",
+            "descricao"=>"servico teste de teste categoria",
+            "endereco"=>"afogados da ingazeira, centro, 21",
+            "valor"=>"800.00", 
+            "status"=>"aberto"          
+        ],
+        [
+            "id"=>9,
+            "titulo"=> "servico teste",
+            "descricao"=>"servico teste de teste categoria",
+            "endereco"=>"afogados da ingazeira, centro, 21",
+            "valor"=>"800.00", 
+            "status"=>"aberto"          
+        ],
+        [
+            "id"=>10,
+            "titulo"=> "servico teste",
+            "descricao"=>"servico teste de teste categoria",
+            "endereco"=>"afogados da ingazeira, centro, 21",
+            "valor"=>"800.00", 
+            "status"=>"finalizado"          
+        ],
+    ];
+    $datactt = [
+        
         [
             "id"=>2,
             "nome"=> "username",
@@ -26,45 +105,94 @@
             "id"=>5,
             "nome"=> "username",
             "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg",
-        ]
+        ],
+        [
+            "id"=>6,
+            "nome"=> "username",
+            "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg",
+        ],
     ];
     $datamsg = [
         [
-            "id"=>1,
-            "to"=>1,
-            "from"=>2,
+            "id"=>11,
+            "contratado_id"=>1,
+            "contratante_id"=>2,
             "mensagem"=>"olá"
         ],
         [
-            "id"=>2,
-            "to"=>2,
-            "from"=>1,
+            "id"=>22,
+            "contratado_id"=>1,
+            "contratante_id"=>2,
+            "mensagem"=>"olá"
+        ],
+        [
+            "id"=>33,
+            "contratado_id"=>1,
+            "contratante_id"=>2,
+            "mensagem"=>"olá"
+        ],
+        [
+            "id"=>24,
+            "contratado_id"=>2,
+            "contratante_id"=>1,
             "mensagem"=>"olá tudo bem?"
         ],
         [
             "id"=>3,
-            "to"=>1,
-            "from"=>3,
+            "contratado_id"=>1,
+            "contratante_id"=>3,
             "mensagem"=>"olá tudo bem?"
         ],
         [
             "id"=>4,
-            "to"=>3,
-            "from"=>1,
+            "contratado_id"=>3,
+            "contratante_id"=>1,
             "mensagem"=>"olá tudo bem? olá tudo bem? olá tudo bem? olá tudo bem? olá tudo bem? olá tudo bem?"
         ],
         [
             "id"=>5,
-            "to"=>1,
-            "from"=>3,
+            "contratado_id"=>1,
+            "contratante_id"=>3,
             "mensagem"=>"olá tudo bem?"
         ],
         [
             "id"=>6,
-            "to"=>3,
-            "from"=>1,
+            "contratado_id"=>3,
+            "contratante_id"=>1,
             "mensagem"=>"olá tudo bem?"
         ],
+    ];
+    $categorias=[
+        (Object)["nome"=>"cat1"],
+        (Object)["nome"=>"cat2"],
+        (Object)["nome"=>"cat3"],
+        (Object)["nome"=>"cat4"],
+        (Object)["nome"=>"cat5"],
+    ];
+    $dataava = [
+        [
+            "avaliacao" => 5,
+            "comentario"=>'Muito bom profissional, recomendo!',
+            "usuario"=>[
+                "apelido"=>"username",
+                "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg"
+            ]
+        ],
+        [
+            "avaliacao" => 2,
+            "comentario"=>'Não gostei, não recomendo!',
+            "usuario"=>[
+                "apelido"=>"username",
+                "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg"
+            ],
+        ],
+        [
+            "avaliacao" => 4,
+            "comentario"=>'Muito bom profissional, deixou a desejar em alguns aspectos, mas recomendo!',
+            "usuario"=>[
+                "apelido"=>"username",
+                "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg"],
+        ]
     ]
 
 ?>
@@ -118,6 +246,7 @@ if($arrayDadosObjetosServico != null) {
         servicos='<?php echo json_encode($data);?>' 
         mensagens='<?php echo json_encode($datamsg);?>' 
         contatos='<?php echo json_encode($datactt);?>'
+        avaliacoes='<?php echo json_encode($dataava);?>'
     >
     </perfil-component>
 </div>
