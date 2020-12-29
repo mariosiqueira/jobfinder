@@ -31,7 +31,7 @@ var perfilDescricaoComponent = {
                 </span>
             </div>
             <p class="text-center">
-                <i class="fas fa-star" v-for="i in (0, 5)" :class="i < ava_usuario ? ' text-warning' : ' text-muted'"></i>
+                <i class="fas fa-star" v-for="i in (0, 5)" :class="i <= ava_usuario ? ' text-warning' : ' text-muted'"></i>
             </p>
             <p class="text-center mt-5">
                 <strong><i>{{usuario.email}}</i></strong>
