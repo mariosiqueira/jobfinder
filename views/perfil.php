@@ -168,6 +168,31 @@
         (Object)["nome"=>"cat3"],
         (Object)["nome"=>"cat4"],
         (Object)["nome"=>"cat5"],
+    ];
+    $dataava = [
+        [
+            "avaliacao" => 5,
+            "comentario"=>'Muito bom profissional, recomendo!',
+            "usuario"=>[
+                "apelido"=>"username",
+                "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg"
+            ]
+        ],
+        [
+            "avaliacao" => 2,
+            "comentario"=>'Não gostei, não recomendo!',
+            "usuario"=>[
+                "apelido"=>"username",
+                "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg"
+            ],
+        ],
+        [
+            "avaliacao" => 4,
+            "comentario"=>'Muito bom profissional, deixou a desejar em alguns aspectos, mas recomendo!',
+            "usuario"=>[
+                "apelido"=>"username",
+                "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg"],
+        ]
     ]
 
 ?>
@@ -175,7 +200,9 @@
 <div class="row m-0 container-perfil">
     <perfil-descricao-component ation_profile_img="url_aqui" avaliacao_usuario="3"></perfil-descricao-component>
     <perfil-component servicos='<?php echo json_encode($data);?>' mensagens='<?php echo json_encode($datamsg);?>'
-        contatos='<?php echo json_encode($datactt);?>'>
+    contatos='<?php echo json_encode($datactt);?>'
+    avaliacoes='<?php echo json_encode($dataava);?>'
+    >
     </perfil-component>
 </div>
 
