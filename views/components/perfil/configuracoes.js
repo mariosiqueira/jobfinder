@@ -1,10 +1,7 @@
 var ConfigComponent = {
 
     template: `
-    <div>
-        <h1 class="text-muted text-uppercase">Configurações</h1>
-        <div class="my-4"></div>
-
+    <div class="mt-5">
         <ul class="list-group">
             <li class="list-group-item list-group-item-success mr-4">
                 <button class="btn btn-link" data-toggle="modal" data-target="#alterar_apelido">
