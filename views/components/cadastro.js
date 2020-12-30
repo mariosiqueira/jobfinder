@@ -112,7 +112,7 @@ var cadastroComponent = {
                     </div>
                     <div class="col-md-12 form-group">
                         <label for="senha" class="required">Confirmar senha</label>
-                        <input type="password" class="form-control" placeholder="**********" id="confirmSenha" v-model="confirmSenha"
+                        <input type="password" class="form-control" placeholder="**********" id="confirmSenha" name="confirmSenha" v-model="confirmSenha"
                         @blur="validarConfirmSenha()" :class="!confirmSenha & !confirmSenhaValid ? ' is-invalid':''"
                         >
                         <small class="invalid-feedback">
