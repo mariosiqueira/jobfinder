@@ -181,7 +181,7 @@ if($arrayDadosObjetosServico != null) {
                 </button>
             </div>
             <div class="modal-body">
-                <form action="../jobfinder/controller/alterar_apelido.php" method="post">
+                <form action="<?= $routes->alterar_apelido ;?>" method="post">
                     <div class="col-md-12 form-group">
                         <label for="apelido" class="required">Apelido</label>
                         <input type="text" name="apelido" id="apelido" class="form-control">
@@ -301,7 +301,7 @@ if($arrayDadosObjetosServico != null) {
             </div>
             <div class="modal-body">
                 <h4 class="text-muted text-uppercase text-center">Deseja realmente deletar sua conta?</h4>
-                <form action="urldeletarconta" method="post" id="deletarConta">
+                <form action="<?= $routes->deletar_conta; ?>" method="post" id="deletarConta">
                     <div class="form-group mt">
                         <span class="badge badge-danger p-2 mt-5 mb-2">Para deletar sua conta, você precisa confirmar sua senha</span>
                         <input type="password" class="form-control shadow-none" name="senha" placeholder="Senha" id="inputDeletarConta" required />
@@ -328,7 +328,7 @@ if($arrayDadosObjetosServico != null) {
                 </button>
             </div>
             <div class="modal-body">
-                <form action="../jobfinder/controller/editar_conta.php" method="post" id="editarConta">
+                <form action="<?= $routes->editar_conta ;?>" method="post" id="editarConta">
                     <input type="hidden" name="user_id">
                     <div class="cold-md-12 form-group">
                         <label for="nome" class="required">Nome</label>
