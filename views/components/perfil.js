@@ -38,7 +38,7 @@ var perfilComponent = {
                         </span>
                     </router-link>
                     <router-link :to="{ name: 'services', query: { servicos: data }}" class="shadow-none " :class="this.$route.path == '/services' ? 'btn btn-outline-dark active': 'btn btn-outline-dark'">
-                        <i class="fas fa-star    "></i>
+                        <i class="fas fa-briefcase    "></i>
                         <span class="title-md">
                             Meus serviços
                         </span>

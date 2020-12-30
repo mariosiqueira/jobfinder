@@ -12,7 +12,7 @@
             crossorigin="anonymous"></script>
         <script src="https://cdn.rawgit.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js"></script>
         <script>
-            var user = <?php echo isset($_SESSION['auth']) ? json_encode(unserialize($_SESSION['auth'])): "{apelido: null}";?>;
+            var user = <?php echo json_encode(getUser())?>;
         </script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src='<?php echo $routes->home."views/components/navbar.js";?>'></script>

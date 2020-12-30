@@ -45,7 +45,6 @@ if (array_key_exists($req, $routes_navigation)) { //verifica se a url requisitad
 }
 
 function auth(){ //funçao pra verificar se o usuario está autenticado
-    // session_start();
     if(isset($_SESSION['auth'])){
         return true;
     }
@@ -55,4 +54,13 @@ function check_auth($routes){ //função pra verificar se o usuário estpa auten
     if(!auth()){
         return header("location: $routes->login");
     }
+}
+
+function getUser(){ // se existir a sessão pega os dados do usuario logado
+    if (auth()) {
+        return unserialize($_SESSION['auth']);
+    } else {
+        return array();
+    }
+    
 }

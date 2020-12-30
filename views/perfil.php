@@ -2,88 +2,6 @@
     check_auth($routes); //faz o check se o usuario está logado
 
     // dados fake pra teste
-    $data = [
-        [
-            "id"=>1,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"aberto"          
-        ],
-        [
-            "id"=>2,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"aberto"          
-        ],
-        [
-            "id"=>3,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"aberto"          
-        ],
-        [
-            "id"=>4,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"aberto"          
-        ],
-        [
-            "id"=>5,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"finalizado"          
-        ],
-        [
-            "id"=>6,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"finalizado"          
-        ],
-        [
-            "id"=>7,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"finalizado"          
-        ],
-        [
-            "id"=>8,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"aberto"          
-        ],
-        [
-            "id"=>9,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"aberto"          
-        ],
-        [
-            "id"=>10,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"finalizado"          
-        ],
-    ];
     $datactt = [
         
         [
@@ -199,6 +117,7 @@
 
 <?php 
 require "layouts/app/head.php";
+
 require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/CategoriaDaoMysql.php'; //import da classe CategoriaDaoMysql pra buscar as categorias do banco de dados e mostrar na aplicação na hora de criar um novo serviço
 require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/ServicoDaoMysql.php'; //Import da classe ServicoDaoMysql para recuperar os serviços cadastrados pelo usuário da sessão e que serão exibidos no perfil dele
 
@@ -216,7 +135,7 @@ foreach($arrayDadosObjetosCategorias as $dadoObjetoCategoria) {
 //Recuperando os serviços cadastrados pelo usuário da sessão
 $usuarioSessao = unserialize($_SESSION['auth']);
 $servicoDao = new ServicoDaoMysql($pdo);
-$data = [];
+$servicos = [];
 
 $arrayDadosObjetosServico = $servicoDao->buscarServicoPeloIdDoUsuario($usuarioSessao->getId());
 if($arrayDadosObjetosServico != null) {
@@ -231,7 +150,7 @@ if($arrayDadosObjetosServico != null) {
         $novoServico->setUsuarioId($_SESSION['auth']);
         $novoServico->setDataPostagem($dadoObjetoServico->getDataPostagem());
         $novoServico->setStatus($dadoObjetoServico->getStatus());
-        $data [] = $novoServico;
+        $servicos [] = $novoServico;
     }
 }
 
@@ -244,7 +163,7 @@ if($arrayDadosObjetosServico != null) {
         url='<?php echo $routes->home;?>' 
     ></perfil-descricao-component>
     <perfil-component 
-        servicos='<?php echo json_encode($data);?>' 
+        servicos='<?php echo json_encode($servicos);?>' 
         mensagens='<?php echo json_encode($datamsg);?>' 
         contatos='<?php echo json_encode($datactt);?>'
         avaliacoes='<?php echo json_encode($dataava);?>'
@@ -352,7 +271,7 @@ if($arrayDadosObjetosServico != null) {
                         <div class="col-md-12 form-group">
                             <label for="categorias" class="required">Categoria</label>
                             <select multiple class="form-control" name="categoria[]" id="categorias" required>
-                                <?php foreach($categorias as $categoria): forea?>
+                                <?php foreach($categorias as $categoria):?>
                                 <option><?php echo $categoria->getNome()?></option>
                                 <?php endforeach ?>
                             </select>
@@ -370,7 +289,7 @@ if($arrayDadosObjetosServico != null) {
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal deletar conta -->
 <div class="modal fade" id="deletar_conta" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
     aria-hidden="true">
     <div class="modal-dialog  modal-lg" role="document">
@@ -392,6 +311,38 @@ if($arrayDadosObjetosServico != null) {
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary shadow-none" data-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-danger shadow-none" id="btnDeletarConta"               onclick="$('#deletarConta').submit()">Deletar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal editar dados conta -->
+<div class="modal fade" id="editar_conta" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
+    <div class="modal-dialog  modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="../jobfinder/controller/editar_conta.php" method="post" id="editarConta">
+                    <input type="hidden" name="user_id">
+                    <div class="cold-md-12 form-group">
+                        <label for="nome" class="required">Nome</label>
+                        <input type="text" class="form-control shadow-none" name="nome" value="<?php echo getUser()->getNome()?>" required />
+                    </div>
+                    <div class="cold-md-12 form-group">
+                        <label for="telefone" class="required">Telefone</label>
+                        <input type="text" class="form-control shadow-none" id="telefone" name="telefone" value="<?php echo getUser()->getTelefone()?>" required />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary shadow-none" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary shadow-none" id="btneditarConta"               onclick="$('#editarConta').submit()">Salvar</button>
             </div>
         </div>
     </div>

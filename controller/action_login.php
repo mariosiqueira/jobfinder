@@ -17,6 +17,9 @@ function autenticarUsuario($email, $senha, $usuarioDaoMysql, $lembrar) {
 
             //Caso o checkbox lembrar de mim na página de login tenha sido marcado, um cookie com o id do usuário será salvo...OBS: Falta implementar o cookie.
             session_start();
+
+            $usuarioBuscado->setSenha(""); //apaga a senha pra poder gravar na sessão;
+            
             $_SESSION['auth']=serialize($usuarioBuscado);
             header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
             exit;
