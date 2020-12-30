@@ -1,29 +1,29 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/config/config.php';
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/UsuarioDaoMysql.php';
+require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/config/config.php'; //Import do PDO para usar na classe UsuarioDaoMysql
+require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/UsuarioDaoMysql.php'; // Import da classe UsuarioDaoMysql para atualizar os dados do usuário
 session_start();
 
 $usuarioDao = new UsuarioDaoMysql($pdo);
 
-$novoNome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING);
-$novoTelefone = filter_input(INPUT_POST, 'telefone', FILTER_SANITIZE_STRING);
+function editarDados($usuarioDao){
+    $novoNome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING);
+    $novoTelefone = filter_input(INPUT_POST, 'telefone', FILTER_SANITIZE_STRING);
 
-function editarApelido($usuarioDao, $novoNome, $novoTelefone){
     if($novoNome && $novoTelefone){
-        $usuario = unserialize($_SESSION['auth']);
+        $usuario = unserialize($_SESSION['auth']); //Usuário vai pegar todos os dados da sessão
+        $usuario = $usuarioDao->buscarPeloId($usuario->getId()); //O usuário vai pegar todos os dados pelo id, inclusive a senha que foi deixada em branco por questões de segurança
 
-        $usuario->setNome($novoNome);
-        $usuario->setTelefone($novoTelefone);
+        $usuario->setNome($novoNome); //Seta um novo nome para o usuário
+        $usuario->setTelefone($novoTelefone); //Seta um novo telefone para o usuário
     
-        $usuarioDao->atualizar($usuario);
+        $usuarioDao->atualizar($usuario); //Grava as atualizações no banco de dados
         
-        $_SESSION['auth'] = null;
-
-        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/login');
+        $usuario->setSenha(""); //Zera a senha para ser salva na sessão
+        $_SESSION['auth'] = serialize($usuario); //salva o usuário na sessão
     }
     
-    header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+    header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile'); //encaminha para a página de perfil
     exit();
 }
 
-editarApelido($usuarioDao, $novoNome, $novoTelefone);
+editarDados($usuarioDao);
