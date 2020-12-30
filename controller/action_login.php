@@ -5,7 +5,7 @@ require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/UsuarioDaoMysql.php'; //Import
 $usuarioDaoMysql = new UsuarioDaoMysql($pdo);
 
 $email = filter_input(INPUT_POST,'email');
-$senha = filter_input(INPUT_POST,'senha');
+$senha = md5(filter_input(INPUT_POST,'senha'));
 $lembrar = isset($_POST['lembrar']) ? $_POST['lembrar'] : null; //valor on gerado quando marca-se o checkbox lembrar de mim na página de login
 
 //O método a seguir realiza a autenticação do usuário no sistema verificando se os dados do e-mail e a senha coincidem no banco de dados.
