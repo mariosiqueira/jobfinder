@@ -2,88 +2,6 @@
     check_auth($routes); //faz o check se o usuario está logado
 
     // dados fake pra teste
-    $data = [
-        [
-            "id"=>1,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"aberto"          
-        ],
-        [
-            "id"=>2,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"aberto"          
-        ],
-        [
-            "id"=>3,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"aberto"          
-        ],
-        [
-            "id"=>4,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"aberto"          
-        ],
-        [
-            "id"=>5,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"finalizado"          
-        ],
-        [
-            "id"=>6,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"finalizado"          
-        ],
-        [
-            "id"=>7,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"finalizado"          
-        ],
-        [
-            "id"=>8,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"aberto"          
-        ],
-        [
-            "id"=>9,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"aberto"          
-        ],
-        [
-            "id"=>10,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00", 
-            "status"=>"finalizado"          
-        ],
-    ];
     $datactt = [
         
         [
@@ -196,19 +114,65 @@
     ]
 
 ?>
-<?php require "layouts/app/head.php"?>
+
+<?php 
+require "layouts/app/head.php";
+
+require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/CategoriaDaoMysql.php'; //import da classe CategoriaDaoMysql pra buscar as categorias do banco de dados e mostrar na aplicação na hora de criar um novo serviço
+require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/ServicoDaoMysql.php'; //Import da classe ServicoDaoMysql para recuperar os serviços cadastrados pelo usuário da sessão e que serão exibidos no perfil dele
+
+//Recuperando as categorias cadastradas no banco de dados para exibir no modal de cadastro de serviço
+$categoriaDao = new CategoriaDaoMysql($pdo);
+$categorias = [];
+$arrayDadosObjetosCategorias = $categoriaDao->buscarTodas();
+foreach($arrayDadosObjetosCategorias as $dadoObjetoCategoria) {
+    $novaCategoria = new Categoria();
+    $novaCategoria->setId($dadoObjetoCategoria->getId());
+    $novaCategoria->setNome($dadoObjetoCategoria->getNome());
+    $categorias [] = $novaCategoria;
+}
+
+//Recuperando os serviços cadastrados pelo usuário da sessão
+$usuarioSessao = unserialize($_SESSION['auth']);
+$servicoDao = new ServicoDaoMysql($pdo);
+$servicos = [];
+
+$arrayDadosObjetosServico = $servicoDao->buscarServicoPeloIdDoUsuario($usuarioSessao->getId());
+if($arrayDadosObjetosServico != null) {
+    
+    foreach($arrayDadosObjetosServico as $dadoObjetoServico) {
+        $novoServico = new Servico();
+        $novoServico->setId($dadoObjetoServico->getId());
+        $novoServico->setTitulo($dadoObjetoServico->getTitulo());
+        $novoServico->setDescricao($dadoObjetoServico->getDescricao());
+        $novoServico->setEnderecoServico($dadoObjetoServico->getEnderecoServico());
+        $novoServico->setValor($dadoObjetoServico->getValor());
+        $novoServico->setUsuarioId($_SESSION['auth']);
+        $novoServico->setDataPostagem($dadoObjetoServico->getDataPostagem());
+        $novoServico->setStatus($dadoObjetoServico->getStatus());
+        $servicos [] = $novoServico;
+    }
+}
+
+?>
+
 <div class="row m-0 container-perfil">
-    <perfil-descricao-component ation_profile_img="url_aqui" avaliacao_usuario="3"></perfil-descricao-component>
-    <perfil-component servicos='<?php echo json_encode($data);?>' mensagens='<?php echo json_encode($datamsg);?>'
-    contatos='<?php echo json_encode($datactt);?>'
-    avaliacoes='<?php echo json_encode($dataava);?>'
+    <perfil-descricao-component
+        ation_profile_img="controller/usuario_imagem.php"
+        avaliacao_usuario="3"
+        url='<?php echo $routes->home;?>' 
+    ></perfil-descricao-component>
+    <perfil-component 
+        servicos='<?php echo json_encode($servicos);?>' 
+        mensagens='<?php echo json_encode($datamsg);?>' 
+        contatos='<?php echo json_encode($datactt);?>'
+        avaliacoes='<?php echo json_encode($dataava);?>'
     >
     </perfil-component>
 </div>
 
 <!-- Modal alterar apelido -->
-<div class="modal fade" id="alterar_apelido" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
-    aria-hidden="true">
+<div class="modal fade" id="alterar_apelido" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -217,7 +181,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="post">
+                <form action="../jobfinder/controller/alterar_apelido.php" method="post">
                     <div class="col-md-12 form-group">
                         <label for="apelido" class="required">Apelido</label>
                         <input type="text" name="apelido" id="apelido" class="form-control">
@@ -286,29 +250,29 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="post">
+                <form action="../jobfinder/controller/action_cadastrar_servico_e_servico_categoria.php" method="post">
                     <div class="form-row">
                         <div class="col-md-12 form-group">
                             <label for="" class="required">Titulo</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control" name="titulo" required>
                         </div>
                         <div class="col-md-12 form-group">
                             <label for="" class="required">Descricao</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control" name="descricao" required>
                         </div>
                         <div class="col-md-12 form-group">
                             <label for="">Endereço</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="endereco_servico">
                         </div>
                         <div class="col-md-12 form-group">
                             <label for="valor">Valor</label>
-                            <input type="text" class="form-control" id="valor">
+                            <input type="text" class="form-control" id="valor" name="valor">
                         </div>
                         <div class="col-md-12 form-group">
                             <label for="categorias" class="required">Categoria</label>
                             <select multiple class="form-control" name="categoria[]" id="categorias" required>
-                                <?php foreach($categorias as $c): forea?>
-                                <option><?php echo $c->nome?></option>
+                                <?php foreach($categorias as $categoria):?>
+                                <option><?php echo $categoria->getNome()?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
@@ -318,13 +282,14 @@
                             Cadastrar
                         </button>
                     </div>
+                    <input type="hidden" name="usuario_id" value=<?= $usuarioSessao->getId() ?>>
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal deletar conta -->
 <div class="modal fade" id="deletar_conta" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
     aria-hidden="true">
     <div class="modal-dialog  modal-lg" role="document">
@@ -346,6 +311,38 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary shadow-none" data-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-danger shadow-none" id="btnDeletarConta"               onclick="$('#deletarConta').submit()">Deletar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal editar dados conta -->
+<div class="modal fade" id="editar_conta" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
+    <div class="modal-dialog  modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="../jobfinder/controller/editar_conta.php" method="post" id="editarConta">
+                    <input type="hidden" name="user_id">
+                    <div class="cold-md-12 form-group">
+                        <label for="nome" class="required">Nome</label>
+                        <input type="text" class="form-control shadow-none" name="nome" value="<?php echo getUser()->getNome()?>" required />
+                    </div>
+                    <div class="cold-md-12 form-group">
+                        <label for="telefone" class="required">Telefone</label>
+                        <input type="text" class="form-control shadow-none" id="telefone" name="telefone" value="<?php echo getUser()->getTelefone()?>" required />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary shadow-none" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary shadow-none" id="btneditarConta"               onclick="$('#editarConta').submit()">Salvar</button>
             </div>
         </div>
     </div>
