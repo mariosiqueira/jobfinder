@@ -16,6 +16,10 @@ $routes_navigation = [
     "/jobfinder/jobs" => "jobs.php",
     "/jobfinder/jobs/show/$jobs_show" => "single_job.php",
     "/jobfinder/notFound" => "pageNotFound.php",
+    "/jobfinder/usuarios/criar" => "../controller/action_cadastro.php",
+    "/jobfinder/usuarios/logar" => "../controller/action_login.php",
+    "/jobfinder/logouturl" => "../controller/action_logout.php",
+    "/jobfinder/url_edit_servico" => "../controller/action_edit_servico.php",
 ]; 
 
 $routes = (Object) [ //rotas nomeadas e suas respectivas url's
@@ -26,6 +30,10 @@ $routes = (Object) [ //rotas nomeadas e suas respectivas url's
     "cadastro"=> "http://$_SERVER[HTTP_HOST]/jobfinder/register",
     "jobs"=> "http://$_SERVER[HTTP_HOST]/jobfinder/jobs",
     "jobs_show"=> "http://$_SERVER[HTTP_HOST]/jobfinder/jobs/show/$jobs_show",
+    "action_cadastro" => "http://$_SERVER[HTTP_HOST]/jobfinder/usuarios/criar",
+    "action_login" => "http://$_SERVER[HTTP_HOST]/jobfinder/usuarios/logar",
+    "logout" => "http://$_SERVER[HTTP_HOST]/jobfinder/logouturl",
+    "edit_job" => "http://$_SERVER[HTTP_HOST]/jobfinder/url_edit_servico",
 ];
 
 $req = $_SERVER['REQUEST_URI']; //pega a url 
@@ -46,4 +54,13 @@ function check_auth($routes){ //função pra verificar se o usuário estpa auten
     if(!auth()){
         return header("location: $routes->login");
     }
+}
+
+function getUser(){ // se existir a sessão pega os dados do usuario logado
+    if (auth()) {
+        return unserialize($_SESSION['auth']);
+    } else {
+        return array();
+    }
+    
 }
