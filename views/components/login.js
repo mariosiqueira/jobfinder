@@ -64,12 +64,8 @@ var loginComponent = {
                     </label>
                 </div>
                 <div class="form-group mt-5">
-                    <button type="submit" class="btn btn-primary font-weight-bold btn-md btn-primary btn-block rounded-pill" v-if="senha && email">
-                        Entrar
-                    </button>
-                    <button type="button" class="btn btn-primary font-weight-bold btn-md btn-primary btn-block rounded-pill" v-else disabled>
-                        Entrar
-                    </button>
+                    <input type="submit" class="btn btn-primary font-weight-bold btn-md btn-primary btn-block rounded-pill" v-if="senha && email" value = "Entrar"/>
+                    <input type="button" class="btn btn-primary font-weight-bold btn-md btn-primary btn-block rounded-pill" v-else disabled value = "Entrar"/>
                     <a class="btn btn-md btn-light btn-block rounded-pill":href="url_cadastro">
                         Cadastre-se
                     </a>
