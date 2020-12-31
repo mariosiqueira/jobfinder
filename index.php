@@ -70,3 +70,8 @@ function getUser(){ // se existir a sessão pega os dados do usuario logado
     }
     
 }
+
+function dd($data){
+    var_dump($data);
+    die();
+}
