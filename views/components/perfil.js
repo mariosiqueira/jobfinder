@@ -52,16 +52,16 @@ var perfilComponent = {
                             Mensagens
                         </span>
                     </router-link>
+                    <router-link :to="{ name: 'rating', query: { avaliacoes: dataava, homeurl }}" class="shadow-none " :class="this.$route.path == '/rating' ? 'btn btn-outline-dark active': 'btn btn-outline-dark'">
+                        <i class="fas fa-star    "></i>
+                        <span class="title-md">
+                            Avaliações
+                        </span>
+                    </router-link>
                     <router-link to="/configuration" class="shadow-none " :class="this.$route.path == '/configuration' ? 'btn btn-outline-dark active': 'btn btn-outline-dark'">
                         <i class="fas fa-cog    "></i>
                         <span class="title-md">
                             Configurações
-                        </span>
-                    </router-link>
-                    <router-link :to="{ name: 'rating', query: { avaliacoes: dataava }}" class="shadow-none " :class="this.$route.path == '/rating' ? 'btn btn-outline-dark active': 'btn btn-outline-dark'">
-                        <i class="fas fa-star    "></i>
-                        <span class="title-md">
-                            Avaliações
                         </span>
                     </router-link>
                 </div>
