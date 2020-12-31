@@ -12,7 +12,8 @@ function atualizarApelido($usuarioDao){
         $usuario = unserialize($_SESSION['auth']); //Recupera o usuário da sessão
         $usuario = $usuarioDao->buscarPeloId($usuario->getId()); //busca os dados do usuário pelo id que foi recuperado da sessão
         $usuario->setApelido($novoApelido); //seta um novo apelido no objeto usuário
-    
+        
+        session_start();
         $_SESSION['message'] = (Object) [
             'type'=>'info',
             'message' => 'Apelido editado com sucesso!'

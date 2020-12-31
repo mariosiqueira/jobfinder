@@ -15,7 +15,8 @@ function editarDados($usuarioDao){
 
         $usuario->setNome($novoNome); //Seta um novo nome para o usuário
         $usuario->setTelefone($novoTelefone); //Seta um novo telefone para o usuário
-    
+        
+        session_start();
         $_SESSION['message'] = (Object) [
             'type'=>'info',
             'message' => 'Dados editados com sucesso!'

@@ -39,6 +39,7 @@ function salvarFotoPerfil($usuarioDaoMysql, $formatosImagemPermitidos){
         $usuario->setFotoPerfil($fotoPerfil);
         $usuarioDaoMysql->atualizar($usuario);
 
+        session_start();
         $_SESSION['message'] = (Object) [
             'type'=>'info',
             'message' => 'Foto de perfil editada com sucesso!'

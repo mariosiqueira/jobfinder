@@ -20,6 +20,7 @@ function atualizarServico($servicoDao) {
     $servicoAtualizado->setEnderecoServico($enderecoServico);
     $servicoAtualizado->setValor($valor);
 
+    session_start();
     $_SESSION['message'] = (Object) [
         'type'=>'info',
         'message' => 'Serviço editado com sucesso!'

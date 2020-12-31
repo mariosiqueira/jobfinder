@@ -23,6 +23,7 @@ if($senha && $nome && $telefone && $email) {
         $novoUsuario->setFotoPerfil($fotoPerfil);
         $novoUsuario->setApelido($apelido);
 
+        session_start();
         $_SESSION['message'] = (Object) [
             'type'=>'info',
             'message' => 'Bem vindo ao JOBFINDER'
