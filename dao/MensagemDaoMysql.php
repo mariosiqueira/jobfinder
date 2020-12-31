@@ -29,4 +29,16 @@ class MensagemDaoMysql implements MensagemDao {
         $mensagem->setId($this->pdo->lastInsertId());
         return $mensagem;
     }
+    public function buscarMensagens($id){ //Recupera todos os mensagens recebidas e enviadas do usuário
+        
+        $sql = $this->pdo->prepare("SELECT * FROM mensagens WHERE contratante_id = :id or contratado_id = :id");
+        $sql->bindValue(':id', $id);
+        $sql->execute();
+
+        if($sql->rowCount() > 0) {
+            return $sql->fetchAll(); 
+        }
+
+        return false;
+    }
 }
