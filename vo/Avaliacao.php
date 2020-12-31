@@ -13,6 +13,7 @@ class Avaliacao implements JsonSerializable{
             'avaliacao' => $this->avaliacao,
             'comentario' => $this->comentario,
             'userId' => $this->userId,
+            'avaliadorId' => $this->avaliadorId,
         ];
     }
 
