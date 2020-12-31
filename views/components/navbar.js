@@ -49,7 +49,7 @@ var navbarComponent = {
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" :href="perfilurl">Perfil</a>
-                            <form action="logouturl" method="post">
+                            <form :action="homeurl + 'logouturl'" method="post">
                                 <button class="dropdown-item">Sair</button>
                             </form>
                         </div>
