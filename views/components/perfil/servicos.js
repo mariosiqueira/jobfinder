@@ -18,6 +18,7 @@ var JobComponent = {
         this.data_servicos = JSON.parse(atob(this.servicos));
         this.data_servicos_filtro = this.data_servicos;
         this.condicao = this.data_servicos_filtro.length == 0 ? true : false;
+        console.log(this.data_servicos);
     },
     template: `
     <div>
@@ -46,7 +47,7 @@ var JobComponent = {
             <div v-if="this.condicao" class="alert alert-warning mt-5" role="alert">
                 <p class="p-1 m-0">
                     <i class="fas fa-info-circle    "></i>
-                Nenhum serviço encontrado</p>
+                    Nenhum serviço encontrado</p>
             </div>
             <li v-else v-for="servico in data_servicos_filtro" :key="servico.id" :class="servico.status=='finalizado' ? 'bg-grey text-white':'bg-success text-white'">
                 <p class="d-flex justify-content-between">
@@ -78,24 +79,24 @@ var JobComponent = {
     </div>
     `,
     methods: {
-        click_servico(id) {
-            alert(id)
-            $(`input[id='${id}']`).attr('checked', true);
-        },
+
         //Método invocado pelo botão de apagar serviço. Para acessar o arquivo action_delete_servico.php utilizei axios para fazer essa requisião assíncrona.
         deletarServico(id) {
-            alert("Tem certeza que deseja apagar este serviço?");
-            $(`input[id='${id}']`).attr('checked', true);
 
-            axios.get('/jobfinder/controller/action_delete_servico.php?id=' + id) //get servico 
-                .then((res) => {
-                    window.location.href = "/jobfinder/profile";
-                    return window.location.href;
-                })
-                .catch(err => {
-                    console.error("erro na requisição");
-                    // alert();
-                })
+            var op = confirm("Tem certeza que deseja apagar este serviço?");
+
+            if (op == true) {
+
+                axios.get('/jobfinder/controller/action_delete_servico.php?id=' + id) //delete servico 
+                    .then((res) => {
+                        window.location.href = "/jobfinder/profile"
+
+                    })
+                    .catch(err => {
+                        console.error("erro na requisição");
+                    })
+
+            }
         },
         filtrarDados() {
             this.data_servicos_filtro = [];
