@@ -1,5 +1,8 @@
 var JobComponent = {
     props: {
+        homeurl: {
+            required: true,
+        },
         servicos: {
             required: true,
         }
@@ -18,7 +21,6 @@ var JobComponent = {
         this.data_servicos = JSON.parse(atob(this.servicos));
         this.data_servicos_filtro = this.data_servicos;
         this.condicao = this.data_servicos_filtro.length == 0 ? true : false;
-        console.log(this.data_servicos);
     },
     template: `
     <div>
@@ -56,7 +58,7 @@ var JobComponent = {
                         <span class="badge badge-danger mr-2" v-else>Finalizado</span>
                         <strong>{{servico.titulo}}</strong><br>
                     </span>
-                    <router-link :to="{name: 'services_close', params: {id: servico.id} }" class="btn btn-sm btn-danger" v-if="servico.status=='aberto'">
+                    <router-link :to="{name: 'services_close', params: {id: servico.id}, query: { homeurl } }" class="btn btn-sm btn-danger" v-if="servico.status=='aberto'">
                         <i class="fa fa-window-close" aria-hidden="true"></i>
                         Finalizar
                     </router-link>
