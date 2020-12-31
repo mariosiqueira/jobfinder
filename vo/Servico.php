@@ -67,7 +67,7 @@ class Servico implements JsonSerializable {
     }
 
     public function setUsuarioId($usuarioId){
-        $this->usuarioId = trim($usuarioId);
+        $this->usuarioId = $usuarioId;
     }
 
     public function getDataPostagem(){
