@@ -5,7 +5,7 @@ const vueRoutes = [
   { path: '/services/close/:id', name: 'services_close', component: servicoClose, props: route => ({ servicos: route.params.id }) },
   { path: '/messages', name: 'messages', component: MessagesComponent, props: route => ({ mensagens: route.query.mensagens, contatos: route.query.contatos, homeurl: route.query.homeurl }) },
   { path: '/configuration', component: ConfigComponent },
-  { path: '/rating', name:'rating', component: AvaliacoesComponent, props: route => ({ avaliacoes: route.query.avaliacoes }) },
+  { path: '/rating', name:'rating', component: AvaliacoesComponent, props: route => ({ avaliacoes: route.query.avaliacoes, homeurl: route.query.homeurl }) },
 ];
 
 
