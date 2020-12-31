@@ -1,5 +1,8 @@
 var perfilComponent = {
     props: {
+        homeurl:{
+            required: true
+        },
         servicos: {
             required: true
         },
@@ -43,7 +46,7 @@ var perfilComponent = {
                             Meus serviços
                         </span>
                     </router-link>
-                    <router-link :to="{ name: 'messages', query: { mensagens: datamsg, contatos: datactt }}" class="shadow-none " :class="this.$route.path == '/messages' ? 'btn btn-outline-dark active': 'btn btn-outline-dark'">
+                    <router-link :to="{ name: 'messages', query: { mensagens: datamsg, contatos: datactt, homeurl }}" class="shadow-none " :class="this.$route.path == '/messages' ? 'btn btn-outline-dark active': 'btn btn-outline-dark'">
                         <i class="fas fa-envelope    "></i>
                         <span class="title-md">
                             Mensagens
