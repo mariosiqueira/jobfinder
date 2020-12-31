@@ -1,5 +1,8 @@
 var MessagesComponent = {
     props: {
+        homeurl:{
+            required: true
+        },
         mensagens: { //todas as mensagem que pertence ao usuario atual que está logado na session
             required: true
         },
@@ -16,7 +19,7 @@ var MessagesComponent = {
             data: [],
             data_ctts: [],
             mensagem: "", //mensagem
-            from: "" //contratado_id
+            from: "", //contratado_id
         }
     },
     mounted() {
@@ -27,8 +30,11 @@ var MessagesComponent = {
     <div class="mt-5">
         <div class="row m-0 profile-msg">
             <div class="col-lg-3 list-contatos">
-                <p class="profile-msg-contatos" v-for="contato in data_ctts" :key="contato.id" @click="loadMensagens(contato.id)">
-                    <img class="profile-msg-contatos-img mr-1" :src="contato.foto_perfil" />
+                <p class="alert alert-primary text-center" v-if="data_ctts.length == 0" role="alert">
+                    <strong>Nenhuma mensagem encontrada</strong>
+                </p>
+                <p class="profile-msg-contatos" v-else v-for="contato in data_ctts" :key="contato.id" @click="loadMensagens(contato.id)">
+                    <img class="profile-msg-contatos-img mr-1" :src="homeurl +'files/'+ contato.fotoPerfil" />
                     <span class="profile-msg-contatos-username">{{contato.id +" " +contato.nome}}</span>
                 </p>
             </div>
@@ -48,7 +54,10 @@ var MessagesComponent = {
                     <div class="input-group mb-3">
                         <input type="text" class="form-control shadow-none" v-model="mensagem" placeholder="Mensagem" ref="mensagem" required>
                         <div class="input-group-append">
-                            <button class="btn btn-success shadow-none" type="submit" id="send">
+                            <button type="submit" v-if="mensagem" class="btn btn-success shadow-none" id="send">
+                                Enviar
+                            </button>
+                            <button type="button" v-else disabled class="btn btn-success shadow-none" id="send">
                                 Enviar
                             </button>
                         </div>
