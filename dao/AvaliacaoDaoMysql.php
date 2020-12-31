@@ -20,11 +20,11 @@ class AvaliacaoDaoMysql implements AvaliacaoDao {
 
     public function salvar(Avaliacao $avaliacao){
         //É melhor quebrar a query de inserção de dados, por questão de segurança. Onde tem :nome, :telefone...serão as máscaras para inserir os valores pelo bindValue
-        $sql = $this->pdo->prepare("INSERT INTO avaliacaoes (avaliacao, comentario, user_id, avaliador_id) VALUES (:avaliacao, :comentario, :user_id, :avaliador_id)");
+        $sql = $this->pdo->prepare("INSERT INTO avaliacoes (avaliacao, comentario, usuario_id, avaliador_id) VALUES (:avaliacao, :comentario, :usuario_id, :avaliador_id)");
 
         $sql->bindValue(":avaliacao", $avaliacao->getAvaliacao());
         $sql->bindValue(":comentario", $avaliacao->getComentario());
-        $sql->bindValue(":user_id", $avaliacao->getUserId());
+        $sql->bindValue(":usuario_id", $avaliacao->getUserId());
         $sql->bindValue(":avaliador_id", $avaliacao->getAvaliadorId());
 
         $sql->execute();
