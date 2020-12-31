@@ -181,7 +181,7 @@ if($arrayDadosObjetosServico != null) {
                 </button>
             </div>
             <div class="modal-body">
-                <form action="<?= $routes->alterar_apelido ;?>" method="post">
+                <form action="<?php echo $routes->alterar_apelido ;?>" method="post">
                     <div class="col-md-12 form-group">
                         <label for="apelido" class="required">Apelido</label>
                         <input type="text" name="apelido" id="apelido" class="form-control">
