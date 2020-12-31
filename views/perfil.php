@@ -1,118 +1,5 @@
 <?php
     check_auth($routes); //faz o check se o usuario está logado
-
-    // dados fake pra teste
-    $datactt = [
-        
-        [
-            "id"=>2,
-            "nome"=> "username",
-            "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg",
-        ],
-        [
-            "id"=>3,
-            "nome"=> "username",
-            "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg",
-        ],
-        [
-            "id"=>4,
-            "nome"=> "username",
-            "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg",
-        ],
-        [
-            "id"=>5,
-            "nome"=> "username",
-            "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg",
-        ],
-        [
-            "id"=>6,
-            "nome"=> "username",
-            "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg",
-        ],
-    ];
-    $datamsg = [
-        [
-            "id"=>11,
-            "contratado_id"=>1,
-            "contratante_id"=>2,
-            "mensagem"=>"olá"
-        ],
-        [
-            "id"=>22,
-            "contratado_id"=>1,
-            "contratante_id"=>2,
-            "mensagem"=>"olá"
-        ],
-        [
-            "id"=>33,
-            "contratado_id"=>1,
-            "contratante_id"=>2,
-            "mensagem"=>"olá"
-        ],
-        [
-            "id"=>24,
-            "contratado_id"=>2,
-            "contratante_id"=>1,
-            "mensagem"=>"olá tudo bem?"
-        ],
-        [
-            "id"=>3,
-            "contratado_id"=>1,
-            "contratante_id"=>3,
-            "mensagem"=>"olá tudo bem?"
-        ],
-        [
-            "id"=>4,
-            "contratado_id"=>3,
-            "contratante_id"=>1,
-            "mensagem"=>"olá tudo bem? olá tudo bem? olá tudo bem? olá tudo bem? olá tudo bem? olá tudo bem?"
-        ],
-        [
-            "id"=>5,
-            "contratado_id"=>1,
-            "contratante_id"=>3,
-            "mensagem"=>"olá tudo bem?"
-        ],
-        [
-            "id"=>6,
-            "contratado_id"=>3,
-            "contratante_id"=>1,
-            "mensagem"=>"olá tudo bem?"
-        ],
-    ];
-    $categorias=[
-        (Object)["nome"=>"cat1"],
-        (Object)["nome"=>"cat2"],
-        (Object)["nome"=>"cat3"],
-        (Object)["nome"=>"cat4"],
-        (Object)["nome"=>"cat5"],
-    ];
-    $dataava = [
-        [
-            "avaliacao" => 5,
-            "comentario"=>'Muito bom profissional, recomendo!',
-            "usuario"=>[
-                "apelido"=>"username",
-                "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg"
-            ]
-        ],
-        [
-            "avaliacao" => 2,
-            "comentario"=>'Não gostei, não recomendo!',
-            "usuario"=>[
-                "apelido"=>"username",
-                "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg"
-            ],
-        ],
-        [
-            "avaliacao" => 4,
-            "comentario"=>'Muito bom profissional, deixou a desejar em alguns aspectos, mas recomendo!',
-            "usuario"=>[
-                "apelido"=>"username",
-                "foto_perfil"=>"https://boostchiropractic.co.nz/wp-content/uploads/2016/09/default-user-img.jpg"],
-        ]
-    ]
-
 ?>
 
 <?php 
@@ -120,6 +7,8 @@ require "layouts/app/head.php";
 
 require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/CategoriaDaoMysql.php'; //import da classe CategoriaDaoMysql pra buscar as categorias do banco de dados e mostrar na aplicação na hora de criar um novo serviço
 require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/ServicoDaoMysql.php'; //Import da classe ServicoDaoMysql para recuperar os serviços cadastrados pelo usuário da sessão e que serão exibidos no perfil dele
+require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/MensagemDaoMysql.php'; //Import da classe MensagemDaoMysql para recuperar as mensagens cadastrados pelo usuário da sessão e que serão exibidos no perfil dele
+require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/AvaliacaoDaoMysql.php'; //Import da classe AvaliacaoDaoMysql para recuperar as avaliaçoes recebidas pelo usuário da sessão e que serão exibidos no perfil dele
 
 //Recuperando as categorias cadastradas no banco de dados para exibir no modal de cadastro de serviço
 $categoriaDao = new CategoriaDaoMysql($pdo);
@@ -136,6 +25,8 @@ foreach($arrayDadosObjetosCategorias as $dadoObjetoCategoria) {
 $usuarioSessao = unserialize($_SESSION['auth']);
 $servicoDao = new ServicoDaoMysql($pdo);
 $servicos = [];
+
+$usuarioDao = new UsuarioDaoMysql($pdo);
 
 $arrayDadosObjetosServico = $servicoDao->buscarServicoPeloIdDoUsuario($usuarioSessao->getId());
 if($arrayDadosObjetosServico != null) {
@@ -154,19 +45,77 @@ if($arrayDadosObjetosServico != null) {
     }
 }
 
+//Recuperando as mensagens enviadas ou recebidas pelo usuário da sessão
+$mensagenDao = new MensagemDaoMysql($pdo);
+$dataMensagens = $mensagenDao->buscarMensagens(getUser()->getId());
+
+$mensagens = [];
+$contatos = [];
+
+if ($dataMensagens) {
+    
+    foreach($dataMensagens as $m) {
+        
+        // pega todas as mesagens enviadas ou recebidas do usuario logado, e armazena em mensagens
+        $mensagens[] = [ 
+            "id" => $m['id'],
+            "contratante_id" => $m['contratante_id'],
+            "contratado_id" => $m['contratado_id'],
+            "mensagem" => $m['mensagem'],
+        ]; 
+
+        //pega os usuários que enviaram ou recebream mensagens do usuário logado, e armazena em contatos
+        if (!array_key_exists($m['contratado_id'], $contatos) && $m['contratado_id'] != getUser()->getId()) {
+
+            $contatos[$m['contratado_id']] = $usuarioDao->buscarPeloId($m['contratado_id']);
+        }
+        if (!array_key_exists($m['contratante_id'], $contatos) && $m['contratante_id'] != getUser()->getId()) {
+
+            $contatos[$m['contratante_id']] = $usuarioDao->buscarPeloId($m['contratante_id']);
+        }
+    }
+    
+}
+
+//Recuperando as avaliaçoes recebidas pelo usuário da sessão
+$avaliacaoDao = new AvaliacaoDaoMysql($pdo);
+$dataAvaliacao = $avaliacaoDao->buscarAvaliacoesUsuario(getUser()->getId());
+
+$avaliacoes = [];
+$somaAvaliacoes = 0; //variavel pra pegar a soma de todas as avaliações deste usuario
+
+$index = 0; //quantidade de avaliações recebidas
+if ($dataAvaliacao) {
+    foreach($dataAvaliacao as $ava) {
+        $aux = [];
+        $aux['id'] = $ava['id'];
+        $aux['avaliacao'] = $ava['avaliacao'];
+        $aux['comentario'] = $ava['comentario'];
+        $aux['usuario_id'] = $ava['usuario_id'];
+        $aux['avaliador_id'] = $usuarioDao->buscarPeloId($ava['avaliador_id']);
+    
+        $avaliacoes[] = $aux;
+    
+        $somaAvaliacoes += intval($ava['avaliacao']); //somando todas as avaliações
+        $index++;
+    }
+}
+
+$mediaAvaliacoes = $index == 0 ? $somaAvaliacoes : round($somaAvaliacoes / $index); //media de avaliações do usuario logado
 ?>
 
 <div class="row m-0 container-perfil">
     <perfil-descricao-component
         ation_profile_img="controller/usuario_imagem.php"
-        avaliacao_usuario="3"
+        avaliacao_usuario="<?php echo $mediaAvaliacoes?>"
         url='<?php echo $routes->home;?>' 
     ></perfil-descricao-component>
     <perfil-component 
+        homeurl='<?php echo $routes->home;?>' 
         servicos='<?php echo json_encode($servicos);?>' 
-        mensagens='<?php echo json_encode($datamsg);?>' 
-        contatos='<?php echo json_encode($datactt);?>'
-        avaliacoes='<?php echo json_encode($dataava);?>'
+        mensagens='<?php echo json_encode($mensagens);?>' 
+        contatos='<?php echo json_encode($contatos);?>'
+        avaliacoes='<?php echo json_encode($avaliacoes);?>'
     >
     </perfil-component>
 </div>
@@ -211,24 +160,38 @@ if($arrayDadosObjetosServico != null) {
                 <h3 class="text-muted text-uppercase text-center mb-4">Termos e resonsabilidade</h3>
                 <div class="col-md-6 mx-auto form-group text-center">
                     <p class="text-justify">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus consequatur aspernatur
-                        tempore alias sed, exercitationem sapiente doloremque aliquam magnam, nihil ipsam incidunt
-                        dolore voluptates necessitatibus eius beatae itaque, a optio!
-                    </p>
-                    <p class="text-justify">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus consequatur aspernatur
-                        tempore alias sed, exercitationem sapiente doloremque aliquam magnam, nihil ipsam incidunt
-                        dolore voluptates necessitatibus eius beatae itaque, a optio!
-                    </p>
-                    <p class="text-justify">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus consequatur aspernatur
-                        tempore alias sed, exercitationem sapiente doloremque aliquam magnam, nihil ipsam incidunt
-                        dolore voluptates necessitatibus eius beatae itaque, a optio!
-                    </p>
-                    <p class="text-justify">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus consequatur aspernatur
-                        tempore alias sed, exercitationem sapiente doloremque aliquam magnam, nihil ipsam incidunt
-                        dolore voluptates necessitatibus eius beatae itaque, a optio!
+                        Eu, estou de acordo com os seguintes termos:
+
+                        1 -  Dos dados pessoais deverão ser obedecidas as seguintes regras:
+
+                        1.1 - Permito que meus dados pessoais sejam utilizados para fins de cadastro na plataforma Job Finder;
+
+                        1.2 - Quanto a foto do perfil:
+
+                        1.2.1 - Não é permitido pornografia em geral(nudez, pedofilia, zoofilia, etc.) ou conteúdo violento (gore, nazismo, apologia ao radicalismo e etc.);
+
+                        1.2.2 - Não é permitido fotos com terceiros selecione uma que esteja apenas você mesmo;
+
+                        1.2.3 - Não é permitido fotos com personagens ficticios (personagens de desenho, animes, games e etc.) ou reais tais como famosos em geral;
+
+                        1.3 - Não serão permitidas contas criadas por menores de idade, sendo a idade mínima 18 anos.
+
+                        2 - Todas as informações obrigatórias serão fornecidas para que seja realizado o meu cadastro;
+
+                        3 - Se necessário for, permito que meu perfil ou ações feitas pelo mesmo sejam usados para fins de marketing empresarial da plataforma em questão;
+
+                        4 - Caso queira encerrar minha conta meu perfil estará disponível caso eu deseje uma possível volta:
+
+                        4.1 -  Nesse caso estarão salvos os dados antes da conta ser encerrada;
+
+                        5 - Caso queira me candidatar a uma vaga meu perfil estará disponível para conversa da parte interessado;
+
+                        6 - Quanto a conduta de comportamento:
+
+                        6.1 - Estou ciente que serei expulso caso não respeite os demais usuários e administradores da plataforma;
+
+                        6.2 - Poderei sofrer penas legais caso falte com respeito com os demais integrante tal como dito anteriormente.
+
                     </p>
                     <p class="text-right">
                         <strong>JOBFINDER</strong>
@@ -315,7 +278,6 @@ if($arrayDadosObjetosServico != null) {
         </div>
     </div>
 </div>
-
 
 <!-- Modal editar dados conta -->
 <div class="modal fade" id="editar_conta" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
