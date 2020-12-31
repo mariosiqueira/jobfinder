@@ -5,62 +5,72 @@
     if($id_job == null){ //se não for passado o id ele redeciona para a view de home, deve ser implmentado tambem para quando o id não resultar em nenhum dado do banco 
         header("location: $routes->home"); 
     }
-    
-    $data = (Object)[ //valores fake, deve ser substituido pelos dados vindo do bando
-            "id"=>1,
-            "user_id"=>1,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00",        
-            "data"=>"20/10/2020"   
-        ];
-
-    $user = isset($_SESSION['auth']) ? unserialize($_SESSION['auth']) : null; //usuario autenticado na session
 ?>
 
-<?php require "layouts/app/head.php"?>
+<?php require "layouts/app/head.php";
+    
+    require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/ServicoDaoMysql.php'; 
+    require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/ServicoCategoriaDaoMysql.php'; 
+    require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/CategoriaDaoMysql.php'; 
+
+    $servicoDao = new ServicoDaoMysql($pdo);
+    $servico = $servicoDao->buscarPeloId($id_job);
+    
+    if (!$servico) { //verifica se retornou um serviço valido do banco
+        header("location: $routes->jobs"); //se nao existir ele redericiona para jobs
+        
+    }
+    if($servico->getUsuarioId() == getUser()->getId()){ //verifica se o serviço retornado pertence ao usuário logado
+        header("location: $routes->jobs"); //se pertecer ele redericiona para jobs
+    }
+    $servicoCategoriaDao = new ServicoCategoriaDaoMysql($pdo);
+
+    $categorias = new CategoriaDaoMysql($pdo);
+    $servicoCategorias = $servicoCategoriaDao->buscarPeloIdDoServico($servico->getId());
+?>
 <div class="container-job">
     <div class="col-md-8 m-0 p-0 mx-auto rounded" style="background-color: DarkSlateGray;">
         <div class="d-flex align-items-center justify-content-between m-0 p-3">
             <div>
-                <img src="<?php echo $user->foto_perfil;?>" alt="img profile user" id="servico_img_user" />
-                <span class="text-white"><?php echo $user->apelido;?></span>
+                <img src="<?php echo $routes->home."files/". getUser()->getFotoPerfil();?>" alt="img profile user" id="servico_img_user" />
+                <span class="text-white"><?php echo getUser()->getApelido();?></span>
             </div>
             <small class="text-white">
                 <i class="fas fa-calendar"></i>
-                <?php echo $data->data;?>
+                <?php echo $servico->getDataPostagem();?>
             </small>
         </div>
-        <div class="form-group text-center">
-            <h1 class="text-white">
-                <?php echo "#".$data->titulo?>
-            </h1>
+        <div class="form-group text-center mt-4">
+            <h2 class="text-white">
+                <?php echo "#".$servico->getTitulo()?>
+            </h2>
         </div>
-        <div class="my-5 p-5 paddind-md border">
+        <div class="my-5 p-5 paddind-md border-bottom">
             <p class="text-justify text-white font-weight-bold">
-                <?php echo $data->descricao?>
+                <?php echo $servico->getDescricao()?>
             </p>
         </div>
         <p class="p-2">
             <span class="text-white">
                 <i class="fas fa-map-marker-alt"></i>
-                <?php echo $data->endereco?>
+                <?php echo $servico->getEnderecoServico()?>
             </span>
-            <strong class="text-white float-right">R$ <?php echo $data->valor?></strong>
+            <strong class="text-white float-right">R$ <?php echo $servico->getValor()?></strong>
         </p>
         <hr>
         <p class="w-50 d-flex flex-wrap ">
-            <span v-for="i in (0,5)" class="badge badge-success m-1">
-                categoria {{ i }}
-            </span>
+            <?php foreach ($servicoCategorias as $c): ?>
+                <span class="badge badge-success m-1">
+                    <?php echo $categorias->buscarPeloId($c->getCategoriaId())->getNome();?>
+                </span>
+            <?php endforeach ?>
         </p>
         <hr>
     </div>
     <div class="col-md-8 mx-auto">
-        <form action="urlsalvarmensagem" method="post" class="p-5 padding-md">
-            <input type="hidden" name="contratante_id" value="<?php echo $data->user_id?>">
-            <input type="hidden" name="contratado_id" value="<?php echo $user->id?>">
+        <form action="<?php echo $routes->proposta?>" method="post" class="p-5 padding-md">
+            <input type="hidden" name="contratante_id" value="<?php echo $servico->getUsuarioId()?>">
+            <input type="hidden" name="contratado_id" value="<?php echo getUser()->getId()?>">
             <div class="form-row">
                 <div class="col-md-12 mx-auto form-group">
                     <small class="text-muted text-uppercase">Faça sua proposta: </small>
