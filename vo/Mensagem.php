@@ -18,7 +18,7 @@ class Mensagem{
     }
     
     public function setContratanteId($id){
-        $this->contratante_id = trim($id);
+        $this->contratante_id = $id;
     }
 
     public function getContratadoId(){
@@ -26,7 +26,7 @@ class Mensagem{
     }
     
     public function setContratadoId($id){
-        $this->contratado_id = trim($id);
+        $this->contratado_id = $id;
     }
     
     public function getMensagem(){
