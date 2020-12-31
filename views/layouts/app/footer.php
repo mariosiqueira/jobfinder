@@ -36,6 +36,10 @@
                 decimal: ',',
                 thousands: '.'
             });
+            $('#valor_job').maskMoney({
+                decimal: ',',
+                thousands: '.'
+            });
             $(document).ready(function() {
                 $("#btnDeletarConta").attr('disabled', true)
                 
