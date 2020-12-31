@@ -38,7 +38,7 @@ if($arrayDadosObjetosServico != null) {
         $novoServico->setDescricao($dadoObjetoServico->getDescricao());
         $novoServico->setEnderecoServico($dadoObjetoServico->getEnderecoServico());
         $novoServico->setValor($dadoObjetoServico->getValor());
-        $novoServico->setUsuarioId($_SESSION['auth']);
+        $novoServico->setUsuarioId($dadoObjetoServico->getUsuarioId());
         $novoServico->setDataPostagem($dadoObjetoServico->getDataPostagem());
         $novoServico->setStatus($dadoObjetoServico->getStatus());
         $servicos [] = $novoServico;
