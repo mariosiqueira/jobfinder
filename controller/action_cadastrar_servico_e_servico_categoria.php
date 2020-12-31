@@ -32,6 +32,11 @@ function cadastrarServico($servicoDao, $categoriaDao, $servicoCategoriaDao) {
     $servico->setUsuarioId($usuarioId);
     $servico->setStatus("aberto");
 
+    $_SESSION['message'] = (Object) [
+        'type'=>'info',
+        'message' => 'Serviço cadastrado com sucesso!'
+    ];
+
     $servico = $servicoDao->salvar($servico);
 
     foreach($categoriasDoServico as $categoria) {

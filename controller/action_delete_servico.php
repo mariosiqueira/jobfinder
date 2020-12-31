@@ -9,6 +9,12 @@ $servicoCategoriaDao = new ServicoCategoriaDaoMysql($pdo);
 function deletarServico($servicoDao, $servicoCategoriaDao) {
     $servicoId = intval(filter_input(INPUT_GET, 'id'));
     $servicoCategoriaDao->deletar($servicoId); //para deletar um serviço é necessário deletar a categoria que faz associação a ele por causa das chaves estrangeiras
+
+    $_SESSION['message'] = (Object) [
+        'type'=>'info',
+        'message' => 'Serviço deletado com sucesso!'
+    ];
+
     $servicoDao->deletar($servicoId);
 }
 

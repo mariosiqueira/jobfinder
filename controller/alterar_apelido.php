@@ -13,6 +13,11 @@ function atualizarApelido($usuarioDao){
         $usuario = $usuarioDao->buscarPeloId($usuario->getId()); //busca os dados do usuário pelo id que foi recuperado da sessão
         $usuario->setApelido($novoApelido); //seta um novo apelido no objeto usuário
     
+        $_SESSION['message'] = (Object) [
+            'type'=>'info',
+            'message' => 'Apelido editado com sucesso!'
+        ];
+
         $usuarioDao->atualizar($usuario); //chama o método atualizar de usuarioDao passando o usuário com o apelido alterado.
         $usuario->setSenha(""); //remove a senha do usuário para ser passado para a sessão.
         $_SESSION['auth'] = serialize($usuario);

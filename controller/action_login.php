@@ -25,6 +25,12 @@ function autenticarUsuario($email, $senha, $usuarioDaoMysql, $lembrar) {
             exit;
 
         } else {
+
+            $_SESSION['message'] = (Object) [
+                'type'=>'error',
+                'message' => 'E-mail ou senha incorretos!'
+            ];
+
             header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/login');
             exit;
         }
