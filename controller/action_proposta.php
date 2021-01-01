@@ -13,7 +13,7 @@ if($contratante_id && $contratado_id && $mensagem) {
 
     $_SESSION['message'] = (Object) [
         'type'=>'info',
-        'message' => 'Sua mensagem foi registrada com sucesso!'
+        'message' => 'Sua proposta foi registrada com sucesso!'
     ];
 
     $novaProposta = new Mensagem();
