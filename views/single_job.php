@@ -69,8 +69,8 @@
     </div>
     <div class="col-md-8 mx-auto">
         <form action="<?php echo $routes->proposta?>" method="post" class="p-5 padding-md">
-            <input type="hidden" name="contratante_id" value="<?php echo $servico->getUsuarioId()?>">
-            <input type="hidden" name="contratado_id" value="<?php echo getUser()->getId()?>">
+            <input type="hidden" name="contratado_id" value="<?php echo $servico->getUsuarioId()?>">
+            <input type="hidden" name="contratante_id" value="<?php echo getUser()->getId()?>">
             <div class="form-row">
                 <div class="col-md-12 mx-auto form-group">
                     <small class="text-muted text-uppercase">Faça sua proposta: </small>
