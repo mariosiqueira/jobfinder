@@ -40,7 +40,7 @@ var perfilComponent = {
                             Página inicial
                         </span>
                     </router-link>
-                    <router-link :to="{ name: 'services', query: { servicos: data, homeurl }}" class="shadow-none " :class="this.$route.path == '/services' ? 'btn btn-outline-dark active': 'btn btn-outline-dark'">
+                    <router-link :to="{ name: 'services', query: { servicos: data, homeurl, contatos: datactt }}" class="shadow-none " :class="this.$route.path == '/services' ? 'btn btn-outline-dark active': 'btn btn-outline-dark'">
                         <i class="fas fa-briefcase    "></i>
                         <span class="title-md">
                             Meus serviços

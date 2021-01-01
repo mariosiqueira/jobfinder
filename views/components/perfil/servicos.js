@@ -1,5 +1,8 @@
 var JobComponent = {
     props: {
+        contatos: {
+            required: true,
+        },
         homeurl: {
             required: true,
         },
@@ -58,7 +61,7 @@ var JobComponent = {
                         <span class="badge badge-danger mr-2" v-else>Finalizado</span>
                         <strong>{{servico.titulo}}</strong><br>
                     </span>
-                    <router-link :to="{name: 'services_close', params: {id: servico.id}, query: { homeurl } }" class="btn btn-sm btn-danger" v-if="servico.status=='aberto'">
+                    <router-link :to="{name: 'services_close', params: {id: servico.id}, query: { homeurl, contatos } }" class="btn btn-sm btn-danger" v-if="servico.status=='aberto'">
                         <i class="fa fa-window-close" aria-hidden="true"></i>
                         Finalizar
                     </router-link>

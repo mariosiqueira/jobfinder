@@ -1,6 +1,9 @@
 var servicoClose = {
     props: {
-        homeurl:{
+        contatos: {
+            required: true
+        },
+        homeurl: {
             required: true
         },
         url_get_servico: {
@@ -12,6 +15,7 @@ var servicoClose = {
     },
     data() {
         return {
+            data_ctts: [], //contatos
             lista_contatos: [], //deve ser buscado no banco todas as mensagens que tenha id desse usuário, e ele vai escolher qual dos usuários que ele conversou ele contratou.
 
             metodo_pagamento: '', //metodo de pagamento que foi usado nesse serviço
@@ -45,10 +49,8 @@ var servicoClose = {
                 <div class="col-md-12 form-group">
                     <label for="contratado" class="required">Contratado</label>
                     <select class="form-control" id="contratado" name="contratado_id" v-model="contratado_id" required>
-                        <option value="1">1</option>
-
-                        <option :value="ctt.id" v-for="ctt in lista_contatos" :key="ctt.id">
-                            {{ctt.nome}}
+                        <option :value="ctt.id" v-for="ctt in data_ctts" :key="ctt.id">
+                            {{ctt.nome +' - '+ ctt.email}}
                         </option>
                     </select>
                 </div>
@@ -82,6 +84,7 @@ var servicoClose = {
     </div>
     `,
     mounted() {
+        this.data_ctts = JSON.parse(atob(this.contatos));
 
         axios.get(this.url_get_servico + "/?s=" + this.servico_id) //pega o servico no banco pelo id do serviço
             .then(res => {
@@ -109,8 +112,8 @@ var servicoClose = {
                 console.error("erro na requisição");
             })
     },
-    methods:{
-        teste(){
+    methods: {
+        teste() {
             console.log(this.metodo_pagamento);
             console.log(this.valor);
             console.log(this.comentario);
