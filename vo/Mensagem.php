@@ -34,7 +34,7 @@ class Mensagem{
     }
 
     public function setMensagem($mensagem){
-        $this->mensagem = trim($mensagem);
+        $this->mensagem = $mensagem;
     }
 }
 
