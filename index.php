@@ -23,6 +23,8 @@ $routes_navigation = [
     "/jobfinder/logouturl" => "../controller/action_logout.php",
     "/jobfinder/url_edit_servico" => "../controller/action_edit_servico.php",
     "/jobfinder/usuarios/alterar_apelido" => "../controller/alterar_apelido.php",
+    "/jobfinder/services/close" => "../controller/action_cadastro_usuario_servico.php",
+    "/jobfinder/services/proposta" => "../controller/action_proposta.php",
 ]; 
 
 $routes = (Object) [ //rotas nomeadas e suas respectivas url's
@@ -40,6 +42,8 @@ $routes = (Object) [ //rotas nomeadas e suas respectivas url's
     "deletar_conta" => "http://$_SERVER[HTTP_HOST]/jobfinder/usuarios/deletar",
     "logout" => "http://$_SERVER[HTTP_HOST]/jobfinder/logouturl",
     "edit_job" => "http://$_SERVER[HTTP_HOST]/jobfinder/url_edit_servico",
+    "close_job" => "http://$_SERVER[HTTP_HOST]/jobfinder/services/close",
+    "proposta" => "http://$_SERVER[HTTP_HOST]/jobfinder/services/proposta",
 ];
 
 $req = $_SERVER['REQUEST_URI']; //pega a url 
@@ -69,4 +73,9 @@ function getUser(){ // se existir a sessão pega os dados do usuario logado
         return array();
     }
     
+}
+
+function dd($data){
+    var_dump($data);
+    die();
 }

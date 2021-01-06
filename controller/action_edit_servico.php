@@ -20,6 +20,12 @@ function atualizarServico($servicoDao) {
     $servicoAtualizado->setEnderecoServico($enderecoServico);
     $servicoAtualizado->setValor($valor);
 
+    session_start();
+    $_SESSION['message'] = (Object) [
+        'type'=>'info',
+        'message' => 'Serviço editado com sucesso!'
+    ];
+
     $servicoDao->atualizar($servicoAtualizado);
     header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
 }

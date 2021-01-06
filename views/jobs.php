@@ -1,53 +1,44 @@
-<?php
-// dados fake, fazer a busca no bd e susbstituir os valores
-    $data = [
-        [
-            "id"=>1,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00",           
-        ],
-        [
-            "id"=>2,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00",           
-        ],
-        [
-            "id"=>3,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00",           
-        ],
-        [
-            "id"=>4,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00",           
-        ],
-        [
-            "id"=>5,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00",           
-        ],
-        [
-            "id"=>6,
-            "titulo"=> "servico teste",
-            "descricao"=>"servico teste de teste categoria",
-            "endereco"=>"afogados da ingazeira, centro, 21",
-            "valor"=>"800.00",           
-        ],
-    ];
+
+<?php require "layouts/app/head.php";
+require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/ServicoDaoMysql.php'; 
+
+$usuarioDao = new UsuarioDaoMysql($pdo);
+$servicoDao = new ServicoDaoMysql($pdo);
+$servicos = [];
+
+$arrayDadosObjetosServico = $servicoDao->buscarTodos();
+if($arrayDadosObjetosServico != null) {
+    
+    foreach($arrayDadosObjetosServico as $dadoObjetoServico) {
+        if(auth()){
+            if($dadoObjetoServico->getUsuarioId() != getUser()->getId()){
+                $novoServico = new Servico();
+                $novoServico->setId($dadoObjetoServico->getId());
+                $novoServico->setTitulo($dadoObjetoServico->getTitulo());
+                $novoServico->setDescricao($dadoObjetoServico->getDescricao());
+                $novoServico->setEnderecoServico($dadoObjetoServico->getEnderecoServico());
+                $novoServico->setValor($dadoObjetoServico->getValor());
+                $novoServico->setUsuarioId($usuarioDao->buscarPeloId($dadoObjetoServico->getUsuarioId()));
+                $novoServico->setDataPostagem($dadoObjetoServico->getDataPostagem());
+                $novoServico->setStatus($dadoObjetoServico->getStatus());
+                $servicos [] = $novoServico;
+            }
+        } else {
+            $novoServico = new Servico();
+            $novoServico->setId($dadoObjetoServico->getId());
+            $novoServico->setTitulo($dadoObjetoServico->getTitulo());
+            $novoServico->setDescricao($dadoObjetoServico->getDescricao());
+            $novoServico->setEnderecoServico($dadoObjetoServico->getEnderecoServico());
+            $novoServico->setValor($dadoObjetoServico->getValor());
+            $novoServico->setUsuarioId($usuarioDao->buscarPeloId($dadoObjetoServico->getUsuarioId()));
+            $novoServico->setDataPostagem($dadoObjetoServico->getDataPostagem());
+            $novoServico->setStatus($dadoObjetoServico->getStatus());
+            $servicos [] = $novoServico;
+        }
+    }
+}
 
 ?>
-
-<?php require "layouts/app/head.php"?>
 <div class="container-job">
     <h2 class="text-black-50 text-center text-uppercase mb-5" style="font-size: max(2.5vw, 12pt)">
         Encontre o <u><strong>JOB</strong></u> ideal para você
@@ -59,7 +50,7 @@
         </label>
 
         <filtro-jobs-component></filtro-jobs-component>
-        <list-jobs-component servicos='<?php echo json_encode($data);?>' show_job="<?php echo $routes->jobs_show?>">
+        <list-jobs-component home="<?php echo $routes->home?>" servicos='<?php echo json_encode($servicos);?>' show_job="<?php echo $routes->jobs_show?>">
             <list-jobs-component>
     </div>
 </div>

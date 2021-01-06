@@ -1,5 +1,8 @@
 var MessagesComponent = {
     props: {
+        homeurl: {
+            required: true
+        },
         mensagens: { //todas as mensagem que pertence ao usuario atual que está logado na session
             required: true
         },
@@ -14,25 +17,35 @@ var MessagesComponent = {
         return {
             user_id: user.id, //contratante_id
             data: [],
+            msgs: [],
             data_ctts: [],
             mensagem: "", //mensagem
-            from: "" //contratado_id
+            from: "", //contratado_id
+            focused: false,
+            conn: null
         }
     },
     mounted() {
         this.msgs = JSON.parse(atob(this.mensagens));
         this.data_ctts = JSON.parse(atob(this.contatos));
     },
+    created() {
+        this.connect();
+    },
     template: `
     <div class="mt-5">
         <div class="row m-0 profile-msg">
             <div class="col-lg-3 list-contatos">
-                <p class="profile-msg-contatos" v-for="contato in data_ctts" :key="contato.id" @click="loadMensagens(contato.id)">
-                    <img class="profile-msg-contatos-img mr-1" :src="contato.foto_perfil" />
+                <p class="alert alert-primary text-center" v-if="data_ctts.length == 0" role="alert">
+                    <strong>Nenhuma mensagem encontrada</strong>
+                </p>
+                <p class="profile-msg-contatos" v-else v-for="contato in data_ctts" :key="contato.id" @click="loadMensagens(contato.id)">
+                    <img class="profile-msg-contatos-img mr-1" :src="homeurl +'files/'+ contato.fotoPerfil" />
                     <span class="profile-msg-contatos-username">{{contato.id +" " +contato.nome}}</span>
                 </p>
             </div>
             <div class="col-lg-9">
+            {{user_id}}
                 <div class="profile-msg-body" ref="profile_scrol">
                     <ul class="messages_body">
                         <li v-for="m in data" :key="m.id">
@@ -48,7 +61,10 @@ var MessagesComponent = {
                     <div class="input-group mb-3">
                         <input type="text" class="form-control shadow-none" v-model="mensagem" placeholder="Mensagem" ref="mensagem" required>
                         <div class="input-group-append">
-                            <button class="btn btn-success shadow-none" type="submit" id="send">
+                            <button type="submit" v-if="mensagem" class="btn btn-success shadow-none" id="send">
+                                Enviar
+                            </button>
+                            <button type="button" v-else disabled class="btn btn-success shadow-none" id="send">
                                 Enviar
                             </button>
                         </div>
@@ -60,57 +76,41 @@ var MessagesComponent = {
     `,
     methods: {
         loadMensagens(id) {
-            // como alternativa pode usar o axios pra buscar no banco as mensagens pelo id do usuario atual, logado na session
-            /**
-             * axios.get(url)
-             *      .then(res=>{
-             *          this.data = res
-             *      })
-             *      .catch(err => {
-             *          console.log(err);
-             * })
-             * 
-             */
-
-
-
+            this.focused = true;
             this.from = id;
             let aux = [];
-            this.msgs.forEach(e => {
-                if (e.contratante_id == id || e.contratado_id == id) {
-                    aux.push(e);
+            this.msgs.forEach(e => { //percore todas as mensagens do usuario logado
+                if (e.contratante_id == id || e.contratado_id == id) { //pega so as mensagens do usuario logado e do contato que ele clicou
+                    aux.push(e); //adiciona todas em um array
                 }
             });
             this.data = aux;
-            this.scrolToBottom();
-            this.$refs.mensagem.focus();
+            this.scrolToBottom(); //da scroll pra baixo
+            this.$refs.mensagem.focus(); //da focus no campo de input de mensagem
 
         },
-        sendMensagem() {
-            if (this.from != "") {
+        async sendMensagem() { //função pra o usuario enviar a mensagem
+            if (this.from != "") { //verifica se o usuario de destino da mensagem nao esta vazio
 
                 if (this.mensagem && this.mensagem != "") { //verifica se a mensagem não está vazia
-                    
-                    this.data.push(
-                        {
-                            'contratante_id': this.user_id,
-                            'contratado_id': this.from,
-                            'mensagem': this.mensagem
-                        }
-                    )
-                    
-                    // falta implementar o chat realtime com ratchet
 
-                    // axios.post(this.urlenviarmsg) //retorna uma promise
-                    //     .then(res => {  //se retornar sucesso ele entra no then
-                    //         this.data.push(res);
-                    //         this.scrolToBottom();
-                    //     })
-                    //     .catch(err => { //se retornar um erro ele entra no catch
-                    //         console.error(err);
-                    //     })
+                    var aux = { //objeto da mensagem
+                        'contratante_id': this.user_id,
+                        'contratado_id': this.from,
+                        'mensagem': this.mensagem,
+                        "sala": this.from //sala é o id do ususario da mensagem de destino, ou seja so o usuario com id igual ao do contratado_id podera visualiza-la
+                    };
+                    this.data.push(aux); //adiciona a mensagem enviada ao array de todas as mensagens
 
-                    this.scrolToBottom();
+                    this.axiosSend({
+                        'contratante_id': this.user_id,
+                        'contratado_id': this.from,
+                        'mensagem': this.mensagem
+                    })
+
+                    this.send(aux); //socket envia a mensagem
+
+                    this.scrolToBottom(); //faz scroll pra baixo
                     this.mensagem = ""; //reseta o valor d mensagem
                 }
 
@@ -124,6 +124,42 @@ var MessagesComponent = {
                 this.$refs.profile_scrol.scrollTop = this.$refs.profile_scrol.scrollHeight - this.$refs.profile_scrol.clientHeight;
             }, 50);
 
+        },
+        connect() {
+            this.conn = new WebSocket('ws://localhost:8180'); //cria uma conexao socket
+            this.conn.onopen = async (e) => await console.log(''); //função de coneção aberta
+            this.conn.onmessage = (e) => this.salvarMensagem(e.data); //toda mensagem  recebida pelo socket
+        },
+        send(data) { //função de enviar a mensagem pelo socket
+            if (this.conn.readyState !== this.conn.OPEN) { //verifica se a conexao está aberta
+
+                this.connect(() => { //tenta reconectar e enviar a mensagem de novo
+                    this.send(data);
+                });
+
+                // Saindo do método
+                return;
+            }
+            this.conn.send(JSON.stringify(data)); //enviando pelo socket 
+
+        },
+        async axiosSend(data) {
+            var res = await axios.post(this.homeurl + 'controller/action_salvar_mensagem.php', data);
+            console.log(res);
+        },
+        salvarMensagem(msg) { //função pra quando uma nova mensagem é recebida no metodo onmessage.
+            var data = JSON.parse(msg);
+
+            if (data.sala == this.user_id) { //verifica se a mensagem recebida tem o id da sala igual ao id do usuario logado
+                if (this.focused) { //verifica se ele ta com o campode de mensagem aberta
+                    this.msgs.push(data); //adiciona a todas as mesagens
+                    this.data.push(data); //adiciona a mensagem a tela pra ele ver
+                    this.scrolToBottom(); //scroll pra baixo
+
+                } else { //se ele nao estiver com a tela aberta adiciona a mensagem so em todas as mensagens
+                    this.msgs.push(data);
+                }
+            }
         }
     }
 }

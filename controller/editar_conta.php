@@ -15,7 +15,13 @@ function editarDados($usuarioDao){
 
         $usuario->setNome($novoNome); //Seta um novo nome para o usuário
         $usuario->setTelefone($novoTelefone); //Seta um novo telefone para o usuário
-    
+        
+        session_start();
+        $_SESSION['message'] = (Object) [
+            'type'=>'info',
+            'message' => 'Dados editados com sucesso!'
+        ];
+
         $usuarioDao->atualizar($usuario); //Grava as atualizações no banco de dados
         
         $usuario->setSenha(""); //Zera a senha para ser salva na sessão

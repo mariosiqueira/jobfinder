@@ -23,6 +23,12 @@ if($senha && $nome && $telefone && $email) {
         $novoUsuario->setFotoPerfil($fotoPerfil);
         $novoUsuario->setApelido($apelido);
 
+        session_start();
+        $_SESSION['message'] = (Object) [
+            'type'=>'info',
+            'message' => 'Bem vindo ao JOBFINDER'
+        ];
+
         $usuarioDaoMysql->salvar($novoUsuario);
         header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/login');
         exit;

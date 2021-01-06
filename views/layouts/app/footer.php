@@ -1,7 +1,5 @@
 </div>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-        </script>
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
         </script>
@@ -11,6 +9,7 @@
             integrity="sha512-VpQwrlvKqJHKtIvpL8Zv6819FkTJyE1DoVNH0L2RLn8hUPjRjkS/bCYurZs0DX9Ybwu9oHRHdBZR9fESaq8Z8A=="
             crossorigin="anonymous"></script>
         <script src="https://cdn.rawgit.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script>
             var user = <?php echo json_encode(getUser())?>;
         </script>
@@ -37,6 +36,10 @@
                 decimal: ',',
                 thousands: '.'
             });
+            $('#valor_job').maskMoney({
+                decimal: ',',
+                thousands: '.'
+            });
             $(document).ready(function() {
                 $("#btnDeletarConta").attr('disabled', true)
                 
@@ -49,6 +52,31 @@
                     }
                 })
             })
+        </script>
+        <script>
+            toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "3000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+            }
+        </script>
+        <script>
+            <?php if(isset($_SESSION['message'])): ?>
+                toastr.<?php echo $_SESSION['message']->type ?>("<?php echo $_SESSION['message']->message ?>")
+                <?php unset($_SESSION['message']); ?>
+            <?php endif ?>
         </script>
         </body>
 

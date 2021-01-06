@@ -1,5 +1,11 @@
 var servicoClose = {
     props: {
+        contatos: {
+            required: true
+        },
+        homeurl: {
+            required: true
+        },
         url_get_servico: {
             type: String
         },
@@ -9,21 +15,20 @@ var servicoClose = {
     },
     data() {
         return {
+            data_ctts: [], //contatos
             lista_contatos: [], //deve ser buscado no banco todas as mensagens que tenha id desse usuário, e ele vai escolher qual dos usuários que ele conversou ele contratou.
 
+            metodo_pagamento: '', //metodo de pagamento que foi usado nesse serviço
             servico_id: this.$route.params.id, //id do servilo que vem da url
             contratante_id: user.id, //id do usuário que criou o serviço - e usuário logado
             contratado_id: '', //id do contratato que será escolhido da lista
-            data: '', //data do momento em que é finalizado o serviço
-            valor: '', //se houve mudança no valor do serviço na negociação deve ser editado no serviço, com o novo valor
             // o status do servico deve ser mudado para finalizado 
-            metodo_pagamento: '', //metodo de pagamento que foi usado nesse serviço
             comentario: "" //comentario da avaliação
         }
     },
     template: `
     <div class="edit_servico_perfil">
-        <form action="url_finalizar_servico" method="post">
+        <form :action="homeurl + 'controller/action_cadastro_usuario_servico.php'" method="post">
             <input type="hidden" name="servico_id" :value="servico_id" />
             <input type="hidden" name="contratante_id" :value="contratante_id" />
             <div class="form-row">
@@ -36,16 +41,16 @@ var servicoClose = {
                     </select>
                 </div>
                 <div class="col-md-4 form-group">
-                    <label for="valor">Valor</label>
-                    <input type="text" class="form-control" v-model="valor" id="valor">
+                    <label for="valor_job" class="required">Valor final</label>
+                    <input type="text" class="form-control" name="valor_final" id="valor_job">
                 </div>
             </div>
             <div class="form-row">
                 <div class="col-md-12 form-group">
                     <label for="contratado" class="required">Contratado</label>
                     <select class="form-control" id="contratado" name="contratado_id" v-model="contratado_id" required>
-                        <option :value="ctt.id" v-for="ctt in lista_contatos" :key="ctt.id">
-                            {{ctt.nome}}
+                        <option :value="ctt.id" v-for="ctt in data_ctts" :key="ctt.id">
+                            {{ctt.nome +' - '+ ctt.email}}
                         </option>
                     </select>
                 </div>
@@ -68,7 +73,7 @@ var servicoClose = {
                 </div>            
             </div>
             <div class="form-group mt-4">
-                <button type="submit" class="btn btn-dark btn-md btn-block rounded-pill text-uppercase" v-if="metodo_pagamento && contratado_id && valor && comentario">
+                <button type="submit" class="btn btn-dark btn-md btn-block rounded-pill text-uppercase" v-if="metodo_pagamento && contratado_id && comentario">
                     Finalizar
                 </button>
                 <button type="button" class="btn btn-dark btn-md btn-block rounded-pill text-uppercase" disabled v-else>
@@ -79,6 +84,7 @@ var servicoClose = {
     </div>
     `,
     mounted() {
+        this.data_ctts = JSON.parse(atob(this.contatos));
 
         axios.get(this.url_get_servico + "/?s=" + this.servico_id) //pega o servico no banco pelo id do serviço
             .then(res => {
@@ -105,5 +111,14 @@ var servicoClose = {
             .catch(err => {
                 console.error("erro na requisição");
             })
+    },
+    methods: {
+        teste() {
+            console.log(this.metodo_pagamento);
+            console.log(this.valor);
+            console.log(this.comentario);
+            console.log(this.contratado_id);
+            console.log(this.contratante_id);
+        }
     }
 }
