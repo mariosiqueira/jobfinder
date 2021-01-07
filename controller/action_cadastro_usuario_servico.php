@@ -35,7 +35,6 @@ function cadastrarUsuarioServico($usuarioServicoDao, $avaliacaoDao, $servicoDao)
     $usuarioServico->setServicoId($servico_id);
     $usuarioServico->setContratanteId($contratante_id);
     $usuarioServico->setContratadoId($contratado_id);
-
     $servico = $servicoDao->buscarPeloId($servico_id);
     $servico->setStatus("finalizado");
     $servicoDao->atualizar($servico);
@@ -50,6 +49,7 @@ function cadastrarUsuarioServico($usuarioServicoDao, $avaliacaoDao, $servicoDao)
     $avaliacaoDao->salvar($avaliacao);
 
     header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+    exit();
 }
 
 cadastrarUsuarioServico($usuarioServicoDao, $avaliacaoDao, $servicoDao);
