@@ -45,7 +45,7 @@ function deletarServicos($servicoDao, $arrayServicos) {
 
 //Método exclusivo para o caso do usuário que será excluído não ter cadastrado serviço, mas apenas se candidatado.
 function deletarContratadoDeServicos($usuarioServicoDao, $contratadoId) {
-    $arrayUsuarioServicos = $usuarioServicoDao->buscarPeloContratado_id($contratadoId); //Vai receber todos os objetos de usuarioServico para o contratado ser desassociado do servico.
+    $arrayUsuarioServicos = $usuarioServicoDao->buscarPeloContratadoId($contratadoId); //Vai receber todos os objetos de usuarioServico para o contratado ser desassociado do servico.
     foreach($arrayUsuarioServicos as $usuarioServico) {
         $usuarioServico->setContratadoId(null); //Ao invés de deletar por completo esse serviço, apenas atualizamos o id do contratado para null, pois este terá sua conta excluída.
         $usuarioServicoDao->atualizar($usuarioServico);
