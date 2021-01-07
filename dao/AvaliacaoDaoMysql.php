@@ -33,9 +33,9 @@ class AvaliacaoDaoMysql implements AvaliacaoDao {
         return $avaliacao;
     }
 
-    public function buscarAvaliacoesUsuario($id){ //pega todas as avaliaçoes de um usuário
+    public function buscarAvaliacoesUsuario($id) { //pega todas as avaliaçoes de um usuário
 
-        $sql = $this->pdo->prepare("SELECT * FROM avaliacoes where usuario_id = :id");
+        $sql = $this->pdo->prepare("SELECT * FROM avaliacoes WHERE usuario_id = :id");
         $sql->bindValue(":id", $id);
         $sql->execute();
         
@@ -46,5 +46,18 @@ class AvaliacaoDaoMysql implements AvaliacaoDao {
         return false;
     }
 
+    //O método a seguir deleta uma ocorrência de avaliação pelo id do usuário
+    public function deletarAvaliacaoPeloUsuarioId($id) {
+        $sql = $this->pdo->prepare("DELETE FROM avaliacoes WHERE usuario_id = :usuario_id");
+        $sql->bindValue(":usuario_id", $id);
+        $sql->execute();
+    }
+
+    //O método a seguir deleta uma ocorrência de avaliação pelo id do avaliador
+    public function deletarAvaliacaoPeloAvaliadorId($id) {
+        $sql = $this->pdo->prepare("DELETE FROM avaliacoes WHERE avaliador_id = :avaliador_id");
+        $sql->bindValue(":avaliador_id", $id);
+        $sql->execute();
+    }
 
 }

@@ -61,4 +61,7 @@ class Avaliacao implements JsonSerializable{
 
 interface AvaliacaoDao {
     public function salvar(Avaliacao $avaliacao);
+    public function buscarAvaliacoesUsuario($id);
+    public function deletarAvaliacaoPeloUsuarioId($usuarioId);
+    public function deletarAvaliacaoPeloAvaliadorId($avaliadorId);
 }

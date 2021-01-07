@@ -47,11 +47,12 @@ class UsuarioServicoDaoMysql implements UsuarioServicoDao {
                  * **/
                 $usuarioServico = new UsuarioServico();
                 $usuarioServico->setId($dadoUsuarioServico['id']);
-                $usuarioServico->setData_finalizacao_servico($dadoUsuarioServico['data_finalizacao_servico']);
-                $usuarioServico->setMetodo_pagamento($dadoUsuarioServico['metodo_pagamento']);
-                $usuarioServico->setServico_id($dadoUsuarioServico['servico_id']);
-                $usuarioServico->setContratante_id($dadoUsuarioServico['contratante_id']);
-                $usuarioServico->setContratado_id($dadoUsuarioServico['contratado_id']);
+                $usuarioServico->setDataFinalizacaoServico($dadoUsuarioServico['data_finalizacao_servico']);
+                $usuarioServico->setMetodoPagamento($dadoUsuarioServico['metodo_pagamento']);
+                $usuarioServico->setServicoId($dadoUsuarioServico['servico_id']);
+                $usuarioServico->setValorFinal($dadoUsuarioServico['valor_final']);
+                $usuarioServico->setContratanteId($dadoUsuarioServico['contratante_id']);
+                $usuarioServico->setContratadoId($dadoUsuarioServico['contratado_id']);
 
                 $arrayUsuarioServico[] = $usuarioServico; //Adiciona o usuário_serviço construído e preenchido no arrayUsuario_serviços que ao final da iteração será devolvido para quem chamou o método.
             }
@@ -71,11 +72,12 @@ class UsuarioServicoDaoMysql implements UsuarioServicoDao {
              */
             $usuarioServico = new UsuarioServico();
             $usuarioServico->setId($dadoUsuarioServico['id']);
-            $usuarioServico->setData_finalizacao_servico($dadoUsuarioServico['data_finalizacao_servico']);
-            $usuarioServico->setMetodo_pagamento($dadoUsuarioServico['metodo_pagamento']);
-            $usuarioServico->setServico_id($dadoUsuarioServico['servico_id']);
-            $usuarioServico->setContratante_id($dadoUsuarioServico['contratante_id']);
-            $usuarioServico->setContratado_id($dadoUsuarioServico['contratado_id']);
+            $usuarioServico->setDataFinalizacaoServico($dadoUsuarioServico['data_finalizacao_servico']);
+            $usuarioServico->setMetodoPagamento($dadoUsuarioServico['metodo_pagamento']);
+            $usuarioServico->setServicoId($dadoUsuarioServico['servico_id']);
+            $usuarioServico->setValorFinal($dadoUsuarioServico['valor_final']);
+            $usuarioServico->setContratanteId($dadoUsuarioServico['contratante_id']);
+            $usuarioServico->setContratadoId($dadoUsuarioServico['contratado_id']);
 
             return $usuarioServico;
         } else {
@@ -84,9 +86,9 @@ class UsuarioServicoDaoMysql implements UsuarioServicoDao {
 
     }
 
-    public function buscarPeloContratante_id($contratante_id){
+    public function buscarPeloContratanteId($contratanteId){
         $sql = $this->pdo->prepare("SELECT * FROM usuario_servico WHERE contratante_id = :contratante_id");
-        $sql->bindValue(":contratante_id", $contratante_id);
+        $sql->bindValue(":contratante_id", $contratanteId);
         $sql->execute();
         if($sql->rowCount() > 0){
             $dadoUsuarioServico = $sql->fetch(); //Pega os dados de um usuário_serviço que foi encontrado com o contratante_id passado por parâmetro e atribui à variável dadosUsuarioServico
@@ -98,11 +100,12 @@ class UsuarioServicoDaoMysql implements UsuarioServicoDao {
             $usuarioServico = new UsuarioServico();
 
             $usuarioServico->setId($dadoUsuarioServico['id']);
-            $usuarioServico->setData_finalizacao_servico($dadoUsuarioServico['data_finalizacao_servico']);
-            $usuarioServico->setMetodo_pagamento($dadoUsuarioServico['metodo_pagamento']);
-            $usuarioServico->setServico_id($dadoUsuarioServico['servico_id']);
-            $usuarioServico->setContratante_id($dadoUsuarioServico['contratante_id']);
-            $usuarioServico->setContratado_id($dadoUsuarioServico['contratado_id']);
+            $usuarioServico->setDataFinalizacaoServico($dadoUsuarioServico['data_finalizacao_servico']);
+            $usuarioServico->setMetodoPagamento($dadoUsuarioServico['metodo_pagamento']);
+            $usuarioServico->setServicoId($dadoUsuarioServico['servico_id']);
+            $usuarioServico->setValorFinal($dadoUsuarioServico['valor_final']);
+            $usuarioServico->setContratanteId($dadoUsuarioServico['contratante_id']);
+            $usuarioServico->setContratadoId($dadoUsuarioServico['contratado_id']);
 
             return $usuarioServico;
 
@@ -112,18 +115,50 @@ class UsuarioServicoDaoMysql implements UsuarioServicoDao {
 
     }
 
+    public function buscarPeloContratadoId($contratadoId){
+        $arrayUsuarioServicos = [];
+        $sql = $this->pdo->prepare("SELECT * FROM usuario_servico WHERE contratado_id = :contratado_id");
+        $sql->bindValue(":contratado_id", $contratadoId);
+        $sql->execute();
+        if($sql->rowCount() > 0){
+            $dadoUsuarioServico = $sql->fetch(); //Pega os dados de um usuário_serviço que foi encontrado com o contratado_id passado por parâmetro e atribui à variável dadosUsuarioServico
+
+            /**
+                 * Deve-se construir um objeto do tipo UsuarioServico e preenchê-lo com os dados
+                 * advindos do banco com a consulta para retornar à aplicação que chamou a busca por contratado_id
+            * **/
+            $usuarioServico = new UsuarioServico();
+
+            $usuarioServico->setId($dadoUsuarioServico['id']);
+            $usuarioServico->setDataFinalizacaoServico($dadoUsuarioServico['data_finalizacao_servico']);
+            $usuarioServico->setMetodoPagamento($dadoUsuarioServico['metodo_pagamento']);
+            $usuarioServico->setServicoId($dadoUsuarioServico['servico_id']);
+            $usuarioServico->setValorFinal($dadoUsuarioServico['valor_final']);
+            $usuarioServico->setContratanteId($dadoUsuarioServico['contratante_id']);
+            $usuarioServico->setContratadoId($dadoUsuarioServico['contratado_id']);
+
+            $arrayUsuarioServicos[] = $usuarioServico;
+
+        } else {    //Se não encontrar nenhum usuário_serviço com o contratante_id fornecido, retorna falso
+            return false;
+        }
+
+        return $arrayUsuarioServicos;
+    }
+
     public function atualizar(UsuarioServico $usuarioServico){
         /**
          * Todos os dados do usuário_serviço para serem atualizados no banco de dados
          * estão no parâmetro usuarioServico, só é preciso dar os gets nos atributos em cada bindValue
          */
-        $sql = $this->pdo->prepare("UPDATE usuario_servico SET data_finalizacao_servico = :data_finalizacao_servico, metodo_pagamento = :metodo_pagamento, servico_id = :servico_id, contratante_id = :contratante_id, contratado_id = :contratado_id WHERE id = :id");
+        $sql = $this->pdo->prepare("UPDATE usuario_servico SET data_finalizacao_servico = :data_finalizacao_servico, metodo_pagamento = :metodo_pagamento, valor_final = :valor_final, servico_id = :servico_id, contratante_id = :contratante_id, contratado_id = :contratado_id WHERE id = :id");
         $sql->bindValue(":id", $usuarioServico->getId());
-        $sql->bindValue(":data_finalizacao_servico", $usuarioServico->getData_finalizacao_servico());
-        $sql->bindValue(":metodo_pagamento", $usuarioServico->getMetodo_pagamento());
-        $sql->bindValue(":servico_id", $usuarioServico->getServico_id());
-        $sql->bindValue(":contratante_id", $usuarioServico->getContratante_id());
-        $sql->bindValue(":contratado_id", $usuarioServico->getContratado_id());
+        $sql->bindValue(":data_finalizacao_servico", $usuarioServico->getDataFinalizacaoServico());
+        $sql->bindValue(":metodo_pagamento", $usuarioServico->getMetodoPagamento());
+        $sql->bindValue(":valor_final", $usuarioServico->getValorFinal());
+        $sql->bindValue(":servico_id", $usuarioServico->getServicoId());
+        $sql->bindValue(":contratante_id", $usuarioServico->getContratanteId());
+        $sql->bindValue(":contratado_id", $usuarioServico->getContratadoId());
         $sql->execute();
 
         return true;
@@ -133,6 +168,14 @@ class UsuarioServicoDaoMysql implements UsuarioServicoDao {
         $sql = $this->pdo->prepare("DELETE FROM usuario_servico WHERE id = :id");
         $sql->bindValue(':id', $id);
         $sql->execute();
+    }
+
+    public function deletarPeloServicoId($servicoId) {
+        $sql = $this->pdo->prepare("DELETE FROM usuario_servico WHERE servico_id = :servico_id");
+        $sql->bindValue(":servico_id", $servicoId);
+        $sql->execute();
+
+        return true;
     }
 
 }

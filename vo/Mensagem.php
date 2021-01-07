@@ -44,5 +44,7 @@ interface MensagemDao {
     // public function buscarPeloId($id);
     // public function buscarPeloNome($nome);
     // public function atualizar(Mensagem $categoria);
-    // public function deletar($id);
+    public function buscarMensagens($id);
+    public function deletarMensagemPeloContratanteId($id);
+    public function deletarMensagemPeloContratadoId($id);
 }

@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'].'/jobfinder/vo/Mensagem.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/jobfinder/vo/Mensagem.php'; //Import do arquivo Mensagem.php para ser manipulado no banco de dados
 
 class MensagemDaoMysql implements MensagemDao {
     /**
@@ -40,5 +40,19 @@ class MensagemDaoMysql implements MensagemDao {
         }
 
         return false;
+    }
+
+    //O método a seguir deleta uma mensagem apenas pelo id do contratante
+    public function deletarMensagemPeloContratanteId($id) {
+        $sql = $this->pdo->prepare("DELETE FROM mensagens WHERE contratante_id = :contratante_id");
+        $sql->bindValue(':contratante_id', $id);
+        $sql->execute();
+    }
+
+    //O método a seguir deleta uma mensagem apenas pelo id do contratado
+    public function deletarMensagemPeloContratadoId($id) {
+        $sql = $this->pdo->prepare("DELETE FROM mensagens WHERE contratado_id = :contratado_id");
+        $sql->bindValue(':contratado_id', $id);
+        $sql->execute();
     }
 }

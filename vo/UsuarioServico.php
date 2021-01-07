@@ -1,22 +1,22 @@
 <?php
 class UsuarioServico implements JsonSerializable{
     private $id;
-    private $data_finalizacao_servico;
-    private $valor_final;
-    private $metodo_pagamento;
-    private $servico_id;
-    private $contratante_id;
-    private $contratado_id;
+    private $dataFinalizacaoServico;
+    private $valorFinal;
+    private $metodoPagamento;
+    private $servicoId;
+    private $contratanteId;
+    private $contratadoId;
 
     public function jsonSerialize() {
         return [
             'id' => $this->id,
-            'data_finalizacao_servico' => $this->data_finalizacao_servico,
-            'metodo_pagamento' => $this->metodo_pagamento,
-            'valor_final' => $this->valor_final,
-            'servico_id' => $this->servico_id,
-            'contratante_id' => $this->contratante_id,
-            'contratado_id' => $this->contratado_id,
+            'dataFinalizacaoServico' => $this->dataFinalizacaoServico,
+            'metodoPagamento' => $this->metodoPagamento,
+            'valorFinal' => $this->valorFinal,
+            'servicoId' => $this->servicoId,
+            'contratanteId' => $this->contratanteId,
+            'contratadoId' => $this->contratadoId,
         ];
     }
 
@@ -29,51 +29,51 @@ class UsuarioServico implements JsonSerializable{
     }
 
     public function getDataFinalizacaoServico(){
-        return $this->data_finalizacao_servico;
+        return $this->dataFinalizacaoServico;
     }
 
-    public function setDataFinalizacaoServico($data_finalizacao_servico){
-        $this->data_finalizacao_servico = trim($data_finalizacao_servico);
+    public function setDataFinalizacaoServico($dataFinalizacaoServico){
+        $this->dataFinalizacaoServico = trim($dataFinalizacaoServico);
     }
 
     public function getMetodoPagamento(){
-        return $this->metodo_pagamento;
+        return $this->metodoPagamento;
     }
 
-    public function setMetodoPagamento($metodo_pagamento){
-        $this->metodo_pagamento = trim($metodo_pagamento);
+    public function setMetodoPagamento($metodoPagamento){
+        $this->metodoPagamento = trim($metodoPagamento);
     }
 
     public function getValorFinal(){
-        return $this->valor_final;
+        return $this->valorFinal;
     }
 
-    public function setValorFinal($valor_final){
-        $this->valor_final = $valor_final;
+    public function setValorFinal($valorFinal){
+        $this->valorFinal = $valorFinal;
     }
 
     public function getServicoId(){
-        return $this->servico_id;
+        return $this->servicoId;
     }
 
-    public function setServicoId($servico_id){
-        $this->servico_id = $servico_id;
+    public function setServicoId($servicoId){
+        $this->servicoId = $servicoId;
     }
 
     public function getContratanteId(){
-        return $this->contratante_id;
+        return $this->contratanteId;
     }
 
-    public function setContratanteId($contratante_id){
-        $this->contratante_id = $contratante_id;
+    public function setContratanteId($contratanteId){
+        $this->contratanteId = $contratanteId;
     }
 
     public function getContratadoId(){
-        return $this->contratado_id;
+        return $this->contratadoId;
     }
 
-    public function setContratadoId($contratado_id){
-        $this->contratado_id = $contratado_id;
+    public function setContratadoId($contratadoId){
+        $this->contratadoId = $contratadoId;
     }
 }
 
@@ -81,7 +81,9 @@ interface UsuarioServicoDao {
     public function salvar(UsuarioServico $usuarioServico);
     public function buscarTodos();
     public function buscarPeloId($id);
-    public function buscarPeloContratante_id($contratante_id);
+    public function buscarPeloContratanteId($contratanteId);
+    public function buscarPeloContratadoId($contratadoId);
     public function atualizar(UsuarioServico $usuarioServico);
     public function deletar($id);
+    public function deletarPeloServicoId($servicoId);
 }
