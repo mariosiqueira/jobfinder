@@ -1,6 +1,6 @@
 <?php
-echo $_SERVER['HTTP_HOST'];
-require "https://$_SERVER[HTTP_HOST]/vendor/autoload.php";
+
+require "https://jobfinder-ifpe.herokuapp.com/vendor/autoload.php";
 
 use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
