@@ -1,8 +1,8 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/config/config.php';
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/UsuarioServicoDaoMysql.php';
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/ServicoDaoMysql.php';
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/AvaliacaoDaoMysql.php';
+require $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
+require $_SERVER['DOCUMENT_ROOT'].'/dao/UsuarioServicoDaoMysql.php';
+require $_SERVER['DOCUMENT_ROOT'].'/dao/ServicoDaoMysql.php';
+require $_SERVER['DOCUMENT_ROOT'].'/dao/AvaliacaoDaoMysql.php';
 
 $usuarioServicoDao = new UsuarioServicoDaoMysql($pdo);
 

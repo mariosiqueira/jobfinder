@@ -5,10 +5,10 @@
 <?php 
 require "layouts/app/head.php";
 
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/CategoriaDaoMysql.php'; //import da classe CategoriaDaoMysql pra buscar as categorias do banco de dados e mostrar na aplicação na hora de criar um novo serviço
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/ServicoDaoMysql.php'; //Import da classe ServicoDaoMysql para recuperar os serviços cadastrados pelo usuário da sessão e que serão exibidos no perfil dele
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/MensagemDaoMysql.php'; //Import da classe MensagemDaoMysql para recuperar as mensagens cadastrados pelo usuário da sessão e que serão exibidos no perfil dele
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/AvaliacaoDaoMysql.php'; //Import da classe AvaliacaoDaoMysql para recuperar as avaliaçoes recebidas pelo usuário da sessão e que serão exibidos no perfil dele
+require $_SERVER['DOCUMENT_ROOT'].'/dao/CategoriaDaoMysql.php'; //import da classe CategoriaDaoMysql pra buscar as categorias do banco de dados e mostrar na aplicação na hora de criar um novo serviço
+require $_SERVER['DOCUMENT_ROOT'].'/dao/ServicoDaoMysql.php'; //Import da classe ServicoDaoMysql para recuperar os serviços cadastrados pelo usuário da sessão e que serão exibidos no perfil dele
+require $_SERVER['DOCUMENT_ROOT'].'/dao/MensagemDaoMysql.php'; //Import da classe MensagemDaoMysql para recuperar as mensagens cadastrados pelo usuário da sessão e que serão exibidos no perfil dele
+require $_SERVER['DOCUMENT_ROOT'].'/dao/AvaliacaoDaoMysql.php'; //Import da classe AvaliacaoDaoMysql para recuperar as avaliaçoes recebidas pelo usuário da sessão e que serão exibidos no perfil dele
 
 //Recuperando as categorias cadastradas no banco de dados para exibir no modal de cadastro de serviço
 $categoriaDao = new CategoriaDaoMysql($pdo);
@@ -213,7 +213,7 @@ $mediaAvaliacoes = $index == 0 ? $somaAvaliacoes : round($somaAvaliacoes / $inde
                 </button>
             </div>
             <div class="modal-body">
-                <form action="../jobfinder/controller/action_cadastrar_servico_e_servico_categoria.php" method="post">
+                <form action="<?php echo $routes->home?>/controller/action_cadastrar_servico_e_servico_categoria.php" method="post">
                     <div class="form-row">
                         <div class="col-md-12 form-group">
                             <label for="" class="required">Titulo</label>

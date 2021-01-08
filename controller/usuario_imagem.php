@@ -1,6 +1,6 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/config/config.php'; //Importa o PDO
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/UsuarioDaoMysql.php'; //Importa UsuarioDaoMysql para o CRUD
+require $_SERVER['DOCUMENT_ROOT'].'/config/config.php'; //Importa o PDO
+require $_SERVER['DOCUMENT_ROOT'].'/dao/UsuarioDaoMysql.php'; //Importa UsuarioDaoMysql para o CRUD
 session_start();
 
 $usuarioDaoMysql = new UsuarioDaoMysql($pdo);
@@ -49,10 +49,10 @@ function salvarFotoPerfil($usuarioDaoMysql, $formatosImagemPermitidos){
         move_uploaded_file($_FILES['foto_perfil']['tmp_name'],'../files/'.$fotoPerfil);
         $_SESSION['auth'] = serialize($usuario); //Para que a foto seja atualizada na página é necessário renovar a sessão com a atualização da foto
 
-        unlink($_SERVER['DOCUMENT_ROOT'].'/jobfinder/files/'.$fotoAntiga);
+        unlink($_SERVER['DOCUMENT_ROOT']."/files/$fotoAntiga");
         
     }
-    header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+    header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
     exit;
 }
 

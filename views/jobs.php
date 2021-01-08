@@ -1,6 +1,6 @@
 
 <?php require "layouts/app/head.php";
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/ServicoDaoMysql.php'; 
+require $_SERVER['DOCUMENT_ROOT'].'/dao/ServicoDaoMysql.php'; 
 
 $usuarioDao = new UsuarioDaoMysql($pdo);
 $servicoDao = new ServicoDaoMysql($pdo);

@@ -1,6 +1,6 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/config/config.php'; //Importa o PDO
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/MensagemDaoMysql.php'; //Importa MensagemDaoMysql para o CRUD
+require $_SERVER['DOCUMENT_ROOT'].'/config/config.php'; //Importa o PDO
+require $_SERVER['DOCUMENT_ROOT'].'/dao/MensagemDaoMysql.php'; //Importa MensagemDaoMysql para o CRUD
 
 $mensagemDaoMysql = new MensagemDaoMysql($pdo);
 
@@ -22,10 +22,10 @@ if($contratante_id && $contratado_id && $mensagem) {
     $novaProposta->setMensagem($mensagem);
 
     $mensagemDaoMysql->salvar($novaProposta);
-    header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/jobs');
+    header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobs');
     exit;
 
     } else {
-        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/jobs');
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobs');
         exit;
 }

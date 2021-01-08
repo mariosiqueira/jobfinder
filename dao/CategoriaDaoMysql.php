@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'].'/jobfinder/vo/Categoria.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/vo/Categoria.php';
 
 class CategoriaDaoMysql implements CategoriaDao {
 

@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'].'/jobfinder/vo/Servico.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/vo/Servico.php';
 
 class ServicoDaoMysql implements ServicoDao {
     /**

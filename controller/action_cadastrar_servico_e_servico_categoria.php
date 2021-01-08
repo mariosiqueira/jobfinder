@@ -1,8 +1,8 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/config/config.php'; //import do pdo para usar nas classes ServicoDaoMysql, CategoriaDaoMysql e ServicoCategoriaDaoMysql
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/ServicoDaoMysql.php'; //import da classe ServicoDaoMysql para cadastrar um serviço
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/CategoriaDaoMysql.php'; //import da classe CategoriaDaoMysql para poder buscar a categoria passado por post no formulário
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/ServicoCategoriaDaoMysql.php'; //import da classe ServicoCategoriaDaoMysql para associar as categorias buscadas ao serviço cadastrado
+require $_SERVER['DOCUMENT_ROOT'].'/config/config.php'; //import do pdo para usar nas classes ServicoDaoMysql, CategoriaDaoMysql e ServicoCategoriaDaoMysql
+require $_SERVER['DOCUMENT_ROOT'].'/dao/ServicoDaoMysql.php'; //import da classe ServicoDaoMysql para cadastrar um serviço
+require $_SERVER['DOCUMENT_ROOT'].'/dao/CategoriaDaoMysql.php'; //import da classe CategoriaDaoMysql para poder buscar a categoria passado por post no formulário
+require $_SERVER['DOCUMENT_ROOT'].'/dao/ServicoCategoriaDaoMysql.php'; //import da classe ServicoCategoriaDaoMysql para associar as categorias buscadas ao serviço cadastrado
 
 $servicoDao = new ServicoDaoMysql($pdo);
 $categoriaDao = new CategoriaDaoMysql($pdo);

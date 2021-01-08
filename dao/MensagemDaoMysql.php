@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'].'/jobfinder/vo/Mensagem.php'; //Import do arquivo Mensagem.php para ser manipulado no banco de dados
+require_once $_SERVER['DOCUMENT_ROOT'].'/vo/Mensagem.php'; //Import do arquivo Mensagem.php para ser manipulado no banco de dados
 
 class MensagemDaoMysql implements MensagemDao {
     /**

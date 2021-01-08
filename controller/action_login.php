@@ -1,6 +1,6 @@
 <?php 
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/config/config.php'; //Importa o PDO
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/UsuarioDaoMysql.php'; //Importa UsuarioDaoMysql para o CRUD
+require $_SERVER['DOCUMENT_ROOT'].'/config/config.php'; //Importa o PDO
+require $_SERVER['DOCUMENT_ROOT'].'/dao/UsuarioDaoMysql.php'; //Importa UsuarioDaoMysql para o CRUD
 
 $usuarioDaoMysql = new UsuarioDaoMysql($pdo);
 
@@ -21,7 +21,7 @@ function autenticarUsuario($email, $senha, $usuarioDaoMysql, $lembrar) {
             //$usuarioBuscado->setSenha(""); //apaga a senha pra poder gravar na sessão;
             
             $_SESSION['auth']=serialize($usuarioBuscado);
-            header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+            header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
             exit;
 
         } else {
@@ -31,12 +31,12 @@ function autenticarUsuario($email, $senha, $usuarioDaoMysql, $lembrar) {
                 'message' => 'E-mail ou senha incorretos!'
             ];
 
-            header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/login');
+            header('Location:http://'.$_SERVER['HTTP_HOST'].'/login');
             exit;
         }
 
     } else {
-        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/login');
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/login');
         exit;
     }
 }

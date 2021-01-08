@@ -1,8 +1,8 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/config/config.php'; //import do pdo
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/ServicoDaoMysql.php'; //import da classe ServicoDaoMysql para deletar o serviço
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/ServicoCategoriaDaoMysql.php'; //import da classe ServicoCategoriaDaoMysql para deletar primeiro a associação da categoria ao serviço e em seguida deletar o serviço
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/UsuarioServicoDaoMysql.php'; //import da classe UsuarioServicoDaoMysql para deletar a associação entre o contratante, contratado e o serviço
+require $_SERVER['DOCUMENT_ROOT'].'/config/config.php'; //import do pdo
+require $_SERVER['DOCUMENT_ROOT'].'/dao/ServicoDaoMysql.php'; //import da classe ServicoDaoMysql para deletar o serviço
+require $_SERVER['DOCUMENT_ROOT'].'/dao/ServicoCategoriaDaoMysql.php'; //import da classe ServicoCategoriaDaoMysql para deletar primeiro a associação da categoria ao serviço e em seguida deletar o serviço
+require $_SERVER['DOCUMENT_ROOT'].'/dao/UsuarioServicoDaoMysql.php'; //import da classe UsuarioServicoDaoMysql para deletar a associação entre o contratante, contratado e o serviço
 
 $servicoDao = new ServicoDaoMysql($pdo);
 $servicoCategoriaDao = new ServicoCategoriaDaoMysql($pdo);

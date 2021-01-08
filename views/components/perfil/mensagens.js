@@ -45,7 +45,6 @@ var MessagesComponent = {
                 </p>
             </div>
             <div class="col-lg-9">
-            {{user_id}}
                 <div class="profile-msg-body" ref="profile_scrol">
                     <ul class="messages_body">
                         <li v-for="m in data" :key="m.id">

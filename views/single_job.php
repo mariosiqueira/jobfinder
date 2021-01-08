@@ -9,9 +9,9 @@
 
 <?php require "layouts/app/head.php";
     
-    require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/ServicoDaoMysql.php'; 
-    require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/ServicoCategoriaDaoMysql.php'; 
-    require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/CategoriaDaoMysql.php'; 
+    require $_SERVER['DOCUMENT_ROOT'].'/dao/ServicoDaoMysql.php'; 
+    require $_SERVER['DOCUMENT_ROOT'].'/dao/ServicoCategoriaDaoMysql.php'; 
+    require $_SERVER['DOCUMENT_ROOT'].'/dao/CategoriaDaoMysql.php'; 
 
     $servicoDao = new ServicoDaoMysql($pdo);
     $servico = $servicoDao->buscarPeloId($id_job);

@@ -1,6 +1,6 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/config/config.php'; //Importa o PDO
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/UsuarioDaoMysql.php'; //Importa UsuarioDaoMysql para o CRUD
+require $_SERVER['DOCUMENT_ROOT'].'/config/config.php'; //Importa o PDO
+require $_SERVER['DOCUMENT_ROOT'].'/dao/UsuarioDaoMysql.php'; //Importa UsuarioDaoMysql para o CRUD
 
 $usuarioDaoMysql = new UsuarioDaoMysql($pdo);
 
@@ -30,16 +30,17 @@ if($senha && $nome && $telefone && $email) {
         ];
 
         $usuarioDaoMysql->salvar($novoUsuario);
-        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/login');
+        $_SESSION['auth']=serialize($novoUsuario);
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
         exit;
 
     } else {
         echo 'Usuário já existe';
-        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/register');
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/register');
         exit;
     }
 
 } else {
-    header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/register');
+    header('Location:http://'.$_SERVER['HTTP_HOST'].'/register');
     exit;
 }

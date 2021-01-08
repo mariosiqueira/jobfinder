@@ -1,6 +1,6 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/config/config.php'; //import do pdo
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/ServicoDaoMysql.php'; //import da classe ServicoDaoMysql para salvar a atualização do serviço
+require $_SERVER['DOCUMENT_ROOT'].'/config/config.php'; //import do pdo
+require $_SERVER['DOCUMENT_ROOT'].'/dao/ServicoDaoMysql.php'; //import da classe ServicoDaoMysql para salvar a atualização do serviço
 
 $servicoDao = new ServicoDaoMysql($pdo);
 
@@ -27,7 +27,7 @@ function atualizarServico($servicoDao) {
     ];
 
     $servicoDao->atualizar($servicoAtualizado);
-    header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+    header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
 }
 
 atualizarServico($servicoDao);

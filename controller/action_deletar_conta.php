@@ -1,11 +1,11 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/config/config.php'; //importa o PDO para utilizar na classe UsuarioDaoMysql
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/UsuarioDaoMysql.php'; //Deleta o usuário do banco de dados
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/ServicoDaoMysql.php'; //Deleta os serviços do usuário no banco de dados
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/ServicoCategoriaDaoMysql.php'; //Deleta as categorias associadas aos serviços do usuário no banco de dados
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/UsuarioServicoDaoMysql.php'; //Deleta a associação entre um usuário e um serviço
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/AvaliacaoDaoMysql.php'; // Deleta as avaliações feitas ao/pelo usuário que vai ser removido
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/MensagemDaoMysql.php'; //Apaga as ocorrências de mensagens que foram trocadas por um usuário que vai ser removido
+require $_SERVER['DOCUMENT_ROOT'].'/config/config.php'; //importa o PDO para utilizar na classe UsuarioDaoMysql
+require $_SERVER['DOCUMENT_ROOT'].'/dao/UsuarioDaoMysql.php'; //Deleta o usuário do banco de dados
+require $_SERVER['DOCUMENT_ROOT'].'/dao/ServicoDaoMysql.php'; //Deleta os serviços do usuário no banco de dados
+require $_SERVER['DOCUMENT_ROOT'].'/dao/ServicoCategoriaDaoMysql.php'; //Deleta as categorias associadas aos serviços do usuário no banco de dados
+require $_SERVER['DOCUMENT_ROOT'].'/dao/UsuarioServicoDaoMysql.php'; //Deleta a associação entre um usuário e um serviço
+require $_SERVER['DOCUMENT_ROOT'].'/dao/AvaliacaoDaoMysql.php'; // Deleta as avaliações feitas ao/pelo usuário que vai ser removido
+require $_SERVER['DOCUMENT_ROOT'].'/dao/MensagemDaoMysql.php'; //Apaga as ocorrências de mensagens que foram trocadas por um usuário que vai ser removido
 
 $usuarioDao = new UsuarioDaoMysql($pdo);
 $servicoDao = new ServicoDaoMysql($pdo);

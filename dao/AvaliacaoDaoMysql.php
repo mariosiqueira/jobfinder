@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'].'/jobfinder/vo/Avaliacao.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/vo/Avaliacao.php';
 
 class AvaliacaoDaoMysql implements AvaliacaoDao {
     /**

@@ -1,6 +1,6 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/config/config.php'; //importa o PDO para utilizar na classe UsuarioDaoMysql
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/UsuarioDaoMysql.php'; //Atualiza o apelido do usuário
+require $_SERVER['DOCUMENT_ROOT'].'/config/config.php'; //importa o PDO para utilizar na classe UsuarioDaoMysql
+require $_SERVER['DOCUMENT_ROOT'].'/dao/UsuarioDaoMysql.php'; //Atualiza o apelido do usuário
 session_start();
 
 $usuarioDao = new UsuarioDaoMysql($pdo);
@@ -24,7 +24,7 @@ function atualizarApelido($usuarioDao){
         $_SESSION['auth'] = serialize($usuario);
     }
     
-    header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+    header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
     exit();
 }
 

@@ -1,6 +1,6 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/config/config.php'; //Import do PDO para usar na classe UsuarioDaoMysql
-require $_SERVER['DOCUMENT_ROOT'].'/jobfinder/dao/UsuarioDaoMysql.php'; // Import da classe UsuarioDaoMysql para atualizar os dados do usuário
+require $_SERVER['DOCUMENT_ROOT'].'/config/config.php'; //Import do PDO para usar na classe UsuarioDaoMysql
+require $_SERVER['DOCUMENT_ROOT'].'/dao/UsuarioDaoMysql.php'; // Import da classe UsuarioDaoMysql para atualizar os dados do usuário
 session_start();
 
 $usuarioDao = new UsuarioDaoMysql($pdo);
@@ -28,7 +28,7 @@ function editarDados($usuarioDao){
         $_SESSION['auth'] = serialize($usuario); //salva o usuário na sessão
     }
     
-    header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile'); //encaminha para a página de perfil
+    header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile'); //encaminha para a página de perfil
     exit();
 }
 

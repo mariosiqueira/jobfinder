@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'].'/jobfinder/vo/Usuario.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/vo/Usuario.php';
 
 class UsuarioDaoMysql implements UsuarioDao {
     /**
