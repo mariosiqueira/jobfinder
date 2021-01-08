@@ -1,6 +1,6 @@
 <?php
 session_start();
-require "config/config.php";
+
 // tratamento da url de serviço 
 $jobs_show = isset($_GET['s']) ? "?s=$_GET[s]" : "";
 
