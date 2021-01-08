@@ -1,6 +1,7 @@
 <?php
 
 require "./vendor/autoload.php";
+require "chat.php";
 
 use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
