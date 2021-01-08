@@ -1,6 +1,6 @@
 <?php
 
-require "https://jobfinder-ifpe.herokuapp.com/vendor/autoload.php";
+require "./vendor/autoload.php";
 
 use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
