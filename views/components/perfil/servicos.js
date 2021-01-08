@@ -92,9 +92,9 @@ var JobComponent = {
 
             if (op == true) {
 
-                axios.get('/jobfinder/controller/action_delete_servico.php?id=' + id) //delete servico 
+                axios.get('/controller/action_delete_servico.php?id=' + id) //delete servico 
                     .then((res) => {
-                        window.location.href = "/jobfinder/profile"
+                        window.location.href = "/profile"
 
                     })
                     .catch(err => {

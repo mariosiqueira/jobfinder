@@ -47,7 +47,7 @@ var servicoShow = {
     `,
     mounted() {
         //Requisição assíncrona com axios para pegar todos os atributos pelo id do serviço selecionado para visualizar e preencher nos campos na aplicação.
-        axios.get('/jobfinder/controller/get_data_servico.php?s='+this.id) //get servico 
+        axios.get('/controller/get_data_servico.php?s='+this.id) //get servico 
             .then((res) => {
                 this.titulo = res.data.titulo;
                 this.descricao = res.data.descricao;
