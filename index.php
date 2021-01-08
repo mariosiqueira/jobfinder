@@ -7,6 +7,7 @@ $jobs_show = isset($_GET['s']) ? "?s=$_GET[s]" : "";
 //tratamento de rotas
 $routes_navigation = [
     "/" => "welcome.php",
+    "/teste" => "teste.php",
     "/index.php" => "welcome.php",
     "/login" => "login.php",
     "/register" => "cadastro.php",
