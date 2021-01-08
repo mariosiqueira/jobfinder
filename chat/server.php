@@ -1,7 +1,7 @@
 <?php
 
-require dirname(__DIR__) . '/vendor/autoload.php';
-
+require $_SERVER['DOCUMENT_ROOT']. '/vendor/autoload.php';
+var_dump($_SERVER['DOCUMENT_ROOT']);
 use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
