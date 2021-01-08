@@ -46,7 +46,7 @@ function cadastrarServico($servicoDao, $categoriaDao, $servicoCategoriaDao) {
         $servicoCategoria->setCategoriaId($categoria[0]->getId());
         $servicoCategoriaDao->salvar($servicoCategoria);
     }
-    header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+    header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
 }
 
 cadastrarServico($servicoDao, $categoriaDao, $servicoCategoriaDao);

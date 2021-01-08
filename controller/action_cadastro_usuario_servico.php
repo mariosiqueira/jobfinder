@@ -48,7 +48,7 @@ function cadastrarUsuarioServico($usuarioServicoDao, $avaliacaoDao, $servicoDao)
     $usuarioServicoDao->salvar($usuarioServico);
     $avaliacaoDao->salvar($avaliacao);
 
-    header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+    header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
     exit();
 }
 

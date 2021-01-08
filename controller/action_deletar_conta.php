@@ -85,15 +85,15 @@ function deletarUsuario($usuarioDao, $servicoDao, $servicoCategoriaDao, $usuario
         }
         //Removendo uma foto que não seja a default-user-img.jpg
         if($usuario->getFotoPerfil() != "default-user-img.jpg") {
-            unlink($_SERVER['DOCUMENT_ROOT'].'/jobfinder/files/'.$usuario->getFotoPerfil());
+            unlink($_SERVER['DOCUMENT_ROOT']."/files/".$usuario->getFotoPerfil());
         }
 
         $_SESSION['auth'] = null;
-        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/index.php');
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/index.php');
         exit();
         
     } else {
-        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
         exit();
     }
 }
