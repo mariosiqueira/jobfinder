@@ -213,7 +213,7 @@ $mediaAvaliacoes = $index == 0 ? $somaAvaliacoes : round($somaAvaliacoes / $inde
                 </button>
             </div>
             <div class="modal-body">
-                <form action="<?php echo $routes->home?>/controller/action_cadastrar_servico_e_servico_categoria.php" method="post">
+                <form action="<?php echo $routes->home?>controller/action_cadastrar_servico_e_servico_categoria.php" method="post">
                     <div class="form-row">
                         <div class="col-md-12 form-group">
                             <label for="" class="required">Titulo</label>
