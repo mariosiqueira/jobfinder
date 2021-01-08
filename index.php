@@ -27,22 +27,22 @@ $routes_navigation = [
 ]; 
 
 $routes = (Object) [ //rotas nomeadas e suas respectivas url's
-    "home"=> "http://$_SERVER[HTTP_HOST]/",
-    "perfil"=> "http://$_SERVER[HTTP_HOST]/profile",
-    "mensagens"=> "http://$_SERVER[HTTP_HOST]/messages",
-    "login"=> "http://$_SERVER[HTTP_HOST]/login",
-    "cadastro"=> "http://$_SERVER[HTTP_HOST]/register",
-    "jobs"=> "http://$_SERVER[HTTP_HOST]/jobs",
-    "jobs_show"=> "http://$_SERVER[HTTP_HOST]/jobs/show/$jobs_show",
-    "action_cadastro" => "http://$_SERVER[HTTP_HOST]/usuarios/criar",
-    "action_login" => "http://$_SERVER[HTTP_HOST]/usuarios/logar",
-    "editar_conta" => "http://$_SERVER[HTTP_HOST]/usuarios/editar",
-    "alterar_apelido" => "http://$_SERVER[HTTP_HOST]/usuarios/alterar_apelido",
-    "deletar_conta" => "http://$_SERVER[HTTP_HOST]/usuarios/deletar",
-    "logout" => "http://$_SERVER[HTTP_HOST]/logouturl",
-    "edit_job" => "http://$_SERVER[HTTP_HOST]/url_edit_servico",
-    "close_job" => "http://$_SERVER[HTTP_HOST]/services/close",
-    "proposta" => "http://$_SERVER[HTTP_HOST]/services/proposta",
+    "home"=> "https://$_SERVER[HTTP_HOST]/",
+    "perfil"=> "https://$_SERVER[HTTP_HOST]/profile",
+    "mensagens"=> "https://$_SERVER[HTTP_HOST]/messages",
+    "login"=> "https://$_SERVER[HTTP_HOST]/login",
+    "cadastro"=> "https://$_SERVER[HTTP_HOST]/register",
+    "jobs"=> "https://$_SERVER[HTTP_HOST]/jobs",
+    "jobs_show"=> "https://$_SERVER[HTTP_HOST]/jobs/show/$jobs_show",
+    "action_cadastro" => "https://$_SERVER[HTTP_HOST]/usuarios/criar",
+    "action_login" => "https://$_SERVER[HTTP_HOST]/usuarios/logar",
+    "editar_conta" => "https://$_SERVER[HTTP_HOST]/usuarios/editar",
+    "alterar_apelido" => "https://$_SERVER[HTTP_HOST]/usuarios/alterar_apelido",
+    "deletar_conta" => "https://$_SERVER[HTTP_HOST]/usuarios/deletar",
+    "logout" => "https://$_SERVER[HTTP_HOST]/logouturl",
+    "edit_job" => "https://$_SERVER[HTTP_HOST]/url_edit_servico",
+    "close_job" => "https://$_SERVER[HTTP_HOST]/services/close",
+    "proposta" => "https://$_SERVER[HTTP_HOST]/services/proposta",
 ];
 
 $req = $_SERVER['REQUEST_URI']; //pega a url 
