@@ -1,7 +1,7 @@
 <?php
 
-require $_SERVER['DOCUMENT_ROOT']. '/vendor/autoload.php';
-var_dump($_SERVER['DOCUMENT_ROOT']);
+require "https://".$_SERVER['HTTP_HOST']. '/vendor/autoload.php';
+
 use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
