@@ -52,6 +52,9 @@ if (array_key_exists($req, $routes_navigation)) { //verifica se a url requisitad
 } else {
     require "views/".$routes_navigation["/notFound"]; //se não existir faz o require na chave notFound
 }
+var_dump($_SERVER);
+var_dump($routes);
+var_dump(array_key_exists($req, $routes_navigation));
 
 function auth(){ //funçao pra verificar se o usuario está autenticado
     if(isset($_SESSION['auth'])){
