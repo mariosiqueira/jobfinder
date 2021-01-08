@@ -78,3 +78,9 @@ function dd($data){
     var_dump($data);
     die();
 }
+
+var_dump(getenv('db_driver'));
+var_dump(getenv('db_name'));
+var_dump(getenv('host'));
+var_dump(getenv('user'));
+var_dump(getenv('password'));
