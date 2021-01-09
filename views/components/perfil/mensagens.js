@@ -101,11 +101,11 @@ var MessagesComponent = {
                     };
                     this.data.push(aux); //adiciona a mensagem enviada ao array de todas as mensagens
 
-                    this.axiosSend({
-                        'contratante_id': this.user_id,
-                        'contratado_id': this.from,
-                        'mensagem': this.mensagem
-                    })
+                    // this.axiosSend({
+                    //     'contratante_id': this.user_id,
+                    //     'contratado_id': this.from,
+                    //     'mensagem': this.mensagem
+                    // })
 
                     this.send(aux); //socket envia a mensagem
 
