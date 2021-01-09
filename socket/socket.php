@@ -1,8 +1,7 @@
 <?php
-echo "server.php";
-// require "./vendor/autoload.php";
-// require "chat.php";
-require_once(dirname(__DIR__) . '/vendor/autoload.php');
+require "./vendor/autoload.php";
+require "chat.php";
+// require_once(dirname(__DIR__) . '/vendor/autoload.php');
 use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
