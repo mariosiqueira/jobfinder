@@ -125,7 +125,7 @@ var MessagesComponent = {
 
         },
         connect() {
-            this.conn = new WebSocket('wss://php-realtime-chat.herokuapp.com:8085'); //cria uma conexao socket
+            this.conn = new WebSocket('wss://jobfinder-chat.herokuapp.com/:8085'); //cria uma conexao socket
             this.conn.onopen = async (e) => await console.log(''); //função de coneção aberta
             this.conn.onmessage = (e) => this.salvarMensagem(e.data); //toda mensagem  recebida pelo socket
         },
