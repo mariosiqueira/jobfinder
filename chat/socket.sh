@@ -1,2 +1,2 @@
-php server.php &
+php chat/server.php &
 exec "$@"
