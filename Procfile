@@ -1,1 +1,1 @@
-web: socket/socket.php vendor/bin/heroku-php-nginx -C nginx_app.conf
+web: socket/socket.sh vendor/bin/heroku-php-nginx -C nginx_app.conf
