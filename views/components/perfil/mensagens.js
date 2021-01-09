@@ -30,7 +30,7 @@ var MessagesComponent = {
         this.data_ctts = JSON.parse(atob(this.contatos));
     },
     created() {
-        this.connect();
+        // this.connect();
     },
     template: `
     <div class="mt-5">
@@ -101,13 +101,13 @@ var MessagesComponent = {
                     };
                     this.data.push(aux); //adiciona a mensagem enviada ao array de todas as mensagens
 
-                    // this.axiosSend({
-                    //     'contratante_id': this.user_id,
-                    //     'contratado_id': this.from,
-                    //     'mensagem': this.mensagem
-                    // })
+                    this.axiosSend({
+                        'contratante_id': this.user_id,
+                        'contratado_id': this.from,
+                        'mensagem': this.mensagem
+                    })
 
-                    this.send(aux); //socket envia a mensagem
+                    // this.send(aux); //socket envia a mensagem
 
                     this.scrolToBottom(); //faz scroll pra baixo
                     this.mensagem = ""; //reseta o valor d mensagem
