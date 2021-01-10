@@ -113,7 +113,7 @@ $mediaAvaliacoes = $index == 0 ? $somaAvaliacoes : round($somaAvaliacoes / $inde
 ?>
 
 <div class="row m-0 container-perfil">
-    <perfil-descricao-component ation_profile_img="controller/usuario_imagem.php"
+    <perfil-descricao-component ation_profile_img="<?= $routes->alterar_imagem; ?> "
         avaliacao_usuario="<?php echo $mediaAvaliacoes?>" url='<?php echo $routes->home;?>'>
     </perfil-descricao-component>
     <perfil-component homeurl='<?php echo $routes->home;?>' servicos='<?php echo json_encode($servicos);?>'

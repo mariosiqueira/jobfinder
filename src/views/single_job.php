@@ -35,7 +35,7 @@
     <div class="col-md-8 m-0 p-0 mx-auto rounded" style="background-color: DarkSlateGray;">
         <div class="d-flex align-items-center justify-content-between m-0 p-3">
             <div>
-                <img src="<?php echo $routes->home."files/". getUser()->getFotoPerfil();?>" alt="img profile user" id="servico_img_user" />
+                <img src="<?php echo $routes->home."src/files/". getUser()->getFotoPerfil();?>" alt="img profile user" id="servico_img_user" />
                 <span class="text-white"><?php echo getUser()->getApelido();?></span>
             </div>
             <small class="text-white">

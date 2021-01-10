@@ -15,7 +15,7 @@ var perfilDescricaoComponent = {
         return{
             usuario: user, //dado vem da session do usuario logado, variável está no footer do layout app
             ava_usuario: parseInt(this.avaliacao_usuario), //criando uma nova variavel para converter o valor padrao para inteiro
-            foto: this.url +"files/"+user.fotoPerfil
+            foto: this.url +"src/files/"+user.fotoPerfil
         }
     },
     template: `

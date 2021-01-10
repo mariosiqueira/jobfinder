@@ -30,7 +30,7 @@ var AvaliacoesComponent = {
             </div>
             <div class="form-row mb-2 p-3 padding-md rounded" v-else v-for="ava in data_avaliacao" style="background-color:DarkSlateGray">
                 <p class="text-left text-white ml-2">
-                    <img :src="homeurl +'files/'+ ava.avaliador_id.fotoPerfil" style="width: 40px; height:40px; border-radius: 50%" />
+                    <img :src="homeurl +'src/files/'+ ava.avaliador_id.fotoPerfil" style="width: 40px; height:40px; border-radius: 50%" />
                     <span>{{ava.avaliador_id.apelido}}</span>
                 </p>
                 <div class="col-md-12">

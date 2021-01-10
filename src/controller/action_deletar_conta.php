@@ -87,7 +87,7 @@ function deletarUsuario($usuarioDao, $servicoDao, $servicoCategoriaDao, $usuario
         }
         //Removendo uma foto que não seja a default-user-img.jpg
         if($usuario->getFotoPerfil() != "default-user-img.jpg") {
-            unlink($_SERVER['DOCUMENT_ROOT'].'/jobfinder/files/'.$usuario->getFotoPerfil());
+            unlink($_SERVER['DOCUMENT_ROOT'].'/jobfinder/src/files/'.$usuario->getFotoPerfil());
         }
 
         $_SESSION['auth'] = null;

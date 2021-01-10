@@ -28,7 +28,7 @@ var servicoClose = {
     },
     template: `
     <div class="edit_servico_perfil">
-        <form :action="homeurl + 'controller/action_cadastro_usuario_servico.php'" method="post">
+        <form :action="homeurl + 'services/close'" method="post">
             <input type="hidden" name="servico_id" :value="servico_id" />
             <input type="hidden" name="contratante_id" :value="contratante_id" />
             <div class="form-row">

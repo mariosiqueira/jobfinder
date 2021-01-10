@@ -26,7 +26,7 @@ var listJobsComponent = {
                 <div class="col-md-4 shadow rounded m-1 mb-5 pt-2 px-1 pb-0" v-for="servico in data" :key="servico.id"  style="background-color: DarkSlateGray;">
                     <div class="d-flex justify-content-between align-items-center">
                         <p class="p-3">
-                            <img :src="home+'files/'+servico.usuarioId.fotoPerfil" alt="img profile user" id="servico_img_user" />
+                            <img :src="home+'/src/files/'+servico.usuarioId.fotoPerfil" alt="img profile user" id="servico_img_user" />
                             <span class="text-white">{{servico.usuarioId.apelido}}</span>
                         </p>
                         <a :href="show_job +'?s='+ servico.id" class="btn btn-success mb-4">

@@ -40,17 +40,17 @@ function salvarFotoPerfil($usuarioDaoMysql, $formatosImagemPermitidos){
         $usuario->setFotoPerfil($fotoPerfil);
         $usuarioDaoMysql->atualizar($usuario);
 
-        session_start();
+        // session_start();
         $_SESSION['message'] = (Object) [
             'type'=>'info',
             'message' => 'Foto de perfil editada com sucesso!'
         ];
 
         //move_uploaded_file move o arquivo que foi feito upload pelo formulário e salva no diretório files
-        move_uploaded_file($_FILES['foto_perfil']['tmp_name'],'../files/'.$fotoPerfil);
+        move_uploaded_file($_FILES['foto_perfil']['tmp_name'],$_SERVER['DOCUMENT_ROOT'].'/jobfinder/src/files/'.$fotoPerfil);
         $_SESSION['auth'] = serialize($usuario); //Para que a foto seja atualizada na página é necessário renovar a sessão com a atualização da foto
 
-        unlink($_SERVER['DOCUMENT_ROOT'].'/jobfinder/files/'.$fotoAntiga);
+        unlink($_SERVER['DOCUMENT_ROOT'].'/jobfinder/src/files/'.$fotoAntiga);
         
     }
     header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');

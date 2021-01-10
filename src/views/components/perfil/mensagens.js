@@ -40,7 +40,7 @@ var MessagesComponent = {
                     <strong>Nenhuma mensagem encontrada</strong>
                 </p>
                 <p class="profile-msg-contatos" v-else v-for="contato in data_ctts" :key="contato.id" @click="loadMensagens(contato.id)">
-                    <img class="profile-msg-contatos-img mr-1" :src="homeurl +'files/'+ contato.fotoPerfil" />
+                    <img class="profile-msg-contatos-img mr-1" :src="homeurl +'src/files/'+ contato.fotoPerfil" />
                     <span class="profile-msg-contatos-username">{{contato.id +" " +contato.nome}}</span>
                 </p>
             </div>
@@ -144,7 +144,8 @@ var MessagesComponent = {
 
         },
         async axiosSend(data) {
-            var res = await axios.post(this.homeurl + 'controller/action_salvar_mensagem.php', data);
+            var res = await axios.post(this.homeurl + 'usuarios/salvar_mensagem', data);
+            console.log("Url: " + this.homeurl)
             console.log(res);
         },
         salvarMensagem(msg) { //função pra quando uma nova mensagem é recebida no metodo onmessage.
