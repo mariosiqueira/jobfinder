@@ -22,7 +22,8 @@ var MessagesComponent = {
             mensagem: "", //mensagem
             from: "", //contratado_id
             focused: false,
-            conn: null
+            conn: null,
+            channel: null,
         }
     },
     mounted() {
@@ -41,11 +42,10 @@ var MessagesComponent = {
                 </p>
                 <p class="profile-msg-contatos" v-else v-for="contato in data_ctts" :key="contato.id" @click="loadMensagens(contato.id)">
                     <img class="profile-msg-contatos-img mr-1" :src="homeurl +'src/files/'+ contato.fotoPerfil" />
-                    <span class="profile-msg-contatos-username">{{contato.id +" " +contato.nome}}</span>
+                    <span class="profile-msg-contatos-username">{{contato.nome}}</span>
                 </p>
             </div>
             <div class="col-lg-9">
-            {{user_id}}
                 <div class="profile-msg-body" ref="profile_scrol">
                     <ul class="messages_body">
                         <li v-for="m in data" :key="m.id">
@@ -108,7 +108,7 @@ var MessagesComponent = {
                         'mensagem': this.mensagem
                     })
 
-                    this.send(aux); //socket envia a mensagem
+                    // this.send(aux); //socket envia a mensagem
 
                     this.scrolToBottom(); //faz scroll pra baixo
                     this.mensagem = ""; //reseta o valor d mensagem
@@ -126,32 +126,24 @@ var MessagesComponent = {
 
         },
         connect() {
-            this.conn = new WebSocket('ws://jobfinder-ifpe.herokuapp.com:8180'); //cria uma conexao socket
-            this.conn.onopen = async (e) => await console.log(''); //função de coneção aberta
-            this.conn.onmessage = (e) => this.salvarMensagem(e.data); //toda mensagem  recebida pelo socket
+            // Enable pusher logging - don't include this in production
+            Pusher.logToConsole = false;
+
+            this.conn = new Pusher('d94eb47625dbc86a8533', {  //cria uma conexao socket
+                cluster: 'eu'
+            });
+
+            this.channel = this.conn.subscribe('jobfinder-chat'); //fica escutando esse canal
+            this.channel.bind('send-message', data => this.salvarMensagem(data)); //fica escultando esse canal por onde  toda mensagem recebida pelo socket passa
         },
-        send(data) { //função de enviar a mensagem pelo socket
-            if (this.conn.readyState !== this.conn.OPEN) { //verifica se a conexao está aberta
-
-                this.connect(() => { //tenta reconectar e enviar a mensagem de novo
-                    this.send(data);
-                });
-
-                // Saindo do método
-                return;
-            }
-            this.conn.send(JSON.stringify(data)); //enviando pelo socket 
-
-        },
+        
         async axiosSend(data) {
-            var res = await axios.post(this.homeurl + 'usuarios/salvar_mensagem', data);
-            console.log("Url: " + this.homeurl)
-            console.log(res);
+            await axios.post(this.homeurl + 'usuarios/salvar_mensagem', data);
         },
         salvarMensagem(msg) { //função pra quando uma nova mensagem é recebida no metodo onmessage.
-            var data = JSON.parse(msg);
+            var data = msg;
 
-            if (data.sala == this.user_id) { //verifica se a mensagem recebida tem o id da sala igual ao id do usuario logado
+            if (data.contratado_id == this.user_id) { //verifica se a mensagem recebida tem o id da sala igual ao id do usuario logado
                 if (this.focused) { //verifica se ele ta com o campode de mensagem aberta
                     this.msgs.push(data); //adiciona a todas as mesagens
                     this.data.push(data); //adiciona a mensagem a tela pra ele ver
