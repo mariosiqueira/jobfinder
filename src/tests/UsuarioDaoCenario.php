@@ -6,7 +6,7 @@ use App\Config\Conexao;
 use App\Dao\UsuarioDaoMysql;
 use App\VO\Usuario;
 
-class UsuarioCadastro
+class UsuarioDaoCenario
 {
     public function cadastrar(Usuario $usuario)
     {
