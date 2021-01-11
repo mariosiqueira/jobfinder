@@ -1,6 +1,7 @@
 <?php
 use App\Config\Conexao;//Importa o PDO
 use App\Dao\MensagemDaoMysql; //Importa MensagemDaoMysql para o CRUD
+use App\Dao\ChatDaoMysql;
 
 use App\VO\Mensagem;
 
@@ -16,15 +17,13 @@ $msg = $data['mensagem'];
 
 if($contratante_id && $contratado_id && $msg) {
 
-    $_SESSION['message'] = (Object) [
-        'type'=>'info',
-        'message' => 'Sua proposta foi registrada com sucesso!'
-    ];
-
     $mensagem = new Mensagem();
     $mensagem->setContratanteId($contratante_id);
     $mensagem->setContratadoId($contratado_id);
     $mensagem->setMensagem($msg);
 
+    $chat = new ChatDaoMysql();
+    $chat->send($mensagem);
+    
     $mensagemDaoMysql->salvar($mensagem);
 }
