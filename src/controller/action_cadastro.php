@@ -27,16 +27,25 @@ if($senha && $nome && $telefone && $email) {
         $novoUsuario->setFotoPerfil($fotoPerfil);
         $novoUsuario->setApelido($apelido);
 
-        $_SESSION['message'] = (Object) [
-            'type'=>'info',
-            'message' => 'Bem vindo ao JOBFINDER'
-        ];
-        $usuarioDaoMysql->salvar($novoUsuario);
-        $_SESSION['auth'] = serialize($novoUsuario);
+        $usuario = $usuarioDaoMysql->salvar($novoUsuario);
+        
+        if ($usuario) {
+            $_SESSION['message'] = (Object) [
+                'type'=>'info',
+                'message' => 'Bem vindo ao JOBFINDER'
+            ];
+            $_SESSION['auth'] = serialize($novoUsuario);
+            header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+            exit;
+        } else {
+            $_SESSION['message'] = (Object) [
+                'type'=>'error',
+                'message' => 'Aconteceu um erro inesperado!'
+            ];
+            header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/register');
+            exit;
 
-        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
-        exit;
-
+        }
     } else {
         $_SESSION['message'] = (Object) [
             'type'=>'error',
