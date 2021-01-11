@@ -2,9 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 use App\VO\Usuario;
-use App\Tests\Cadastro;
+use App\Tests\UsuarioCadastro;
 
-final class CadastroTest extends TestCase
+final class UsuarioCadastroTest extends TestCase
 {
     public function testFazerCadastro(): void
     {
@@ -14,9 +14,9 @@ final class CadastroTest extends TestCase
         $usuario->setApelido('usuario');
         $usuario->setEmail('usuario@email.com');
         $usuario->setTelefone('(00) 0 0000-0000');
-        $usuario->setFotoPerfil('https://elaele.com.br/img/anonimo.png');
+        $usuario->setFotoPerfil('default-user-img.jpg');
 
-        $usuarioDAO = new Cadastro();
-        $this->assertTrue($usuarioDAO->cadastrar($usuario));
+        $dao = new UsuarioCadastro();
+        $this->assertTrue($dao->cadastrar($usuario)); //retorna true se conseguir salvar o usuario e false se nao conseguir;
     }
 }

@@ -13,6 +13,7 @@
         <script>
             var user = <?php echo json_encode(getUser())?>;
         </script>
+        <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src='<?php echo $routes->home."src/views/components/navbar.js";?>'></script>
         <script src='<?php echo $routes->home."src/views/components/login.js";?>'></script>

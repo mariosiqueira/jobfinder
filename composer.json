@@ -7,8 +7,12 @@
             "email": "jefersongomes333@hotmail.com"
         }
     ],
+    "scripts": {
+        "tests": ".\\vendor\\bin\\phpunit"
+    },
     "require": {
-        "cboden/ratchet": "^0.4"
+        "cboden/ratchet": "^0.4",
+        "pusher/pusher-php-server": "^4.1"
     },
     "autoload": {
         "psr-4": {
