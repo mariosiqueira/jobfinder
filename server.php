@@ -6,7 +6,7 @@ use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
 use MyApp\Chat;
 
-$port = getenv('PORT') ? getenv('PORT') : 8185;
+$port =  8185; //getenv('PORT') ? getenv('PORT') :
 echo "porta: ".$port;
 $server = IoServer::factory(
     new HttpServer(
