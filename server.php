@@ -12,7 +12,7 @@ $server = IoServer::factory(
             new Chat()
         )
     ),
-    getenv('port') ?? 8185
+    getenv('port') ? getenv('port') : 8185
 );
 
 $server->run();
