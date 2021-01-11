@@ -1,11 +1,21 @@
 <?php
 namespace App\VO;
+use JsonSerializable;
 
-class Mensagem{
+class Mensagem implements JsonSerializable{
     private $id;
     private $contratante_id;
     private $contratado_id;
     private $mensagem;
+
+    public function jsonSerialize() {
+        return [
+            'id' => $this->id,
+            'contratante_id' => $this->contratante_id,
+            'contratado_id' => $this->contratado_id,
+            'mensagem' => $this->mensagem,
+        ];
+    }
 
     public function getId(){
         return $this->id;
