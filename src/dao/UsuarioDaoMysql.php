@@ -30,10 +30,12 @@ class UsuarioDaoMysql implements UsuarioDao {
         $sql->bindValue(":email", $usuario->getEmail());
         $sql->bindValue(":senha", $usuario->getSenha());
         $sql->bindValue(":foto_perfil", $usuario->getFotoPerfil());
-        $sql->execute();
 
-        $usuario->setId($this->pdo->lastInsertId());
-        return $usuario;
+        if ($sql->execute()) {
+            $usuario->setId($this->pdo->lastInsertId());
+            return $usuario;
+        }
+        return null;
     }
 
     public function buscarTodos(){

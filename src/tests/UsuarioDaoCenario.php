@@ -12,17 +12,19 @@ class UsuarioDaoCenario
     {
         $usuarioDaoMysql = new UsuarioDaoMysql(Conexao::getInstance());
 
-        $aux = $usuarioDaoMysql->salvar($usuario);
-
-        return $aux ? true : false;
+        return $usuarioDaoMysql->salvar($usuario);
     }
 
-    // public function logar($email, $senha)
-    // {
-    //     $usuarioDaoMysql = new UsuarioDaoMysql(Conexao::getInstance());
+    public function logar($email, $senha)
+    {
+        $usuarioDaoMysql = new UsuarioDaoMysql(Conexao::getInstance());
 
-    //     $aux = $usuarioDaoMysql->buscarPeloEmail($email);
+        $aux = $usuarioDaoMysql->buscarPeloEmail($email);
 
-    //     return $aux->getSenha() == $senha ? true : false;
-    // }
+        if($aux) { //Se encontrou usuário com o e-mail fornecido
+            return $aux->getSenha() == $senha ? true : false;
+        } else {
+            return null;
+        } 
+    }
 }
