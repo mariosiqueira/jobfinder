@@ -30,10 +30,12 @@ class AvaliacaoDaoMysql implements AvaliacaoDao {
         $sql->bindValue(":usuario_id", $avaliacao->getUserId());
         $sql->bindValue(":avaliador_id", $avaliacao->getAvaliadorId());
 
-        $sql->execute();
-
-        $avaliacao->setId($this->pdo->lastInsertId());
-        return $avaliacao;
+        if($sql->execute()) {
+            $avaliacao->setId($this->pdo->lastInsertId());
+            return $avaliacao;
+        }
+        return null;
+        
     }
 
     public function buscarAvaliacoesUsuario($id) { //pega todas as avaliaçoes de um usuário
@@ -53,14 +55,20 @@ class AvaliacaoDaoMysql implements AvaliacaoDao {
     public function deletarAvaliacaoPeloUsuarioId($id) {
         $sql = $this->pdo->prepare("DELETE FROM avaliacoes WHERE usuario_id = :usuario_id");
         $sql->bindValue(":usuario_id", $id);
-        $sql->execute();
+        if($sql->execute()) {
+            return true;
+        }
+        return false;
     }
 
     //O método a seguir deleta uma ocorrência de avaliação pelo id do avaliador
     public function deletarAvaliacaoPeloAvaliadorId($id) {
         $sql = $this->pdo->prepare("DELETE FROM avaliacoes WHERE avaliador_id = :avaliador_id");
         $sql->bindValue(":avaliador_id", $id);
-        $sql->execute();
+        if($sql->execute()) {
+            return true;
+        }
+        return false;
     }
 
 }

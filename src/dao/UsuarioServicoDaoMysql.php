@@ -30,10 +30,13 @@ class UsuarioServicoDaoMysql implements UsuarioServicoDao {
         $sql->bindValue(":servico_id", $usuarioServico->getServicoId());
         $sql->bindValue(":contratante_id", $usuarioServico->getContratanteId());
         $sql->bindValue(":contratado_id", $usuarioServico->getContratadoId());
-        $sql->execute();
 
-        $usuarioServico->setId($this->pdo->lastInsertId());
-        return $usuarioServico;
+        if ($sql->execute()) {
+            $usuarioServico->setId($this->pdo->lastInsertId());
+            return $usuarioServico;
+        }
+        return null;
+        
     }
 
     public function buscarTodos(){
@@ -162,21 +165,29 @@ class UsuarioServicoDaoMysql implements UsuarioServicoDao {
         $sql->bindValue(":servico_id", $usuarioServico->getServicoId());
         $sql->bindValue(":contratante_id", $usuarioServico->getContratanteId());
         $sql->bindValue(":contratado_id", $usuarioServico->getContratadoId());
-        $sql->execute();
-
-        return true;
+        
+        if($sql->execute()) {
+            return true;
+        }
+        return false;
     }
 
     public function deletar($id){
         $sql = $this->pdo->prepare("DELETE FROM usuario_servico WHERE id = :id");
         $sql->bindValue(':id', $id);
-        $sql->execute();
+        if($sql->execute()) {
+            return true;
+        }
+        return false;
     }
 
     public function deletarPeloServicoId($servicoId) {
         $sql = $this->pdo->prepare("DELETE FROM usuario_servico WHERE servico_id = :servico_id");
         $sql->bindValue(":servico_id", $servicoId);
-        $sql->execute();
+        if($sql->execute()) {
+            return true;
+        }
+        return false;
     }
 
 }

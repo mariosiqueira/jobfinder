@@ -15,10 +15,11 @@ class CategoriaDaoMysql implements CategoriaDao {
     public function salvar(Categoria $categoria){
         $sql = $this->pdo->prepare("INSERT INTO categorias(nome) VALUES (:nome)");
         $sql->bindValue(":nome", $categoria->getNome());
-        $sql->execute();
-        $categoria->setId($this->pdo->lastInsertId());
-
-        return $categoria;
+        if($sql->execute()) {
+            $categoria->setId($this->pdo->lastInsertId());
+            return $categoria;
+        }
+        return null;
         
     }
 
@@ -84,13 +85,19 @@ class CategoriaDaoMysql implements CategoriaDao {
         $sql = $this->pdo->prepare("UPDATE categorias SET nome = :nome WHERE id = :id");
         $sql->bindValue(":id", $categoria->getId());
         $sql->bindValue(":nome", $categoria->getNome());
-        $sql->execute();
-        return true;
+        if($sql->execute()) {
+            return true;
+        }
+        return false;
+        
     }
 
     public function deletar($id){
         $sql = $this->pdo->prepare("DELETE FROM categorias WHERE id = :id");
         $sql->bindValue(':id', $id);
-        $sql->execute();
+        if($sql->execute()) {
+            return true;
+        }
+        return false;
     }
 }

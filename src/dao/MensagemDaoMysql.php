@@ -27,11 +27,14 @@ class MensagemDaoMysql implements MensagemDao {
         $sql->bindValue(":contratante_id", $mensagem->getContratanteId());
         $sql->bindValue(":contratado_id", $mensagem->getContratadoId());
         $sql->bindValue(":mensagem", $mensagem->getMensagem());
-        $sql->execute();
+        if($sql->execute()) {
+            $mensagem->setId($this->pdo->lastInsertId());
+            return $mensagem;
+        }
+        return null;
 
-        $mensagem->setId($this->pdo->lastInsertId());
-        return $mensagem;
     }
+
     public function buscarMensagens($id){ //Recupera todos os mensagens recebidas e enviadas do usuário
         
         $sql = $this->pdo->prepare("SELECT * FROM mensagens WHERE contratante_id = :id or contratado_id = :id");
@@ -49,13 +52,19 @@ class MensagemDaoMysql implements MensagemDao {
     public function deletarMensagemPeloContratanteId($id) {
         $sql = $this->pdo->prepare("DELETE FROM mensagens WHERE contratante_id = :contratante_id");
         $sql->bindValue(':contratante_id', $id);
-        $sql->execute();
+        if($sql->execute()) {
+            return true;
+        }
+        return false;
     }
 
     //O método a seguir deleta uma mensagem apenas pelo id do contratado
     public function deletarMensagemPeloContratadoId($id) {
         $sql = $this->pdo->prepare("DELETE FROM mensagens WHERE contratado_id = :contratado_id");
         $sql->bindValue(':contratado_id', $id);
-        $sql->execute();
+        if($sql->execute()) {
+            return true;
+        }
+        return false;
     }
 }
