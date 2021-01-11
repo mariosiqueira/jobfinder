@@ -67,6 +67,9 @@ function deletarUsuario($usuarioDao, $servicoDao, $servicoCategoriaDao, $usuario
     $senha = md5(filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_STRING));
     $usuario = unserialize($_SESSION['auth']);
     $usuario = $usuarioDao->buscarPeloId($usuario->getId());
+
+    $deletou = false;
+
     if($senha && $senha == $usuario->getSenha()) {
         $arrayServicos = $servicoDao->buscarServicoPeloIdDoUsuario($usuario->getId());
 
@@ -74,7 +77,7 @@ function deletarUsuario($usuarioDao, $servicoDao, $servicoCategoriaDao, $usuario
             deletarContratadoDeServicos($usuarioServicoDao, $usuario->getId());
             deletarAvaliacoesDoUsuario($avaliacaoDao, $usuario->getId());
             deletarMensagensDoUsuario($mensagemDao, $usuario->getId());
-            $usuarioDao->deletar($usuario->getId());
+            $deletou = $usuarioDao->deletar($usuario->getId());
             
         } else {
             deletarCategoriasAssociadasAUmServico($servicoCategoriaDao, $arrayServicos);
@@ -82,7 +85,7 @@ function deletarUsuario($usuarioDao, $servicoDao, $servicoCategoriaDao, $usuario
             deletarAvaliacoesDoUsuario($avaliacaoDao, $usuario->getId());
             deletarMensagensDoUsuario($mensagemDao, $usuario->getId());
             deletarServicos($servicoDao, $arrayServicos);
-            $usuarioDao->deletar($usuario->getId());
+            $deletou = $usuarioDao->deletar($usuario->getId());
 
         }
         //Removendo uma foto que não seja a default-user-img.jpg
@@ -91,10 +94,28 @@ function deletarUsuario($usuarioDao, $servicoDao, $servicoCategoriaDao, $usuario
         }
 
         $_SESSION['auth'] = null;
+
+        if ($deletou == true) {
+        
+            $_SESSION['message'] = (Object) [
+                'type'=>'info',
+                'message' => 'Conta deletada com sucesso.'
+            ];
+        } else {
+            $_SESSION['message'] = (Object) [
+                'type'=>'error',
+                'message' => 'Ocorreu um erro inesperado ao remover sua conta. Contate o administrador do sistema.'
+            ];
+        }
+
         header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/index.php');
         exit();
         
     } else {
+        $_SESSION['message'] = (Object) [
+            'type'=>'error',
+            'message' => 'A senha digita está incorreta.'
+        ];
         header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
         exit();
     }
