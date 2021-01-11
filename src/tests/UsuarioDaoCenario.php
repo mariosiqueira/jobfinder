@@ -6,7 +6,7 @@ use App\Config\Conexao;
 use App\Dao\UsuarioDaoMysql;
 use App\VO\Usuario;
 
-class UsuarioCadastro
+class UsuarioDaoCenario
 {
     public function cadastrar(Usuario $usuario)
     {
@@ -16,4 +16,13 @@ class UsuarioCadastro
 
         return $aux ? true : false;
     }
+
+    // public function logar($email, $senha)
+    // {
+    //     $usuarioDaoMysql = new UsuarioDaoMysql(Conexao::getInstance());
+
+    //     $aux = $usuarioDaoMysql->buscarPeloEmail($email);
+
+    //     return $aux->getSenha() == $senha ? true : false;
+    // }
 }

@@ -39,18 +39,27 @@ function cadastrarServico($servicoDao, $categoriaDao, $servicoCategoriaDao) {
     $servico->setStatus("aberto");
 
     session_start();
-    $_SESSION['message'] = (Object) [
-        'type'=>'info',
-        'message' => 'Serviço cadastrado com sucesso!'
-    ];
-
     $servico = $servicoDao->salvar($servico);
 
-    foreach($categoriasDoServico as $categoria) {
-        $servicoCategoria = new ServicoCategoria();
-        $servicoCategoria->setServicoId($servico->getId());
-        $servicoCategoria->setCategoriaId($categoria[0]->getId());
-        $servicoCategoriaDao->salvar($servicoCategoria);
+    if (!is_null($servico)) {
+        
+        $_SESSION['message'] = (Object) [
+            'type'=>'info',
+            'message' => 'Serviço cadastrado com sucesso!'
+        ];
+    
+        foreach($categoriasDoServico as $categoria) {
+            $servicoCategoria = new ServicoCategoria();
+            $servicoCategoria->setServicoId($servico->getId());
+            $servicoCategoria->setCategoriaId($categoria[0]->getId());
+            $servicoCategoriaDao->salvar($servicoCategoria);
+        }
+        
+    } else{
+        $_SESSION['message'] = (Object) [
+            'type'=>'error',
+            'message' => 'Aconteceu um erro inesperado!'
+        ];
     }
     header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
 }
