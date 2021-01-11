@@ -27,9 +27,11 @@ class ServicoCategoriaDaoMysql implements ServicoCategoriaDao {
         $sql = $this->pdo->prepare("INSERT INTO servico_categorias (servico_id, categoria_id) values (:servico_id, :categoria_id)");
         $sql->bindValue(':servico_id', $servicoCategoria->getServicoId());
         $sql->bindValue(':categoria_id', $servicoCategoria->getCategoriaId());
-        $sql->execute();
+        if($sql->execute()) {
+            return $servicoCategoria;
+        }
+        return null;
 
-        return $servicoCategoria;
     }
 
     public function buscarTodos() {
@@ -107,9 +109,11 @@ class ServicoCategoriaDaoMysql implements ServicoCategoriaDao {
         $sql = $this->pdo->prepare("UPDATE servico_categorias SET servico_id = :servico_id, categoria_id = :categoria_id");
         $sql->bindValue(':servico_id', $servicoCategoria->getServicoId());
         $sql->bindValue(':categoria_id', $servicoCategoria->getCategoriaId());
-        $sql->execute();
-        
-        return true;
+        if($sql->execute()) {
+            return true;
+        }
+        return false;
+         
     }
 
     //Deleta uma categoria que foi associada a um determinado serviço
@@ -117,14 +121,20 @@ class ServicoCategoriaDaoMysql implements ServicoCategoriaDao {
         $sql = $this->pdo->prepare("DELETE FROM servico_categorias WHERE (servico_id = :servico_id) AND (categoria_id = :categoria_id)");
         $sql->bindValue(':servico_id', $servicoId);
         $sql->bindValue(':categoria_id', $categoriaId);
-        $sql->execute();
+        if($sql->execute()) {
+            return true;
+        }
+        return false;
     }
 
     //Deleta todas as associações entre categoria e serviço do banco
     public function deletar($servicoId) {
         $sql = $this->pdo->prepare("DELETE FROM servico_categorias WHERE servico_id = :servico_id");
         $sql->bindValue(':servico_id', $servicoId);
-        $sql->execute();
+        if($sql->execute()) {
+            return true;
+        }
+        return false;
     }
 
 }

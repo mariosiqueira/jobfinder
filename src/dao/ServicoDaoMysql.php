@@ -133,15 +133,19 @@ class ServicoDaoMysql implements ServicoDao {
         $sql->bindValue(":usuario_id", $servico->getUsuarioId());
         $sql->bindValue(":data_postagem", $servico->getDataPostagem());
         $sql->bindValue(":status_servico", $servico->getStatus());
-        $sql->execute();
-
-        return true;
+        if($sql->execute()) {
+            return true;
+        }
+        return false;
     }
 
     public function deletar($id){
         $sql = $this->pdo->prepare("DELETE FROM servicos WHERE id = :id");
         $sql->bindValue(':id', $id);
-        $sql->execute();
+        if($sql->execute()) {
+            return true;
+        }
+        return false;
     }
 
     public function buscarServicoPeloStatus($status){ //Recupera todos os serviços com status de aberto ou fechado

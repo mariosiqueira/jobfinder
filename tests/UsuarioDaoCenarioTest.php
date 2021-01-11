@@ -19,4 +19,32 @@ final class UsuarioDaoCenarioTest extends TestCase
         $dao = new UsuarioDaoCenario();
         $this->assertNotNull($dao->cadastrar($usuario)); //É esperado que nao retorne null
     }
+
+    public function testLogarCorretamente(): void
+    {
+        $email = "usuario@email.com";
+        $senha = md5("12345");
+
+        $dao = new UsuarioDaoCenario();
+        $this->assertTrue($dao->logar($email, $senha));
+    }
+
+    public function testLogarSenhaIncorreta(): void
+    {
+        $email = "usuario@email.com";
+        $senha = md5("senhaerrada");
+
+        $dao = new UsuarioDaoCenario();
+        $this->assertFalse($dao->logar($email, $senha)); //Deve retornar false caso seja passado uma senha incorreta
+    }
+
+    public function testLogarEmailIncorretoOuInexistente(): void
+    {
+        $email = "usuario@email.co";
+        $senha = md5("12345");
+
+        $dao = new UsuarioDaoCenario();
+        $this->assertNull($dao->logar($email, $senha)); //Deve retornar null caso seja passado um e-mail incorreto ou um e-mail de usuario que não seja cadastrado
+    }
+
 }

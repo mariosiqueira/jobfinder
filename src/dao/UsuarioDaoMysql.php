@@ -133,15 +133,20 @@ class UsuarioDaoMysql implements UsuarioDao {
         $sql->bindValue(":email", $usuario->getEmail());
         $sql->bindValue(":senha", $usuario->getSenha());
         $sql->bindValue(":foto_perfil", $usuario->getFotoPerfil());
-        $sql->execute();
+        if($sql->execute()) {
+            return true;
+        }
+        return false;
 
-        return true;
     }
 
     public function deletar($id){
         $sql = $this->pdo->prepare("DELETE FROM usuarios WHERE id = :id");
         $sql->bindValue(':id', $id);
-        $sql->execute();
+        if($sql->execute()) {
+            return true;
+        }
+        return false;
     }
 
 }

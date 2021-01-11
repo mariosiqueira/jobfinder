@@ -48,7 +48,6 @@ function cadastrarServico($servicoDao, $categoriaDao, $servicoCategoriaDao) {
             'message' => 'Serviço cadastrado com sucesso!'
         ];
     
-    
         foreach($categoriasDoServico as $categoria) {
             $servicoCategoria = new ServicoCategoria();
             $servicoCategoria->setServicoId($servico->getId());

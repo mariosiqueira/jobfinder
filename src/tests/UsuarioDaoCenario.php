@@ -14,4 +14,17 @@ class UsuarioDaoCenario
 
         return $usuarioDaoMysql->salvar($usuario);
     }
+
+    public function logar($email, $senha)
+    {
+        $usuarioDaoMysql = new UsuarioDaoMysql(Conexao::getInstance());
+
+        $aux = $usuarioDaoMysql->buscarPeloEmail($email);
+
+        if($aux) { //Se encontrou usuário com o e-mail fornecido
+            return $aux->getSenha() == $senha ? true : false;
+        } else {
+            return null;
+        } 
+    }
 }
