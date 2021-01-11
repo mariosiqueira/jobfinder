@@ -30,10 +30,12 @@ class ServicoDaoMysql implements ServicoDao {
         $sql->bindValue(":valor", $servico->getValor());
         $sql->bindValue(":usuario_id", $servico->getUsuarioId());
         $sql->bindValue(":status_servico", $servico->getStatus());
-        $sql->execute();
 
-        $servico->setId($this->pdo->lastInsertId());
-        return $servico;
+        if ($sql->execute()) {
+            $servico->setId($this->pdo->lastInsertId());
+            return $servico;
+        }
+        return null;
     }
 
     public function buscarTodos(){
