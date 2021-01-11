@@ -12,8 +12,6 @@ class UsuarioDaoCenario
     {
         $usuarioDaoMysql = new UsuarioDaoMysql(Conexao::getInstance());
 
-        $aux = $usuarioDaoMysql->salvar($usuario);
-
-        return $aux ? true : false;
+        return $usuarioDaoMysql->salvar($usuario);
     }
 }
