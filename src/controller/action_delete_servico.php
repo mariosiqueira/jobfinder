@@ -20,7 +20,7 @@ function deletarServico($servicoDao, $servicoCategoriaDao, $usuarioServicoDao) {
             'message' => 'Ocorreu um erro inesperado!'
         ];
         header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
-        exit;
+        exit();
     }
 
     $deletouUsuarioServico = $usuarioServicoDao->deletarPeloServicoId($servicoId); //Deleta a associação do id do serviço na tabela usuario_servico do banco de dados
@@ -31,7 +31,7 @@ function deletarServico($servicoDao, $servicoCategoriaDao, $usuarioServicoDao) {
             'message' => 'Ocorreu um erro inesperado!'
         ];
         header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
-        exit;
+        exit();
     }
 
     $deletouServico = $servicoDao->deletar($servicoId);
@@ -47,11 +47,11 @@ function deletarServico($servicoDao, $servicoCategoriaDao, $usuarioServicoDao) {
             'message' => 'Ocorreu um erro inesperado ao deletar o serviço!'
         ];
         header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
-        exit;
+        exit();
     }
 
     header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
-    exit;
+    exit();
 }
 
 deletarServico($servicoDao, $servicoCategoriaDao, $usuarioServicoDao);

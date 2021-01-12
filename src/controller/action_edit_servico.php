@@ -15,6 +15,14 @@ function atualizarServico($servicoDao) {
 
     //Recuperando todos os dados do serviço buscado pelo id porque no formulário não encaminhou o usuario_id e o id do serviço.
     $servicoAtualizado = $servicoDao->buscarPeloId($servicoId);
+    if($servicoAtualizado == false) {
+        $_SESSION['message'] = (Object) [
+            'type'=>'error',
+            'message' => 'Ocorreu um erro inesperado ao atualizar o serviço!'
+        ];
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+        exit();
+    }
     
     //Setando os campos atualizados que vieram do formulário
     $servicoAtualizado->setTitulo($titulo);
@@ -22,13 +30,20 @@ function atualizarServico($servicoDao) {
     $servicoAtualizado->setEnderecoServico($enderecoServico);
     $servicoAtualizado->setValor($valor);
 
-    $_SESSION['message'] = (Object) [
-        'type'=>'info',
-        'message' => 'Serviço editado com sucesso!'
-    ];
-
-    $servicoDao->atualizar($servicoAtualizado);
+    $atualizou = $servicoDao->atualizar($servicoAtualizado);
+    if($atualizou == true) {
+        $_SESSION['message'] = (Object) [
+            'type'=>'info',
+            'message' => 'Serviço editado com sucesso!'
+        ];
+    } else {
+        $_SESSION['message'] = (Object) [
+            'type'=>'error',
+            'message' => 'Ocorreu um erro inesperado ao atualizar o serviço!'
+        ];
+    }
     header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+    exit();
 }
 
 atualizarServico($servicoDao);

@@ -27,9 +27,9 @@ if($contratante_id && $contratado_id && $mensagem) {
 
     $mensagemDaoMysql->salvar($novaProposta);
     header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/jobs');
-    exit;
+    exit();
 
     } else {
         header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/jobs');
-        exit;
+        exit();
 }

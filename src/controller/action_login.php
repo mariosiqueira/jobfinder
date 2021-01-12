@@ -24,7 +24,7 @@ function autenticarUsuario($email, $senha, $usuarioDaoMysql, $lembrar) {
             
             $_SESSION['auth']=serialize($usuarioBuscado);
             header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
-            exit;
+            exit();
 
         } else {
 
@@ -34,7 +34,7 @@ function autenticarUsuario($email, $senha, $usuarioDaoMysql, $lembrar) {
             ];
 
             header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/login');
-            exit;
+            exit();
         }
 
     } else {
@@ -43,7 +43,7 @@ function autenticarUsuario($email, $senha, $usuarioDaoMysql, $lembrar) {
             'message' => 'E-mail não cadastrado!'
         ];
         header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/login');
-        exit;
+        exit();
     }
 }
 
