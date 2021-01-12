@@ -77,4 +77,19 @@ class UsuarioDaoCenario
         }
         return false;
     }
+
+    public function atualizarNomeETelefone($id, $novoNome, $novoTelefone) 
+    {
+        $usuarioDaoMysql = new UsuarioDaoMysql($this->pdo);
+        $aux = $usuarioDaoMysql->buscarPeloId($id);
+        if($aux == false) {
+            return false;
+        }
+        if($novoNome && $novoTelefone) {
+            $aux->setNome($novoNome);
+            $aux->setTelefone($novoTelefone);
+            return $usuarioDaoMysql->atualizar($aux);
+        }
+        return false;
+    }
 }
