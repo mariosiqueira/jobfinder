@@ -23,6 +23,12 @@ function autenticarUsuario($email, $senha, $usuarioDaoMysql, $lembrar) {
             //$usuarioBuscado->setSenha(""); //apaga a senha pra poder gravar na sessão;
             
             $_SESSION['auth']=serialize($usuarioBuscado);
+
+                $_SESSION['message'] = (Object) [
+                    'type'=>'info',
+                    'message' => 'Olá, '.$usuarioBuscado->getNome().'.'
+                ];
+
             header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
             exit();
 
