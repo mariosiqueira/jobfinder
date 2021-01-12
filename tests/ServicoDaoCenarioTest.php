@@ -1,51 +1,96 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\Tests;
-
-use App\Config\Conexao;
-use App\Dao\ServicoDaoMysql;
+use PHPUnit\Framework\TestCase;
 use App\VO\Servico;
+use App\Tests\ServicoDaoCenario;
 
-class ServicoDaoCenario
+final class ServicoDaoCenarioTest extends TestCase
 {
-
-    private $pdo;
-
-    public function __construct()
+    public function testSalvaServico(): void
     {
-        $this->pdo = Conexao::getInstance();
+        // Método usando para pular esse test
+        $this->markTestIncomplete(
+            'Ignorando o test de salvar serviço para nao persistir no banco.'
+        );
+
+        $servico = new Servico();
+        $servico->setTitulo('servico test');
+        $servico->setDescricao('descrição serviço teste');
+        $servico->setEnderecoServico('endereço teste');
+        $servico->setValor(100.53);
+        $servico->setStatus("aberto");
+        $servico->setUsuarioId(1); //id de um usuario cadastrado no banco
+
+        $dao = new ServicoDaoCenario();
+        $this->assertNotNull($dao->cadastrar($servico)); //É esperado que o serviço seja criado com sucesso
     }
 
-    public function cadastrar(Servico $servico)
+    public function testSalvaServicoErro(): void
     {
-        $servicoDaoMysql = new ServicoDaoMysql($this->pdo);
+        $servico = new Servico();
+        $servico->setTitulo('servico test');
+        $servico->setDescricao('descrição serviço teste');
+        $servico->setEnderecoServico('endereço teste');
+        $servico->setValor(100.53);
+        $servico->setStatus("aberto");
+        //$servico->setUsuarioId(2); //id de um usuario cadastrado no banco
 
-        return $servicoDaoMysql->salvar($servico);
+        $dao = new ServicoDaoCenario();
+        $this->assertNull($dao->cadastrar($servico)); //É esperado null pq não foi passado o id do usuario que criou o serviço 
     }
 
-    public function atualizar(int $id, array $novoServico)
+    public function testDelatarServico() :void
     {
-        $servicoDaoMysql = new ServicoDaoMysql($this->pdo);
-        $servico = $servicoDaoMysql->buscarPeloId($id);
+        // Método usando para pular esse test
+        $this->markTestIncomplete(
+            'Ignorando o test de deletar serviço para nao persistir no banco.'
+        );
+        $dao = new ServicoDaoCenario();
 
-        if($servico){
-            array_key_exists("titulo", $novoServico) ? $servico->setTitulo($novoServico['titulo']) : null;
-            array_key_exists("descricao", $novoServico) ? $servico->setDescricao($novoServico['descricao']) : null;
-            array_key_exists("enderecoServico", $novoServico) ? $servico->setEnderecoServico($novoServico['enderecoServico']) : null;
-            array_key_exists("valor", $novoServico) ? $servico->setvalor($novoServico['valor']) : null;
-            array_key_exists("dataPostagem", $novoServico) ? $servico->setDataPostagem($novoServico['dataPostagem']) : null;
-            array_key_exists("status", $novoServico) ? $servico->setStatus($novoServico['status']) : null;
-    
-            return $servicoDaoMysql->atualizar($servico);
-        }
-        return false;
+        $this->assertTrue($dao->deletar(1)); // é esperado o retorno true ao deletar um serviço válido
     }
 
-    public function deletar(int $id)
+    public function testDelatarServicoInexistente() :void
     {
-        $servicoDaoMysql = new ServicoDaoMysql($this->pdo);
+        $dao = new ServicoDaoCenario();
 
-        return $servicoDaoMysql->deletar($id);
+        //foi utilizado um id de um serviço que não existe no banco de dados.
+        $idInvalido = 100;
+
+        $this->assertNotTrue($dao->deletar($idInvalido)); // é esperado o retorno diferente de true ao deletar um serviço inválido.
     }
 
+    public function testUpdateServico() :void
+    {
+        $dao = new ServicoDaoCenario();
+
+        //id de um serviço válido do banco 
+        $idServico = 1;
+
+        // criando novos dados pra editar o serviço
+        $novosDados = array(
+            "titulo" => "Novo titulo update teste 1",
+            "descricao" => "Nova descrição update teste 1",
+            "enderecoServico" => "Novo endereço update teste 1",
+        );
+
+        $this->assertTrue($dao->atualizar($idServico, $novosDados)); // é esperado o retorno de true ao atualizar o serviço.
+    }
+
+    public function testUpdateServicoInexistente() :void
+    {
+        $dao = new ServicoDaoCenario();
+
+        //id de um serviço inválido do banco 
+        $idServico = 100;
+
+        // criando novos dados pra editar o serviço
+        $novosDados = array(
+            "titulo" => "Novo titulo update teste 2",
+            "descricao" => "Nova descrição update teste 2",
+            "enderecoServico" => "Novo endereço update teste 2",
+        );
+
+        $this->assertNotTrue($dao->atualizar($idServico, $novosDados)); // é esperado o retorno diferente de true ao atualizar o serviço com id inválido.
+    }
 }
