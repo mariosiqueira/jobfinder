@@ -140,10 +140,15 @@ class ServicoDaoMysql implements ServicoDao {
     }
 
     public function deletar($id){
-        $sql = $this->pdo->prepare("DELETE FROM servicos WHERE id = :id");
-        $sql->bindValue(':id', $id);
-        if($sql->execute()) {
-            return true;
+        $servico = $this->buscarPeloId($id);
+        if ($servico) {
+            $sql = $this->pdo->prepare("DELETE FROM servicos WHERE id = :id");
+            $sql->bindValue(':id', $id);
+
+            if($sql->execute()) {
+                return true;
+            }
+            return false;
         }
         return false;
     }
