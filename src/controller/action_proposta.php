@@ -15,21 +15,26 @@ $mensagem = filter_input(INPUT_POST,'mensagem', FILTER_SANITIZE_STRING);
 
 if($contratante_id && $contratado_id && $mensagem) {
 
-    $_SESSION['message'] = (Object) [
-        'type'=>'info',
-        'message' => 'Sua proposta foi registrada com sucesso!'
-    ];
-
     $novaProposta = new Mensagem();
     $novaProposta->setContratanteId($contratante_id);
     $novaProposta->setContratadoId($contratado_id);
     $novaProposta->setMensagem($mensagem);
 
-    $mensagemDaoMysql->salvar($novaProposta);
-    header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/jobs');
-    exit();
+    $propostaSalva = $mensagemDaoMysql->salvar($novaProposta);
+    if(!is_null($propostaSalva)) {
 
-    } else {
-        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/jobs');
-        exit();
+        $_SESSION['message'] = (Object) [
+            'type'=>'info',
+            'message' => 'Sua proposta foi registrada com sucesso!'
+        ];
+    }
+
+} else {
+    $_SESSION['message'] = (Object) [
+        'type'=>'error',
+        'message' => 'Ocorreu um erro inesperado no registro da proposta!'
+    ];
 }
+
+header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/jobs');
+exit();
