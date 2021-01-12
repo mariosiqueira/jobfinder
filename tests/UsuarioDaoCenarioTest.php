@@ -66,4 +66,49 @@ final class UsuarioDaoCenarioTest extends TestCase
         $this->assertNull($dao->logar($email, $senha)); //Deve retornar null caso seja passado um e-mail incorreto ou um e-mail de usuario que não seja cadastrado
     }
 
+    public function testBuscarUsuarioPeloEmailCorretamente(): void
+    {
+        $email = "usuario@email.com";
+
+        $dao = new UsuarioDaoCenario();
+        $this->assertNotNull($dao->buscarUsuarioPeloEmail($email)); //Deve retornar not null caso exista um usuário com o e-mail cadastrado
+    }
+
+    public function testBuscarUsuarioPeloEmailIncorretamente(): void
+    {
+        $email = "usuario@email.co";
+
+        $dao = new UsuarioDaoCenario();
+        $this->assertNull($dao->buscarUsuarioPeloEmail($email)); //Deve retornar not null caso exista um usuário com o e-mail cadastrado
+    }
+
+    public function testAtualizarUsuarioComIdInexistente(): void
+    {
+        $usuario = new Usuario();
+        $usuario->setId(-1); //Id inválido
+        $usuario->setNome('novo nome');
+        $usuario->setApelido('novo apelido');
+        $usuario->setTelefone('(00) 0 0000-0000');
+        $usuario->setEmail('usuario@email.com'); //usando e-mail já existente
+        $usuario->setSenha(md5('12345'));
+        $usuario->setFotoPerfil('default-user-img.jpg');
+
+        $dao = new UsuarioDaoCenario();
+        $this->assertFalse($dao->atualizar($usuario)); //Um valor falso é esperado atribuindo-se um id inexistente no banco de dados
+    }
+    public function testAtualizarUsuarioComIdExistente(): void
+    {
+        $usuario = new Usuario();
+        $usuario->setId(21); //É necessário passar um id válido para poder atualizar o usuário
+        $usuario->setNome('novo nome');
+        $usuario->setApelido('novo apelido');
+        $usuario->setTelefone('(00) 0 0000-0000');
+        $usuario->setEmail('usuario@email.com'); //usando e-mail já existente
+        $usuario->setSenha(md5('12345'));
+        $usuario->setFotoPerfil('default-user-img.jpg');
+
+        $dao = new UsuarioDaoCenario();
+        $this->assertTrue($dao->atualizar($usuario)); //Um valor true será esperado caso o id seja válido
+    }
+
 }

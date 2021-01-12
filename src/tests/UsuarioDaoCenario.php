@@ -27,4 +27,33 @@ class UsuarioDaoCenario
             return null;
         } 
     }
+
+    public function buscarUsuarioPeloEmail($email) 
+    {
+        $usuarioDaoMysql = new UsuarioDaoMysql(Conexao::getInstance());
+
+        $aux = $usuarioDaoMysql->buscarPeloEmail($email);
+
+        return $aux == false ? null : $aux;
+    }
+
+    public function buscarUsuarioPeloId($id) 
+    {
+        $usuarioDaoMysql = new UsuarioDaoMysql(Conexao::getInstance());
+
+        $aux = $usuarioDaoMysql->buscarPeloId($id);
+
+        return $aux == false ? null : $aux;
+    }
+
+    public function atualizar(Usuario $usuario) 
+    {
+        $usuarioDaoMysql = new UsuarioDaoMysql(Conexao::getInstance());
+        $aux = $usuarioDaoMysql->buscarPeloId($usuario->getId());
+        if($aux == false) {
+            return false;
+        }
+
+        return $usuarioDaoMysql->atualizar($usuario);
+    }
 }
