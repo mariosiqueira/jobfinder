@@ -1,5 +1,7 @@
 <?php
 namespace App\Dao;
+use App\Dao\ServicoDaoMysql;
+use App\Dao\CategoriaDaoMysql;
 use App\VO\ServicoCategoria;
 use App\VO\ServicoCategoriaDao;
 use PDO;
@@ -7,6 +9,8 @@ use PDO;
 class ServicoCategoriaDaoMysql implements ServicoCategoriaDao {
 
     private $pdo;
+    private $servicoDaoMysql;
+    private $categoriaDaoMysql;
 
     /**
      * O PDO vai ser passado por parâmetro no arquivo que 
@@ -15,6 +19,8 @@ class ServicoCategoriaDaoMysql implements ServicoCategoriaDao {
 
     public function __construct(PDO $driver){
         $this->pdo = $driver;
+        $this->servicoDaoMysql = new ServicoDaoMysql($pdo);
+        $this->categoriaDaoMysql = new CategoriaDaoMysql($pdo);
     }
 
     /**
@@ -52,39 +58,51 @@ class ServicoCategoriaDaoMysql implements ServicoCategoriaDao {
     }
 
     public function buscarPeloIdDoServico($servicoId) {
-        $arrayServicoCategorias = [];
 
-        $sql = $this->pdo->prepare("SELECT * FROM servico_categorias WHERE servico_id = :servico_id");
-        $sql->bindValue(':servico_id', $servicoId);
-        $sql->execute();
-        if($sql->rowCount() > 0){
-            $arrayDadosServicoCategorias = $sql->fetchAll();
-            foreach ($arrayDadosServicoCategorias as $dadoServicoCategoria) {
-                $servicoCategoria = new ServicoCategoria();
-                $servicoCategoria->setServicoId($dadoServicoCategoria['servico_id']);
-                $servicoCategoria->setCategoriaId($dadoServicoCategoria['categoria_id']);
-                $arrayServicoCategorias[] = $servicoCategoria;
+        if ($this->servicoDaoMysql->buscarPeloId($servicoId)) {
+            
+            $arrayServicoCategorias = [];
+    
+            $sql = $this->pdo->prepare("SELECT * FROM servico_categorias WHERE servico_id = :servico_id");
+            $sql->bindValue(':servico_id', $servicoId);
+            $sql->execute();
+            if($sql->rowCount() > 0){
+                $arrayDadosServicoCategorias = $sql->fetchAll();
+                foreach ($arrayDadosServicoCategorias as $dadoServicoCategoria) {
+                    $servicoCategoria = new ServicoCategoria();
+                    $servicoCategoria->setServicoId($dadoServicoCategoria['servico_id']);
+                    $servicoCategoria->setCategoriaId($dadoServicoCategoria['categoria_id']);
+                    $arrayServicoCategorias[] = $servicoCategoria;
+                }
+                return $arrayServicoCategorias;
             }
+            return false;
         }
-        return $arrayServicoCategorias;
+        return false;
     }
 
-    public function buscarPeloIdDaSCategoria($categoriaId) {
-        $arrayServicoCategorias = [];
+    public function buscarPeloIdDaCategoria($categoriaId) {
 
-        $sql = $this->pdo->prepare("SELECT * FROM servico_categorias WHERE categoria_id = :categoria_id");
-        $sql->bindValue(':categoria_id', $categoriaId);
-        $sql->execute();
-        if($sql->rowCount() > 0){
-            $arrayDadosServicoCategorias = $sql->fetchAll();
-            foreach ($arrayDadosServicoCategorias as $dadoServicoCategoria) {
-                $servicoCategoria = new ServicoCategoria();
-                $servicoCategoria->setServicoId($dadoServicoCategoria['servico_id']);
-                $servicoCategoria->setCategoriaId($dadoServicoCategoria['categoria_id']);
-                $arrayServicoCategorias[] = $servicoCategoria;
+        if ($this->categoriaDaoMysql->buscarPeloId($categoriaId)) {
+
+            $arrayServicoCategorias = [];
+
+            $sql = $this->pdo->prepare("SELECT * FROM servico_categorias WHERE categoria_id = :categoria_id");
+            $sql->bindValue(':categoria_id', $categoriaId);
+            $sql->execute();
+            if($sql->rowCount() > 0){
+                $arrayDadosServicoCategorias = $sql->fetchAll();
+                foreach ($arrayDadosServicoCategorias as $dadoServicoCategoria) {
+                    $servicoCategoria = new ServicoCategoria();
+                    $servicoCategoria->setServicoId($dadoServicoCategoria['servico_id']);
+                    $servicoCategoria->setCategoriaId($dadoServicoCategoria['categoria_id']);
+                    $arrayServicoCategorias[] = $servicoCategoria;
+                }
+                return $arrayServicoCategorias;
             }
+            return false;
         }
-        return $arrayServicoCategorias;
+        return false;
     }
 
     public function buscarPeloNomeDaCategoria($nome) {
@@ -118,11 +136,16 @@ class ServicoCategoriaDaoMysql implements ServicoCategoriaDao {
 
     //Deleta uma categoria que foi associada a um determinado serviço
     public function deletarCategoriaDeUmServico($servicoId, $categoriaId) {
-        $sql = $this->pdo->prepare("DELETE FROM servico_categorias WHERE (servico_id = :servico_id) AND (categoria_id = :categoria_id)");
-        $sql->bindValue(':servico_id', $servicoId);
-        $sql->bindValue(':categoria_id', $categoriaId);
-        if($sql->execute()) {
-            return true;
+                
+        if ($this->buscarPeloIdDoServico($servicoId) && $this->buscarPeloIdDaCategoria($categoriaId)) {
+
+            $sql = $this->pdo->prepare("DELETE FROM servico_categorias WHERE (servico_id = :servico_id) AND (categoria_id = :categoria_id)");
+            $sql->bindValue(':servico_id', $servicoId);
+            $sql->bindValue(':categoria_id', $categoriaId);
+            if($sql->execute()) {
+                return true;
+            }
+            return false;
         }
         return false;
     }

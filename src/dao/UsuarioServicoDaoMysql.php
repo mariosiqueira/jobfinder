@@ -173,10 +173,15 @@ class UsuarioServicoDaoMysql implements UsuarioServicoDao {
     }
 
     public function deletar($id){
-        $sql = $this->pdo->prepare("DELETE FROM usuario_servico WHERE id = :id");
-        $sql->bindValue(':id', $id);
-        if($sql->execute()) {
-            return true;
+        $usuario_servico = $this->buscarPeloId($id);
+        
+        if ($usuario_servico) {
+            $sql = $this->pdo->prepare("DELETE FROM usuario_servico WHERE id = :id");
+            $sql->bindValue(':id', $id);
+            if($sql->execute()) {
+                return true;
+            }
+            return false;
         }
         return false;
     }
