@@ -85,7 +85,7 @@ final class UsuarioDaoCenarioTest extends TestCase
     public function testAtualizarUsuarioComIdInexistente(): void
     {
         $usuario = new Usuario();
-        $usuario->setId(-1); //Id inválido
+        $usuario->setId(-1); //Id inválido para o teste retornar false
         $usuario->setNome('novo nome');
         $usuario->setApelido('novo apelido');
         $usuario->setTelefone('(00) 0 0000-0000');
@@ -122,7 +122,7 @@ final class UsuarioDaoCenarioTest extends TestCase
 
     public function testAtualizarApelidoComIdInexistente(): void
     {
-        $id = -1; //É necessário passar um id válido para poder atualizar o usuário
+        $id = -1; //É necessário passar um id inválido para o teste retornar false
         $apelido = 'novo apelido';
 
         $dao = new UsuarioDaoCenario();
@@ -135,5 +135,32 @@ final class UsuarioDaoCenarioTest extends TestCase
         $apelido = '';
         $dao = new UsuarioDaoCenario();
         $this->assertFalse($dao->atualizarApelido($id, $apelido)); //Um valor false será esperado
+    }
+
+    public function testAtualizarNomeETelefoneComIdExistente(): void
+    {
+        $id = 40; //É necessário passar um id válido para poder atualizar o usuário
+        $novoNome = "Novo Nome de Usuário";
+        $novoTelefone = "(87) 9 9999-9999";
+        $dao = new UsuarioDaoCenario();
+        $this->assertTrue($dao->atualizarNomeETelefone($id, $novoNome, $novoTelefone)); //Um retorno true é esperado
+    }
+
+    public function testAtualizarNomeETelefoneComIdInexistente(): void
+    {
+        $id = -1; //É necessário passar um id inválido para o teste retornar false
+        $novoNome = "Novo Nome de Usuário";
+        $novoTelefone = "(87) 9 9999-9999";
+        $dao = new UsuarioDaoCenario();
+        $this->assertFalse($dao->atualizarNomeETelefone($id, $novoNome, $novoTelefone)); //Um retorno false é esperado
+    }
+
+    public function testAtualizarNomeETelefoneComCampoVazio(): void
+    {
+        $id = 40; //É necessário passar um id válido para poder atualizar o usuário
+        $novoNome = "Novo Nome de Usuário";
+        $novoTelefone = "";//Qualquer dos campos vazio fará com que o teste retorne false
+        $dao = new UsuarioDaoCenario();
+        $this->assertFalse($dao->atualizarNomeETelefone($id, $novoNome, $novoTelefone)); //Um valor false é esperado
     }
 }
