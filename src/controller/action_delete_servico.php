@@ -12,15 +12,46 @@ $usuarioServicoDao = new UsuarioServicoDaoMysql($pdo);
 
 function deletarServico($servicoDao, $servicoCategoriaDao, $usuarioServicoDao) {
     $servicoId = intval(filter_input(INPUT_POST, 'id'));
-    $servicoCategoriaDao->deletar($servicoId); //para deletar um serviço é necessário deletar a categoria que faz associação a ele por causa das chaves estrangeiras
-    $usuarioServicoDao->deletarPeloServicoId($servicoId); //Deleta a associação do id do serviço na tabela usuario_servico do banco de dados
+    $deletouCategoria = $servicoCategoriaDao->deletar($servicoId); //para deletar um serviço é necessário deletar a categoria que faz associação a ele por causa das chaves estrangeiras
+    
+    if($deletouCategoria == false) {
+        $_SESSION['message'] = (Object) [
+            'type'=>'error',
+            'message' => 'Ocorreu um erro inesperado!'
+        ];
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+        exit();
+    }
 
-    $_SESSION['message'] = (Object) [
-        'type'=>'info',
-        'message' => 'Serviço deletado com sucesso!'
-    ];
-    $servicoDao->deletar($servicoId);
+    $deletouUsuarioServico = $usuarioServicoDao->deletarPeloServicoId($servicoId); //Deleta a associação do id do serviço na tabela usuario_servico do banco de dados
+
+    if($deletouUsuarioServico == false) {
+        $_SESSION['message'] = (Object) [
+            'type'=>'error',
+            'message' => 'Ocorreu um erro inesperado!'
+        ];
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+        exit();
+    }
+
+    $deletouServico = $servicoDao->deletar($servicoId);
+
+    if($deletouServico == true) {
+        $_SESSION['message'] = (Object) [
+            'type'=>'info',
+            'message' => 'Serviço deletado com sucesso!'
+        ];
+    } else {
+        $_SESSION['message'] = (Object) [
+            'type'=>'error',
+            'message' => 'Ocorreu um erro inesperado ao deletar o serviço!'
+        ];
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+        exit();
+    }
+
     header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+    exit();
 }
 
 deletarServico($servicoDao, $servicoCategoriaDao, $usuarioServicoDao);

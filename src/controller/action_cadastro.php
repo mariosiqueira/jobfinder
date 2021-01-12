@@ -36,14 +36,14 @@ if($senha && $nome && $telefone && $email) {
             ];
             $_SESSION['auth'] = serialize($novoUsuario);
             header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
-            exit;
+            exit();
         } else {
             $_SESSION['message'] = (Object) [
                 'type'=>'error',
                 'message' => 'Aconteceu um erro inesperado!'
             ];
             header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/register');
-            exit;
+            exit();
 
         }
     } else {
@@ -52,10 +52,10 @@ if($senha && $nome && $telefone && $email) {
             'message' => 'Este e-mail já está cadastrado!'
         ];
         header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/register');
-        exit;
+        exit();
     }
 
 } else {
     header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/register');
-    exit;
+    exit();
 }

@@ -8,6 +8,7 @@ $pdo = Conexao::getInstance();
 $usuarioDao = new UsuarioDaoMysql($pdo);
 
 function editarDados($usuarioDao){
+    session_start();
     $novoNome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING);
     $novoTelefone = filter_input(INPUT_POST, 'telefone', FILTER_SANITIZE_STRING);
 
@@ -17,17 +18,30 @@ function editarDados($usuarioDao){
 
         $usuario->setNome($novoNome); //Seta um novo nome para o usuário
         $usuario->setTelefone($novoTelefone); //Seta um novo telefone para o usuário
-        
-        session_start();
-        $_SESSION['message'] = (Object) [
-            'type'=>'info',
-            'message' => 'Dados editados com sucesso!'
-        ];
 
-        $usuarioDao->atualizar($usuario); //Grava as atualizações no banco de dados
+        $atualizouUsuario = $usuarioDao->atualizar($usuario); //Grava as atualizações no banco de dados
+
+        if($atualizouUsuario == true) {
+            $_SESSION['message'] = (Object) [
+                'type'=>'info',
+                'message' => 'Dados editados com sucesso!'
+            ];
+        } else {
+            $_SESSION['message'] = (Object) [
+                'type'=>'error',
+                'message' => 'Ocorreu um erro inesperado ao salvar as alterações!'
+            ];
+        }
         
         $usuario->setSenha(""); //Zera a senha para ser salva na sessão
         $_SESSION['auth'] = serialize($usuario); //salva o usuário na sessão
+    } else {
+
+        $_SESSION['message'] = (Object) [
+            'type'=>'error',
+            'message' => 'O nome e/ou o telefone não pode ser vazio!'
+        ];
+        
     }
     
     header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile'); //encaminha para a página de perfil

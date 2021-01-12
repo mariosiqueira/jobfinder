@@ -62,6 +62,7 @@ function cadastrarServico($servicoDao, $categoriaDao, $servicoCategoriaDao) {
         ];
     }
     header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+    exit();
 }
 
 cadastrarServico($servicoDao, $categoriaDao, $servicoCategoriaDao);
