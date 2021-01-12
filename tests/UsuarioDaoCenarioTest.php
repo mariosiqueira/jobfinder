@@ -88,10 +88,9 @@ final class UsuarioDaoCenarioTest extends TestCase
         $usuario->setId(-1); //Id inválido para o teste retornar false
         $usuario->setNome('novo nome');
         $usuario->setApelido('novo apelido');
-        $usuario->setTelefone('(00) 0 0000-0000');
-        $usuario->setEmail('usuario@email.com'); //usando e-mail já existente
+        $usuario->setTelefone('(87) 9 9999-9999');
         $usuario->setSenha(md5('12345'));
-        $usuario->setFotoPerfil('default-user-img.jpg');
+        $usuario->setFotoPerfil('novafoto.jpg');
 
         $dao = new UsuarioDaoCenario();
         $this->assertFalse($dao->atualizar($usuario)); //Um valor falso é esperado atribuindo-se um id inexistente no banco de dados
@@ -99,13 +98,12 @@ final class UsuarioDaoCenarioTest extends TestCase
     public function testAtualizarUsuarioComIdExistente(): void
     {
         $usuario = new Usuario();
-        $usuario->setId(40); //É necessário passar um id válido para poder atualizar o usuário
+        $usuario->setId(40); //Id válido para o teste retornar true
         $usuario->setNome('novo nome');
         $usuario->setApelido('novo apelido');
-        $usuario->setTelefone('(00) 0 0000-0000');
-        $usuario->setEmail('usuario@email.com'); //usando e-mail já existente
+        $usuario->setTelefone('(87) 9 9999-9999');
         $usuario->setSenha(md5('12345'));
-        $usuario->setFotoPerfil('default-user-img.jpg');
+        $usuario->setFotoPerfil('novafoto.jpg');
 
         $dao = new UsuarioDaoCenario();
         $this->assertTrue($dao->atualizar($usuario)); //Um valor true será esperado caso o id seja válido
