@@ -38,8 +38,9 @@ class CategoriaDaoMysql implements CategoriaDao {
 
                 $arrayCategorias[] = $categoria; 
             }
+            return $arrayCategorias;
         }
-        return $arrayCategorias;
+        return false;
     }
 
     public function buscarPeloId($id){
@@ -76,8 +77,9 @@ class CategoriaDaoMysql implements CategoriaDao {
 
                 $arrayCategorias[] = $categoria; 
             }
+            return $arrayCategorias;
         }
-        return $arrayCategorias;
+        return false;
 
     }
   
@@ -93,10 +95,14 @@ class CategoriaDaoMysql implements CategoriaDao {
     }
 
     public function deletar($id){
-        $sql = $this->pdo->prepare("DELETE FROM categorias WHERE id = :id");
-        $sql->bindValue(':id', $id);
-        if($sql->execute()) {
-            return true;
+        
+        if ($this->buscarPeloId($id)) {
+            $sql = $this->pdo->prepare("DELETE FROM categorias WHERE id = :id");
+            $sql->bindValue(':id', $id);
+            if($sql->execute()) {
+                return true;
+            }
+            return false;
         }
         return false;
     }
