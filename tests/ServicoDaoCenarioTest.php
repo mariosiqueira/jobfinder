@@ -1,41 +1,51 @@
-<?php declare(strict_types=1);
+<?php
 
-use PHPUnit\Framework\TestCase;
+namespace App\Tests;
+
+use App\Config\Conexao;
+use App\Dao\ServicoDaoMysql;
 use App\VO\Servico;
-use App\Tests\ServicoDaoCenario;
 
-final class ServicoDaoCenarioTest extends TestCase
+class ServicoDaoCenario
 {
-    public function testSalvaServico(): void
+
+    private $pdo;
+
+    public function __construct()
     {
-        // Método usando para pular esse test
-        $this->markTestIncomplete(
-            'Ignorando o test de salvar serviço para nao persistir no banco.'
-        );
-
-        $servico = new Servico();
-        $servico->setTitulo('servico test');
-        $servico->setDescricao('descrição serviço teste');
-        $servico->setEnderecoServico('endereço teste');
-        $servico->setValor(100.53);
-        $servico->setStatus("aberto");
-        $servico->setUsuarioId(1); //id de um usuario cadastrado no banco
-
-        $dao = new ServicoDaoCenario();
-        $this->assertNotNull($dao->cadastrar($servico)); //É esperado que o serviço seja criado com sucesso
+        $this->pdo = Conexao::getInstance();
     }
 
-    public function testSalvaServicoErro(): void
+    public function cadastrar(Servico $servico)
     {
-        $servico = new Servico();
-        $servico->setTitulo('servico test');
-        $servico->setDescricao('descrição serviço teste');
-        $servico->setEnderecoServico('endereço teste');
-        $servico->setValor(100.53);
-        $servico->setStatus("aberto");
-        //$servico->setUsuarioId(2); //id de um usuario cadastrado no banco
+        $servicoDaoMysql = new ServicoDaoMysql($this->pdo);
 
-        $dao = new ServicoDaoCenario();
-        $this->assertNull($dao->cadastrar($servico)); //É esperado null pq não foi passado o id do usuario que criou o serviço 
+        return $servicoDaoMysql->salvar($servico);
     }
+
+    public function atualizar(int $id, array $novoServico)
+    {
+        $servicoDaoMysql = new ServicoDaoMysql($this->pdo);
+        $servico = $servicoDaoMysql->buscarPeloId($id);
+
+        if($servico){
+            array_key_exists("titulo", $novoServico) ? $servico->setTitulo($novoServico['titulo']) : null;
+            array_key_exists("descricao", $novoServico) ? $servico->setDescricao($novoServico['descricao']) : null;
+            array_key_exists("enderecoServico", $novoServico) ? $servico->setEnderecoServico($novoServico['enderecoServico']) : null;
+            array_key_exists("valor", $novoServico) ? $servico->setvalor($novoServico['valor']) : null;
+            array_key_exists("dataPostagem", $novoServico) ? $servico->setDataPostagem($novoServico['dataPostagem']) : null;
+            array_key_exists("status", $novoServico) ? $servico->setStatus($novoServico['status']) : null;
+    
+            return $servicoDaoMysql->atualizar($servico);
+        }
+        return false;
+    }
+
+    public function deletar(int $id)
+    {
+        $servicoDaoMysql = new ServicoDaoMysql($this->pdo);
+
+        return $servicoDaoMysql->deletar($id);
+    }
+
 }
