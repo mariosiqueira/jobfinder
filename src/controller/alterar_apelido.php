@@ -36,6 +36,12 @@ function atualizarApelido($usuarioDao){
 
         $usuario->setSenha(""); //remove a senha do usuário para ser passado para a sessão.
         $_SESSION['auth'] = serialize($usuario);
+
+    } else {
+        $_SESSION['message'] = (Object) [
+            'type'=>'error',
+            'message' => 'O apelido não pode ser vazio!'
+        ];
     }
     
     header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
