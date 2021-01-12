@@ -20,7 +20,7 @@ function autenticarUsuario($email, $senha, $usuarioDaoMysql, $lembrar) {
 
             //Caso o checkbox lembrar de mim na página de login tenha sido marcado, um cookie com o id do usuário será salvo...OBS: Falta implementar o cookie.
 
-            //$usuarioBuscado->setSenha(""); //apaga a senha pra poder gravar na sessão;
+            $usuarioBuscado->setSenha(""); //apaga a senha pra poder gravar na sessão;
             
             $_SESSION['auth']=serialize($usuarioBuscado);
 
