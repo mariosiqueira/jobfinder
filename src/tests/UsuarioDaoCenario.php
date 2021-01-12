@@ -5,6 +5,8 @@ namespace App\Tests;
 use App\Config\Conexao;
 use App\Dao\UsuarioDaoMysql;
 use App\VO\Usuario;
+use App\Dao\ServicoDaoMysql;
+use App\VO\Servico;
 
 class UsuarioDaoCenario
 {
@@ -60,8 +62,13 @@ class UsuarioDaoCenario
         if($aux == false) {
             return false;
         }
+        $aux->setNome($usuario->getNome());
+        $aux->setApelido($usuario->getApelido());
+        $aux->setTelefone($usuario->getTelefone());
+        $aux->setSenha($usuario->getSenha());
+        $aux->setFotoPerfil($usuario->getFotoPerfil());
 
-        return $usuarioDaoMysql->atualizar($usuario);
+        return $usuarioDaoMysql->atualizar($aux);
     }
 
     public function atualizarApelido($id, $apelido) 
