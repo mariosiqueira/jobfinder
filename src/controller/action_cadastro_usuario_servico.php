@@ -42,16 +42,43 @@ function cadastrarUsuarioServico($usuarioServicoDao, $avaliacaoDao, $servicoDao)
     $usuarioServico->setContratadoId($contratado_id);
     $servico = $servicoDao->buscarPeloId($servico_id);
     $servico->setStatus("finalizado");
-    $servicoDao->atualizar($servico);
+    $servicoFinalizado = $servicoDao->atualizar($servico);
 
     session_start();
+    if($servicoFinalizado == false) {
+        $_SESSION['message'] = (Object) [
+            'type'=>'error',
+            'message' => 'Ocorreu um erro inesperado ao finalizar o serviço'
+        ];
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+        exit();
+    }
+    
+    $resultadoSalvarUsuarioServico = $usuarioServicoDao->salvar($usuarioServico);
+    
+    if(is_null($resultadoSalvarUsuarioServico)) {
+        $_SESSION['message'] = (Object) [
+            'type'=>'error',
+            'message' => 'Ocorreu um erro inesperado ao finalizar o serviço'
+        ];
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+        exit();
+    }
+
+    $avaliacaoDao->salvar($avaliacao);
+    if(is_null($avaliacao)) {
+        $_SESSION['message'] = (Object) [
+            'type'=>'error',
+            'message' => 'Ocorreu um erro inesperado ao finalizar o serviço'
+        ];
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+        exit();
+    }
+
     $_SESSION['message'] = (Object) [
         'type'=>'info',
         'message' => 'O serviço foi finalizado com sucesso!'
     ];
-
-    $usuarioServicoDao->salvar($usuarioServico);
-    $avaliacaoDao->salvar($avaliacao);
 
     header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
     exit();
