@@ -99,7 +99,7 @@ final class UsuarioDaoCenarioTest extends TestCase
     public function testAtualizarUsuarioComIdExistente(): void
     {
         $usuario = new Usuario();
-        $usuario->setId(21); //É necessário passar um id válido para poder atualizar o usuário
+        $usuario->setId(40); //É necessário passar um id válido para poder atualizar o usuário
         $usuario->setNome('novo nome');
         $usuario->setApelido('novo apelido');
         $usuario->setTelefone('(00) 0 0000-0000');
@@ -111,4 +111,29 @@ final class UsuarioDaoCenarioTest extends TestCase
         $this->assertTrue($dao->atualizar($usuario)); //Um valor true será esperado caso o id seja válido
     }
 
+    public function testAtualizarApelidoComIdExistenteEApelidoPreenchido(): void
+    {
+        $id = 40; //É necessário passar um id válido para poder atualizar o usuário
+        $apelido = 'novo apelido';
+
+        $dao = new UsuarioDaoCenario();
+        $this->assertTrue($dao->atualizarApelido($id, $apelido)); //Um valor true será esperado caso o id seja válido e o apelido seja preenchido
+    }
+
+    public function testAtualizarApelidoComIdInexistente(): void
+    {
+        $id = -1; //É necessário passar um id válido para poder atualizar o usuário
+        $apelido = 'novo apelido';
+
+        $dao = new UsuarioDaoCenario();
+        $this->assertFalse($dao->atualizarApelido($id, $apelido)); //Um valor false será esperado
+    }
+
+    public function testAtualizarApelidoComApelidoVazio(): void
+    {
+        $id = 40; //É necessário passar um id válido para poder atualizar o usuário
+        $apelido = '';
+        $dao = new UsuarioDaoCenario();
+        $this->assertFalse($dao->atualizarApelido($id, $apelido)); //Um valor false será esperado
+    }
 }

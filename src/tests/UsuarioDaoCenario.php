@@ -63,4 +63,18 @@ class UsuarioDaoCenario
 
         return $usuarioDaoMysql->atualizar($usuario);
     }
+
+    public function atualizarApelido($id, $apelido) 
+    {
+        $usuarioDaoMysql = new UsuarioDaoMysql($this->pdo);
+        $aux = $usuarioDaoMysql->buscarPeloId($id);
+        if($aux == false) {
+            return false;
+        }
+        if($apelido) {
+            $aux->setApelido($apelido);
+            return $usuarioDaoMysql->atualizar($aux);
+        }
+        return false;
+    }
 }
