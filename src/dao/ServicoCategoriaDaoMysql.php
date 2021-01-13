@@ -19,8 +19,8 @@ class ServicoCategoriaDaoMysql implements ServicoCategoriaDao {
 
     public function __construct(PDO $driver){
         $this->pdo = $driver;
-        $this->servicoDaoMysql = new ServicoDaoMysql($pdo);
-        $this->categoriaDaoMysql = new CategoriaDaoMysql($pdo);
+        $this->servicoDaoMysql = new ServicoDaoMysql($this->pdo);
+        $this->categoriaDaoMysql = new CategoriaDaoMysql($this->pdo);
     }
 
     /**
