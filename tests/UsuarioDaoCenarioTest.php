@@ -98,7 +98,7 @@ final class UsuarioDaoCenarioTest extends TestCase
     public function testAtualizarUsuarioComIdExistente(): void
     {
         $usuario = new Usuario();
-        $usuario->setId(40); //Id válido para o teste retornar true
+        $usuario->setId(1); //Id válido para o teste retornar true
         $usuario->setNome('novo nome');
         $usuario->setApelido('novo apelido');
         $usuario->setTelefone('(87) 9 9999-9999');
@@ -111,7 +111,7 @@ final class UsuarioDaoCenarioTest extends TestCase
 
     public function testAtualizarApelidoComIdExistenteEApelidoPreenchido(): void
     {
-        $id = 40; //É necessário passar um id válido para poder atualizar o usuário
+        $id = 1; //É necessário passar um id válido para poder atualizar o usuário
         $apelido = 'novo apelido';
 
         $dao = new UsuarioDaoCenario();
@@ -129,7 +129,7 @@ final class UsuarioDaoCenarioTest extends TestCase
 
     public function testAtualizarApelidoComApelidoVazio(): void
     {
-        $id = 40; //É necessário passar um id válido para poder atualizar o usuário
+        $id = 1; //É necessário passar um id válido para poder atualizar o usuário
         $apelido = '';
         $dao = new UsuarioDaoCenario();
         $this->assertFalse($dao->atualizarApelido($id, $apelido)); //Um valor false será esperado
@@ -137,7 +137,7 @@ final class UsuarioDaoCenarioTest extends TestCase
 
     public function testAtualizarNomeETelefoneComIdExistente(): void
     {
-        $id = 40; //É necessário passar um id válido para poder atualizar o usuário
+        $id = 1; //É necessário passar um id válido para poder atualizar o usuário
         $novoNome = "Novo Nome de Usuário";
         $novoTelefone = "(87) 9 9999-9999";
         $dao = new UsuarioDaoCenario();
@@ -155,10 +155,22 @@ final class UsuarioDaoCenarioTest extends TestCase
 
     public function testAtualizarNomeETelefoneComCampoVazio(): void
     {
-        $id = 40; //É necessário passar um id válido para poder atualizar o usuário
+        $id = 1; //É necessário passar um id válido para poder atualizar o usuário
         $novoNome = "Novo Nome de Usuário";
         $novoTelefone = "";//Qualquer dos campos vazio fará com que o teste retorne false
         $dao = new UsuarioDaoCenario();
         $this->assertFalse($dao->atualizarNomeETelefone($id, $novoNome, $novoTelefone)); //Um valor false é esperado
+    }
+
+    public function testDelatarUsuario() :void
+    {
+        // Método usando para pular esse test
+        $this->markTestIncomplete(
+            'Ignorando o test de deletar usuário para nao persistir no banco.'
+        );
+        $id = 1; //Id de usuário cadastrado
+        $dao = new UsuarioDaoCenario();
+
+        $this->assertTrue($dao->deletar($id)); // é esperado o retorno true ao deletar um usuário com id válido
     }
 }

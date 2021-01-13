@@ -99,4 +99,11 @@ class UsuarioDaoCenario
         }
         return false;
     }
+
+    public function deletar(int $id)
+    {
+        $usuarioDaoMysql = new UsuarioDaoMysql($this->pdo);
+
+        return $usuarioDaoMysql->deletar($id);
+    }
 }
