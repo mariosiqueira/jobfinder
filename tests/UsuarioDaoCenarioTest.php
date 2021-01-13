@@ -95,6 +95,7 @@ final class UsuarioDaoCenarioTest extends TestCase
         $dao = new UsuarioDaoCenario();
         $this->assertFalse($dao->atualizar($usuario)); //Um valor falso é esperado atribuindo-se um id inexistente no banco de dados
     }
+
     public function testAtualizarUsuarioComIdExistente(): void
     {
         $usuario = new Usuario();
