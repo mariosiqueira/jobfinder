@@ -5,8 +5,6 @@ namespace App\Tests;
 use App\Config\Conexao;
 use App\Dao\UsuarioDaoMysql;
 use App\VO\Usuario;
-use App\Dao\ServicoDaoMysql;
-use App\VO\Servico;
 
 class UsuarioDaoCenario
 {
