@@ -5,8 +5,6 @@ namespace App\Tests;
 use App\Config\Conexao;
 use App\Dao\UsuarioDaoMysql;
 use App\VO\Usuario;
-use App\Dao\ServicoDaoMysql;
-use App\VO\Servico;
 
 class UsuarioDaoCenario
 {
@@ -98,5 +96,12 @@ class UsuarioDaoCenario
             return $usuarioDaoMysql->atualizar($aux);
         }
         return false;
+    }
+
+    public function deletar(int $id)
+    {
+        $usuarioDaoMysql = new UsuarioDaoMysql($this->pdo);
+
+        return $usuarioDaoMysql->deletar($id);
     }
 }
