@@ -13,7 +13,7 @@ final class AvaliacaoDaoCenarioTest extends TestCase
             'Ignorando o test de salvar serviço para nao persistir no banco.'
         );
         $contratadoId = 1; //Id válido do usuario teste
-        $contratanteId = 23; //Id válido de um contratante que avalia o serviço do contratado
+        $contratanteId = 2; //Id válido de um contratante que avalia o serviço do contratado
         $valorAvaliacao = 4;
 
         $avaliacao = new Avaliacao();
