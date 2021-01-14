@@ -23,4 +23,10 @@ class AvaliacaoDaoCenario
         return $avaliacaoDaoMysql->salvar($avaliacao);
     }
 
+    public function buscarAvaliacaoUsuario($idUsuario) {
+        $avaliacaoDaoMysql = new AvaliacaoDaoMysql($this->pdo);
+
+        return $avaliacaoDaoMysql->buscarAvaliacoesUsuario($idUsuario);
+    }
+
 }
