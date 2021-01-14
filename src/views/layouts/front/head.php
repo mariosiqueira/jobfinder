@@ -34,7 +34,7 @@
 
                 </li>
                 <a href="<?php echo $routes->cadastro?>" id="cadastro" class="btn btn-outline-light ml-2 mb-2">Cadastre-se</a>
-                <a href="<?php echo $routes->login?>" class="btn ml-2 mb-2" style="background-color:DarkSlateGray; color:#fff">Login</a>
+                <a href="<?php echo $routes->login?>" id="login" class="btn ml-2 mb-2" style="background-color:DarkSlateGray; color:#fff">Login</a>
             </ul>
         </div>
     </nav>
