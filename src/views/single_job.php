@@ -10,6 +10,7 @@
 <?php require "layouts/app/head.php";
     use App\Config\Conexao;//Importa o PDO
         
+    use App\Dao\UsuarioDaoMysql; 
     use App\Dao\ServicoDaoMysql; 
     use App\Dao\ServicoCategoriaDaoMysql; 
     use App\Dao\CategoriaDaoMysql; 
@@ -18,11 +19,16 @@
 
     $servicoDao = new ServicoDaoMysql($pdo);
     $servico = $servicoDao->buscarPeloId($id_job);
-    
+
     if (!$servico) { //verifica se retornou um serviço valido do banco
         header("location: $routes->jobs"); //se nao existir ele redericiona para jobs
-        
     }
+
+    // pegando o usuario a quem pertence o job
+    $usuarioDaoMysql = new UsuarioDaoMysql($pdo);
+
+    $usuario = $usuarioDaoMysql->buscarPeloId($servico->getUsuarioId());
+
     if($servico->getUsuarioId() == getUser()->getId()){ //verifica se o serviço retornado pertence ao usuário logado
         header("location: $routes->jobs"); //se pertecer ele redericiona para jobs
     }
@@ -35,8 +41,8 @@
     <div class="col-md-8 m-0 p-0 mx-auto rounded" style="background-color: DarkSlateGray;">
         <div class="d-flex align-items-center justify-content-between m-0 p-3">
             <div>
-                <img src="<?php echo $routes->home."src/files/". getUser()->getFotoPerfil();?>" alt="img profile user" id="servico_img_user" />
-                <span class="text-white"><?php echo getUser()->getApelido();?></span>
+                <img src="<?php echo $routes->home."src/files/". $usuario->getFotoPerfil();?>" alt="img profile user" id="servico_img_user" />
+                <span class="text-white"><?php echo $usuario->getApelido();?></span>
             </div>
             <small class="text-white">
                 <i class="fas fa-calendar"></i>
