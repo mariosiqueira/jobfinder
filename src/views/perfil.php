@@ -3,113 +3,119 @@
 ?>
 
 <?php 
-require "layouts/app/head.php";
+    require "layouts/app/head.php";
 
-use App\Config\Conexao;//Importa o PDO
-use App\VO\Categoria;
-use App\VO\Servico;
+    use App\Config\Conexao;//Importa o PDO
+    use App\VO\Categoria;
+    use App\VO\Servico;
 
-use App\Dao\UsuarioDaoMysql; 
+    use App\Dao\UsuarioDaoMysql; 
+    use App\Dao\ServicoCategoriaDaoMysql; 
 
-use App\Dao\CategoriaDaoMysql; //import da classe CategoriaDaoMysql pra buscar as categorias do banco de dados e mostrar na aplicação na hora de criar um novo serviço
-use App\Dao\ServicoDaoMysql; //Import da classe ServicoDaoMysql para recuperar os serviços cadastrados pelo usuário da sessão e que serão exibidos no perfil dele
-use App\Dao\MensagemDaoMysql; //Import da classe MensagemDaoMysql para recuperar as mensagens cadastrados pelo usuário da sessão e que serão exibidos no perfil dele
-use App\Dao\AvaliacaoDaoMysql; //Import da classe AvaliacaoDaoMysql para recuperar as avaliaçoes recebidas pelo usuário da sessão e que serão exibidos no perfil dele
+    use App\Dao\CategoriaDaoMysql; //import da classe CategoriaDaoMysql pra buscar as categorias do banco de dados e mostrar na aplicação na hora de criar um novo serviço
+    use App\Dao\ServicoDaoMysql; //Import da classe ServicoDaoMysql para recuperar os serviços cadastrados pelo usuário da sessão e que serão exibidos no perfil dele
+    use App\Dao\MensagemDaoMysql; //Import da classe MensagemDaoMysql para recuperar as mensagens cadastrados pelo usuário da sessão e que serão exibidos no perfil dele
+    use App\Dao\AvaliacaoDaoMysql; //Import da classe AvaliacaoDaoMysql para recuperar as avaliaçoes recebidas pelo usuário da sessão e que serão exibidos no perfil dele
 
-$pdo = Conexao::getInstance();
+    $pdo = Conexao::getInstance();
 
-//Recuperando as categorias cadastradas no banco de dados para exibir no modal de cadastro de serviço
-$categoriaDao = new CategoriaDaoMysql($pdo);
-$categorias = [];
-$arrayDadosObjetosCategorias = $categoriaDao->buscarTodas();
-foreach($arrayDadosObjetosCategorias as $dadoObjetoCategoria) {
-    $novaCategoria = new Categoria();
-    $novaCategoria->setId($dadoObjetoCategoria->getId());
-    $novaCategoria->setNome($dadoObjetoCategoria->getNome());
-    $categorias [] = $novaCategoria;
-}
-
-//Recuperando os serviços cadastrados pelo usuário da sessão
-$usuarioSessao = unserialize($_SESSION['auth']);
-$servicoDao = new ServicoDaoMysql($pdo);
-$servicos = [];
-
-$usuarioDao = new UsuarioDaoMysql($pdo);
-
-$arrayDadosObjetosServico = $servicoDao->buscarServicoPeloIdDoUsuario($usuarioSessao->getId());
-if($arrayDadosObjetosServico != null) {
-    
-    foreach($arrayDadosObjetosServico as $dadoObjetoServico) {
-        $novoServico = new Servico();
-        $novoServico->setId($dadoObjetoServico->getId());
-        $novoServico->setTitulo($dadoObjetoServico->getTitulo());
-        $novoServico->setDescricao($dadoObjetoServico->getDescricao());
-        $novoServico->setEnderecoServico($dadoObjetoServico->getEnderecoServico());
-        $novoServico->setValor($dadoObjetoServico->getValor());
-        $novoServico->setUsuarioId($dadoObjetoServico->getUsuarioId());
-        $novoServico->setDataPostagem($dadoObjetoServico->getDataPostagem());
-        $novoServico->setStatus($dadoObjetoServico->getStatus());
-        $servicos [] = $novoServico;
+    //Recuperando as categorias cadastradas no banco de dados para exibir no modal de cadastro de serviço
+    $categoriaDao = new CategoriaDaoMysql($pdo);
+    $categorias = [];
+    $arrayDadosObjetosCategorias = $categoriaDao->buscarTodas();
+    foreach($arrayDadosObjetosCategorias as $dadoObjetoCategoria) {
+        $novaCategoria = new Categoria();
+        $novaCategoria->setId($dadoObjetoCategoria->getId());
+        $novaCategoria->setNome($dadoObjetoCategoria->getNome());
+        $categorias [] = $novaCategoria;
     }
-}
 
-//Recuperando as mensagens enviadas ou recebidas pelo usuário da sessão
-$mensagenDao = new MensagemDaoMysql($pdo);
-$dataMensagens = $mensagenDao->buscarMensagens(getUser()->getId());
+    //Recuperando os serviços cadastrados pelo usuário da sessão
+    $usuarioSessao = unserialize($_SESSION['auth']);
+    $servicoDao = new ServicoDaoMysql($pdo);
+    $servicos = [];
 
-$mensagens = [];
-$contatos = [];
+    $usuarioDao = new UsuarioDaoMysql($pdo);
+    $servicoCategoria = new ServicoCategoriaDaoMysql($pdo);
 
-if ($dataMensagens) {
-    
-    foreach($dataMensagens as $m) {
+    $arrayDadosObjetosServico = $servicoDao->buscarServicoPeloIdDoUsuario($usuarioSessao->getId());
+    if($arrayDadosObjetosServico != null) {
         
-        // pega todas as mesagens enviadas ou recebidas do usuario logado, e armazena em mensagens
-        $mensagens[] = [ 
-            "id" => $m['id'],
-            "contratante_id" => $m['contratante_id'],
-            "contratado_id" => $m['contratado_id'],
-            "mensagem" => $m['mensagem'],
-        ]; 
-
-        //pega os usuários que enviaram ou recebream mensagens do usuário logado, e armazena em contatos
-        if (!array_key_exists($m['contratado_id'], $contatos) && $m['contratado_id'] != getUser()->getId()) {
-
-            $contatos[$m['contratado_id']] = $usuarioDao->buscarPeloId($m['contratado_id']);
-        }
-        if (!array_key_exists($m['contratante_id'], $contatos) && $m['contratante_id'] != getUser()->getId()) {
-
-            $contatos[$m['contratante_id']] = $usuarioDao->buscarPeloId($m['contratante_id']);
+        foreach($arrayDadosObjetosServico as $dadoObjetoServico) {
+            $novoServico = new Servico();
+            $novoServico->setId($dadoObjetoServico->getId());
+            $novoServico->setTitulo($dadoObjetoServico->getTitulo());
+            $novoServico->setDescricao($dadoObjetoServico->getDescricao());
+            $novoServico->setEnderecoServico($dadoObjetoServico->getEnderecoServico());
+            $novoServico->setValor($dadoObjetoServico->getValor());
+            $novoServico->setUsuarioId($dadoObjetoServico->getUsuarioId());
+            $novoServico->setDataPostagem($dadoObjetoServico->getDataPostagem());
+            $novoServico->setStatus($dadoObjetoServico->getStatus());
+            // $servicos [] = $novoServico;
+            $servicos [] = array(
+                'servico' => $novoServico,
+                'categorias' => $servicoCategoria->buscarCategoriasDoServico($novoServico->getId())
+            );
         }
     }
-    
-}
 
-//Recuperando as avaliaçoes recebidas pelo usuário da sessão
-$avaliacaoDao = new AvaliacaoDaoMysql($pdo);
-$dataAvaliacao = $avaliacaoDao->buscarAvaliacoesUsuario(getUser()->getId());
+    //Recuperando as mensagens enviadas ou recebidas pelo usuário da sessão
+    $mensagenDao = new MensagemDaoMysql($pdo);
+    $dataMensagens = $mensagenDao->buscarMensagens(getUser()->getId());
 
-$avaliacoes = [];
-$somaAvaliacoes = 0; //variavel pra pegar a soma de todas as avaliações deste usuario
+    $mensagens = [];
+    $contatos = [];
 
-$index = 0; //quantidade de avaliações recebidas
-if ($dataAvaliacao) {
-    foreach($dataAvaliacao as $ava) {
-        $aux = [];
-        $aux['id'] = $ava['id'];
-        $aux['avaliacao'] = $ava['avaliacao'];
-        $aux['comentario'] = $ava['comentario'];
-        $aux['usuario_id'] = $ava['usuario_id'];
-        $aux['avaliador_id'] = $usuarioDao->buscarPeloId($ava['avaliador_id']);
-    
-        $avaliacoes[] = $aux;
-    
-        $somaAvaliacoes += intval($ava['avaliacao']); //somando todas as avaliações
-        $index++;
+    if ($dataMensagens) {
+        
+        foreach($dataMensagens as $m) {
+            
+            // pega todas as mesagens enviadas ou recebidas do usuario logado, e armazena em mensagens
+            $mensagens[] = [ 
+                "id" => $m['id'],
+                "contratante_id" => $m['contratante_id'],
+                "contratado_id" => $m['contratado_id'],
+                "mensagem" => $m['mensagem'],
+            ]; 
+
+            //pega os usuários que enviaram ou recebream mensagens do usuário logado, e armazena em contatos
+            if (!array_key_exists($m['contratado_id'], $contatos) && $m['contratado_id'] != getUser()->getId()) {
+
+                $contatos[$m['contratado_id']] = $usuarioDao->buscarPeloId($m['contratado_id']);
+            }
+            if (!array_key_exists($m['contratante_id'], $contatos) && $m['contratante_id'] != getUser()->getId()) {
+
+                $contatos[$m['contratante_id']] = $usuarioDao->buscarPeloId($m['contratante_id']);
+            }
+        }
+        
     }
-}
 
-$mediaAvaliacoes = $index == 0 ? $somaAvaliacoes : round($somaAvaliacoes / $index); //media de avaliações do usuario logado
+    //Recuperando as avaliaçoes recebidas pelo usuário da sessão
+    $avaliacaoDao = new AvaliacaoDaoMysql($pdo);
+    $dataAvaliacao = $avaliacaoDao->buscarAvaliacoesUsuario(getUser()->getId());
+
+    $avaliacoes = [];
+    $somaAvaliacoes = 0; //variavel pra pegar a soma de todas as avaliações deste usuario
+
+    $index = 0; //quantidade de avaliações recebidas
+    if ($dataAvaliacao) {
+        foreach($dataAvaliacao as $ava) {
+            $aux = [];
+            $aux['id'] = $ava['id'];
+            $aux['avaliacao'] = $ava['avaliacao'];
+            $aux['comentario'] = $ava['comentario'];
+            $aux['usuario_id'] = $ava['usuario_id'];
+            $aux['avaliador_id'] = $usuarioDao->buscarPeloId($ava['avaliador_id']);
+        
+            $avaliacoes[] = $aux;
+        
+            $somaAvaliacoes += intval($ava['avaliacao']); //somando todas as avaliações
+            $index++;
+        }
+    }
+
+    $mediaAvaliacoes = $index == 0 ? $somaAvaliacoes : round($somaAvaliacoes / $index); //media de avaliações do usuario logado
 ?>
 
 <div class="row m-0 container-perfil">
@@ -117,6 +123,7 @@ $mediaAvaliacoes = $index == 0 ? $somaAvaliacoes : round($somaAvaliacoes / $inde
         avaliacao_usuario="<?php echo $mediaAvaliacoes?>" url='<?php echo $routes->home;?>'>
     </perfil-descricao-component>
     <perfil-component homeurl='<?php echo $routes->home;?>' servicos='<?php echo json_encode($servicos);?>'
+        categorias='<?php echo json_encode($categorias);?>'
         mensagens='<?php echo json_encode($mensagens);?>' contatos='<?php echo json_encode($contatos);?>'
         avaliacoes='<?php echo json_encode($avaliacoes);?>'>
     </perfil-component>

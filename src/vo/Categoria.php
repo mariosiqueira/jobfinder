@@ -1,9 +1,17 @@
 <?php
 namespace App\VO;
+use JsonSerializable;
 
-class Categoria{
+class Categoria implements JsonSerializable{
     private $id;
     private $nome;
+
+    public function jsonSerialize() {
+        return [
+            'id' => $this->id,
+            'nome' => $this->nome,
+        ];
+    }
 
     public function getId(){
         return $this->id;

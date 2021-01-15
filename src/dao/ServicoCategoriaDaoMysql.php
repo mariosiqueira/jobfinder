@@ -123,6 +123,21 @@ class ServicoCategoriaDaoMysql implements ServicoCategoriaDao {
         return $arrayServicoCategorias;
     }
 
+    public function buscarCategoriasDoServico($servicoId)
+    {
+        $servicoCategoria = $this->buscarPeloIdDoServico($servicoId);
+
+        $categorias = [];
+
+        if ($servicoCategoria) {
+            foreach ($servicoCategoria as $c) {
+                $categorias[] = $this->categoriaDaoMysql->buscarPeloId($c->getCategoriaId());
+            }
+            return $categorias;
+        }
+        return false;
+    }
+
     public function atualizar(ServicoCategoria $servicoCategoria) {
         $sql = $this->pdo->prepare("UPDATE servico_categorias SET servico_id = :servico_id, categoria_id = :categoria_id");
         $sql->bindValue(':servico_id', $servicoCategoria->getServicoId());
@@ -142,6 +157,21 @@ class ServicoCategoriaDaoMysql implements ServicoCategoriaDao {
             $sql = $this->pdo->prepare("DELETE FROM servico_categorias WHERE (servico_id = :servico_id) AND (categoria_id = :categoria_id)");
             $sql->bindValue(':servico_id', $servicoId);
             $sql->bindValue(':categoria_id', $categoriaId);
+            if($sql->execute()) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
+    //Deleta uma categoria que foi associada a um determinado serviço pelo id do serviço
+    public function deletarCategoriaServico($servicoId) {
+                
+        if ($this->buscarPeloIdDoServico($servicoId)) {
+
+            $sql = $this->pdo->prepare("DELETE FROM servico_categorias WHERE (servico_id = :servico_id)");
+            $sql->bindValue(':servico_id', $servicoId);
             if($sql->execute()) {
                 return true;
             }

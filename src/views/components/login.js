@@ -40,7 +40,7 @@ var loginComponent = {
                 <div class="form-row">
                     <div class="col-md-12 form-group">
                         <label for="email" class="required">E-mail</label>
-                        <input type="text" class="form-control" name="email" v-model="email" placeholder="usuario@email.com"
+                        <input type="text" class="form-control" name="email" v-model="email" id="email" placeholder="usuario@email.com"
                         @blur="validarEmail()" :class="!email & !emailValid? ' is-invalid':''"
                         >
                         <small class="invalid-feedback">
@@ -49,7 +49,7 @@ var loginComponent = {
                     </div>
                     <div class="col-md-12 form-group">
                         <label for="senha" class="required">Senha</label>
-                        <input type="password" name="senha" v-model="senha" class="form-control" placeholder="**********"
+                        <input type="password" name="senha" v-model="senha" id="senha" class="form-control" placeholder="**********"
                         @blur="validarSenha()" :class="!senha & !senhaValid? ' is-invalid':''"
                         >
                         <small class="invalid-feedback">
@@ -64,7 +64,7 @@ var loginComponent = {
                     </label>
                 </div>
                 <div class="form-group mt-5">
-                    <input type="submit" class="btn btn-primary font-weight-bold btn-md btn-primary btn-block rounded-pill" v-if="senha && email" value = "Entrar"/>
+                    <input type="submit" class="btn btn-primary font-weight-bold btn-md btn-primary btn-block rounded-pill" v-if="senha && email" id="entrar" value = "Entrar"/>
                     <input type="button" class="btn btn-primary font-weight-bold btn-md btn-primary btn-block rounded-pill" v-else disabled value = "Entrar"/>
                     <a class="btn btn-md btn-light btn-block rounded-pill":href="url_cadastro">
                         Cadastre-se

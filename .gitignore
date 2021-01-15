@@ -1,3 +1,4 @@
-/files
+/src/files/
 /
 /vendor/
+/node_modules

@@ -22,7 +22,6 @@
 
     if (!$servico) { //verifica se retornou um serviço valido do banco
         header("location: $routes->jobs"); //se nao existir ele redericiona para jobs
-        exit();
     }
 
     // pegando o usuario a quem pertence o job

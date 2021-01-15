@@ -6,6 +6,9 @@ var perfilComponent = {
         servicos: {
             required: true
         },
+        categorias: {
+            required: true
+        },
         mensagens: {
             required: true
         },
@@ -22,9 +25,11 @@ var perfilComponent = {
             datamsg: [],
             datactt: [],
             dataava: [],
+            data_categorias: []
         }
     },
     mounted() {
+        this.data_categorias = btoa(this.categorias);
         this.data = btoa(this.servicos);
         this.datamsg = btoa(this.mensagens);
         this.datactt = btoa(this.contatos);
@@ -40,7 +45,7 @@ var perfilComponent = {
                             Página inicial
                         </span>
                     </router-link>
-                    <router-link :to="{ name: 'services', query: { servicos: data, homeurl, contatos: datactt }}" class="shadow-none " :class="this.$route.path == '/services' ? 'btn btn-outline-dark active': 'btn btn-outline-dark'">
+                    <router-link :to="{ name: 'services', query: { servicos: data, categorias: data_categorias, homeurl, contatos: datactt }}" class="shadow-none " :class="this.$route.path == '/services' ? 'btn btn-outline-dark active': 'btn btn-outline-dark'">
                         <i class="fas fa-briefcase    "></i>
                         <span class="title-md">
                             Meus serviços
