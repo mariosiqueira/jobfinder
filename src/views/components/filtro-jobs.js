@@ -1,4 +1,20 @@
 var filtroJobsComponent = {
+    props:{
+        categorias: {
+            required: true
+        },
+        url: {
+            required: true
+        }
+    },
+    data(){
+        return {
+            data_categorias: []
+        }
+    },
+    mounted(){
+        this.data_categorias = JSON.parse(this.categorias);
+    },
     template: `
         <div class="d-flex flex-column border-right" id="vertical-navbar">
             <div class="d-flex justify-content-between align-items-center px-2">
@@ -18,27 +34,25 @@ var filtroJobsComponent = {
                         </div>
                     </div>
                     <hr>
-                    <small class="text-muted text-uppercase">categoria</small>
-                    <select name="" id="" class="form-control">
-                        <option>categoria1</option>
-                        <option>categoria1</option>
-                        <option>categoria1</option>
-                        <option>categoria1</option>
-                        <option>categoria1</option>
-                    </select>
-                    <hr>
-                    <div class="d-inline">
-                        <small class="text-muted text-uppercase">data inicio</small>
-                        <input type="date" class="form-control">
-                        
-                        <small class="text-muted text-uppercase">data fim</small>
-                        <input type="date" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group mt-5 p-3">
-                    <button class="btn btn-md btn-outline-success btn-block">
-                        Filtrar
-                    </button>
+                    <form method="get" :action="url">
+                        <div class="form-group mt-5">
+                            <small class="text-muted text-uppercase">Palavra-chave</small>
+                            <input type="text" class="form-control" name="descricao">
+                        </div>
+                        <div class="form-group my-5">
+                            <small class="text-muted text-uppercase">categoria</small>
+                            <select name="categoria" class="form-control" required>
+                                <option value="todos" selected></option>
+                                <option v-for="categoria in data_categorias" :value="categoria.id">{{categoria.nome}}</option>
+                            </select>
+                        </div>
+                        <hr>
+                        <div class="form-group mt-5 p-3">
+                            <button class="btn btn-md btn-outline-success btn-block">
+                                Filtrar
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
