@@ -19,10 +19,11 @@ var listJobsComponent = {
     },
     mounted() {
         this.data = JSON.parse(this.servicos);
+        console.log(this.data.length);
     },
     template: `
         <div class="d-flex flex-column p-3" id="job-list">
-            <div v-if="false" class="alert alert-warning" role="alert">
+            <div v-if="data.length == 0" class="alert alert-warning" role="alert">
                 <p class="m-0 p-1">
                     <i class="fas fa-info-circle"></i>
                     Nenhum serviço encontrado
