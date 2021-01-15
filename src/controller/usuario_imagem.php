@@ -31,6 +31,7 @@ function salvarFotoPerfil($usuarioDaoMysql, $formatosImagemPermitidos){
         }
 
         $usuario = unserialize($_SESSION['auth']); //recupera o usuário salvo na sessão e retira a serialização
+        $usuario = $usuarioDaoMysql->buscarPeloId($usuario->getId()); //busca os dados do usuário pelo id que foi recuperado da sessão
 
         //Para que não exista arquivos de imagem sem utilização no servidor, é checado se o usuário já tem uma foto que não é default. Se isso ocorrer a nova foto será salva e a antiga será apagada.
         if($usuario->getFotoPerfil() != "default-user-img.jpg") {
@@ -51,6 +52,7 @@ function salvarFotoPerfil($usuarioDaoMysql, $formatosImagemPermitidos){
         
         //move_uploaded_file move o arquivo que foi feito upload pelo formulário e salva no diretório files
         move_uploaded_file($_FILES['foto_perfil']['tmp_name'],$_SERVER['DOCUMENT_ROOT'].'/jobfinder/src/files/'.$fotoPerfil);
+        $usuario->setSenha(""); //Zera a senha para ser salva na sessão
         $_SESSION['auth'] = serialize($usuario); //Para que a foto seja atualizada na página é necessário renovar a sessão com a atualização da foto
 
         unlink($_SERVER['DOCUMENT_ROOT'].'/jobfinder/src/files/'.$fotoAntiga);
