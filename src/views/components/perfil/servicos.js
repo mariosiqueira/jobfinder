@@ -8,6 +8,9 @@ var JobComponent = {
         },
         servicos: {
             required: true,
+        },
+        categorias: {
+            required: true,
         }
     },
     data() {
@@ -25,7 +28,7 @@ var JobComponent = {
         this.data_servicos = JSON.parse(atob(this.servicos));
         this.data_servicos_filtro = this.data_servicos;
         this.condicao = this.data_servicos_filtro.length == 0 ? true : false;
-        this.servico = btoa(this.servicos)
+        this.servico = btoa(this.servicos);
     },
     template: `
     <div>
@@ -56,31 +59,30 @@ var JobComponent = {
                     <i class="fas fa-info-circle    "></i>
                     Nenhum serviço encontrado</p>
             </div>
-            <li v-else v-for="servico in data_servicos_filtro" :key="servico.id" :class="servico.status=='finalizado' ? 'bg-grey text-white':'bg-success text-white'">
+            <li v-else v-for="data in data_servicos_filtro" :key="data.servico.id" :class="data.servico.status=='finalizado' ? 'bg-grey text-white':'bg-success text-white'">
                 <p class="d-flex justify-content-between">
                     <span>
-                        <span class="badge badge-light mr-2" v-if="servico.status == 'aberto'">Aberto</span>
+                        <span class="badge badge-light mr-2" v-if="data.servico.status == 'aberto'">Aberto</span>
                         <span class="badge badge-danger mr-2" v-else>Finalizado</span>
-                        <strong>{{servico.titulo}}</strong><br>
+                        <strong>{{data.servico.titulo}}</strong><br>
                     </span>
-                    <router-link :to="{name: 'services_close', params: {id: servico.id}, query: { homeurl, contatos } }" class="btn btn-sm btn-danger" v-if="servico.status=='aberto'">
+                    <router-link :to="{name: 'services_close', params: {id: data.servico.id}, query: { homeurl, contatos } }" class="btn btn-sm btn-danger" v-if="data.servico.status=='aberto'">
                         <i class="fa fa-window-close" aria-hidden="true"></i>
                         Finalizar
                     </router-link>
                 </p>
                 <hr>    
-                {{servico.descricao}}
+                {{data.servico.descricao}}
                 <div class="d-flex m-0 justify-content-between mt-5">
-                    <strong class="text-white">{{servico.valor}}</strong><br>
+                    <strong class="text-white">{{data.servico.valor}}</strong><br>
                     <div class="d-flex m-0">   
-                        <form :action="homeurl+'services/delete'" :id="servico.id" method="post">
-                            <input type="hidden" name="id" :value="servico.id" />
-                        
-                            <button class="btn btn-danger btn-sm" type="button" @click="deletarServico(servico.id)">
+                        <form :action="homeurl+'services/delete'" :id="data.servico.id" method="post">
+                            <input type="hidden" name="id" :value="data.servico.id" />
+                            <button class="btn btn-danger btn-sm" type="button" @click="deletarServico(data.servico.id)">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </button>
                         </form>
-                        <router-link class="btn btn-primary btn-sm ml-1" :to="{name: 'services_show', query: {servico} }" v-if="servico.status != 'finalizado'">
+                        <router-link class="btn btn-primary btn-sm ml-1" :to="{name: 'services_show', query: {servico: JSON.stringify(data), categorias} }" v-if="data.servico.status != 'finalizado'">
                             <i class="fas fa-eye"></i>
                         </router-link>
                     </div>
