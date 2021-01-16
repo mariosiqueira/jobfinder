@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require __DIR__.'/vendor/autoload.php';
+require 'vendor/autoload.php';
 // tratamento da url de serviço e filtro
 $jobs_show = isset($_GET['s']) ? "?s=$_GET[s]" : "";
 
