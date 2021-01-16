@@ -1,6 +1,5 @@
 <?php
 require __DIR__.'/vendor/autoload.php';
-echo __DIR__.'/vendor/autoload.php';
 session_start();
 
 // tratamento da url de serviço e filtro
@@ -13,7 +12,6 @@ $filter = isset($_GET['categoria']) ? "?descricao=$descricao&categoria=$_GET[cat
 $routes_navigation = [
     "/" => "welcome.php",
     "/index.php" => "welcome.php",
-    "/index.php/" => "welcome.php",
     "/login" => "login.php",
     "/register" => "cadastro.php",
     "/profile" => "perfil.php",
@@ -60,11 +58,12 @@ $routes = (Object) [ //rotas nomeadas e suas respectivas url's
 ];
 
 $req = $_SERVER['REQUEST_URI']; //pega a url 
+var_dump(array(__DIR__.'/vendor/autoload.php', ));
 
 if (array_key_exists($req, $routes_navigation)) { //verifica se a url requisitada existe nas rotas cadastrdas
-    require $_SERVER['HTTP_HOST']."/src/views/$routes_navigation[$req]"; //se existir e faz o require no arquivo da chave do array 
+    require "./src/views/$routes_navigation[$req]"; //se existir e faz o require no arquivo da chave do array 
 } else {
-    require "src/views/".$routes_navigation["/notFound"]; //se não existir faz o require na chave notFound
+    require __DIR__."/src/views/".$routes_navigation["/notFound"]; //se não existir faz o require na chave notFound
 }
 
 function auth(){ //funçao pra verificar se o usuario está autenticado
