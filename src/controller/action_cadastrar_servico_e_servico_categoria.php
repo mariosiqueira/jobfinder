@@ -61,7 +61,7 @@ function cadastrarServico($servicoDao, $categoriaDao, $servicoCategoriaDao) {
             'message' => 'Aconteceu um erro inesperado!'
         ];
     }
-    header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+    header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
     exit();
 }
 

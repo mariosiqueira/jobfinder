@@ -45,7 +45,7 @@ function atualizarServico($servicoDao, $servicoCategoriaDao, $categoriaDao) {
             'type'=>'error',
             'message' => 'Ocorreu um erro inesperado ao atualizar o serviço!'
         ];
-        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
         exit();
     }
    
@@ -67,7 +67,7 @@ function atualizarServico($servicoDao, $servicoCategoriaDao, $categoriaDao) {
             'message' => 'Ocorreu um erro inesperado ao atualizar o serviço!'
         ];
     }
-    header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
+    header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
     exit();
 }
 
