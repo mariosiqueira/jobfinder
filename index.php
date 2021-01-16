@@ -62,7 +62,7 @@ $routes = (Object) [ //rotas nomeadas e suas respectivas url's
 $req = $_SERVER['REQUEST_URI']; //pega a url 
 
 if (array_key_exists($req, $routes_navigation)) { //verifica se a url requisitada existe nas rotas cadastrdas
-    require $routes->home."src/views/$routes_navigation[$req]"; //se existir e faz o require no arquivo da chave do array 
+    require $_SERVER['HTTP_HOST']."/src/views/$routes_navigation[$req]"; //se existir e faz o require no arquivo da chave do array 
 } else {
     require "src/views/".$routes_navigation["/notFound"]; //se não existir faz o require na chave notFound
 }
