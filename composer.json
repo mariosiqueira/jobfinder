@@ -11,6 +11,7 @@
         
     },
     "require": {
+        "php": "7.4.0",
         "cboden/ratchet": "^0.4",
         "pusher/pusher-php-server": "^4.1"
     },
