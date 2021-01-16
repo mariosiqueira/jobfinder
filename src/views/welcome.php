@@ -1,8 +1,9 @@
 <?php require "layouts/front/head.php";
-    use App\Config\Conexao; 
-    $pdo = Conexao::getInstance();
+use App\Dao\ServicoDaoMysql; 
+use App\Config\Conexao; 
 
-    var_dump($pdo);
+$s = new ServicoDaoMysql(Conexao::getInstance());
+
 ?>
 <header>
     <div class="position-absolute w-75">
