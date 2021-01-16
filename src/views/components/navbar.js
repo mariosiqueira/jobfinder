@@ -18,10 +18,6 @@ var navbarComponent = {
         perfilurl: {
             required: true,
             type: String
-        },
-        mensagens: {
-            required: true,
-            type: String
         }
     },
     template: `
