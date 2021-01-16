@@ -5,7 +5,7 @@ require __DIR__.'/vendor/autoload.php';
 // tratamento da url de serviço e filtro
 $jobs_show = isset($_GET['s']) ? "?s=$_GET[s]" : "";
 
-$descricao = isset($_GET['descricao']) ? str_replace(' ', '+', $_GET['descricao']) : null;
+$descricao = isset($_GET['descricao']) ? urlencode($_GET['descricao']) : null;// str_replace(' ', '+', $_GET['descricao']) : null;
 $filter = isset($_GET['categoria']) ? "?descricao=$descricao&categoria=$_GET[categoria]" : "";
 
 //tratamento de rotas
@@ -59,6 +59,8 @@ $routes = (Object) [ //rotas nomeadas e suas respectivas url's
 ];
 
 $req = $_SERVER['REQUEST_URI']; //pega a url 
+// var_dump($req, $routes->jobs);
+// die();
 if (array_key_exists($req, $routes_navigation)) { //verifica se a url requisitada existe nas rotas cadastrdas
     require "src/views/$routes_navigation[$req]"; //se existir e faz o require no arquivo da chave do array 
 } else {
