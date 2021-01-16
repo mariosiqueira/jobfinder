@@ -121,10 +121,10 @@ var cadastroComponent = {
                     </div>
                 </div>
                 <div class="form-group mt-5">
-                    <button type="submit" class="btn btn-md btn-primary font-weight-bold btn-block rounded-pill" v-if="nome && email && telefone && senha && confirmSenha">
+                    <button type="submit" class="btn btn-md btn-primary font-weight-bold btn-block rounded-pill" v-if="nome && email && telefone && senha && confirmSenha" id="btn_cadastro">
                         Cadastrar
                     </button>
-                    <button type="button" class="btn btn-md btn-primary font-weight-bold btn-block rounded-pill" v-else disabled>
+                    <button type="button" id="btn_cadastro" class="btn btn-md btn-primary font-weight-bold btn-block rounded-pill" v-else disabled>
                         Cadastrar
                     </button>
                 </div>

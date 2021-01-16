@@ -6,7 +6,7 @@
                 <h1 class="text-white open-sans text-uppercase text-center mb-5">
                     Seja Freelancer
                 </h1>
-                <a class="btn btn-light btn-md text-uppercase my-5" href="<?php echo $routes->jobs;?>">
+                <a class="btn btn-light btn-md text-uppercase my-5" href="<?php echo $routes->jobs;?>" id="comecar">
                     Começar
                     <i class="fa fa-chevron-right" aria-hidden="true"></i>
                 </a>

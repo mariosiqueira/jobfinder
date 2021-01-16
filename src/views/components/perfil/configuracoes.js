@@ -16,7 +16,7 @@ var ConfigComponent = {
                 </button>
             </li>
             <li class="list-group-item list-group-item-success mr-4">
-                <button class="btn btn-link" data-toggle="modal" data-target="#editar_conta">
+                <button class="btn btn-link" data-toggle="modal" data-target="#editar_conta" id="btn_editar_dados_usuario">
                     <i class="fas fa-edit    "></i>
                     Editar meus dados
                 </button>

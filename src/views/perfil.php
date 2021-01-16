@@ -128,6 +128,7 @@
         avaliacoes='<?php echo json_encode($avaliacoes);?>'>
     </perfil-component>
 </div>
+
 <!-- Modal alterar apelido -->
 <div class="modal fade" id="alterar_apelido" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
     aria-hidden="true">
@@ -258,7 +259,7 @@
                         </div>
                     </div>
                     <div class="form-group mt-4">
-                        <button class="btn btn-success btn-md btn-block rounded-pill">
+                        <button class="btn btn-success btn-md btn-block rounded-pill" id="cadastrar_servico">
                             Cadastrar
                         </button>
                     </div>

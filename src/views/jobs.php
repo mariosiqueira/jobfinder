@@ -86,10 +86,7 @@
 
 ?>
 <div class="container-job">
-    <h2 class="text-black-50 text-center text-uppercase mb-5" style="font-size: max(2.5vw, 12pt)">
-        Encontre o <u><strong>JOB</strong></u> ideal para você
-    </h2>
-    <div class="d-flex">
+    <div class="job-container">
         <input type="checkbox" checked class="d-none" id="close_navbar" />
         <label for="close_navbar" class="cursor_pointer">
             <i class="fas fa-bars fa-2x ml-2"></i>

@@ -54,7 +54,7 @@ var servicoShow = {
                 </div>
             </div>
             <div class="form-group mt-5" style="margin-bottom: 150px">
-                <button type="submit" class="btn btn-success btn-md btn-block rounded-pill">
+                <button type="submit" class="btn btn-success btn-md btn-block rounded-pill" id="btn_editar_servico">
                     Salvar
                 </button>
             </div>
