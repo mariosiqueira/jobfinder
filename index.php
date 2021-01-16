@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require './vendor/autoload.php';
+require_once(__DIR__.'/vendor/autoload.php');
 // tratamento da url de serviço e filtro
 $jobs_show = isset($_GET['s']) ? "?s=$_GET[s]" : "";
 
@@ -59,7 +59,7 @@ $routes = (Object) [ //rotas nomeadas e suas respectivas url's
 ];
 
 $req = $_SERVER['REQUEST_URI']; //pega a url 
-var_dump(require __DIR__.'/vendor/autoload.php');
+
 if (array_key_exists($req, $routes_navigation)) { //verifica se a url requisitada existe nas rotas cadastrdas
     require "src/views/$routes_navigation[$req]"; //se existir e faz o require no arquivo da chave do array 
 } else {
