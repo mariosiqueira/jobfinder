@@ -1,4 +1,9 @@
-<?php require "layouts/front/head.php"?>
+<?php require "layouts/front/head.php";
+    use App\Config\Conexao; 
+    $pdo = Conexao::getInstance();
+
+    var_dump($pdo);
+?>
 <header>
     <div class="position-absolute w-75">
         <div class="d-flex m-0 justify-content-center">
