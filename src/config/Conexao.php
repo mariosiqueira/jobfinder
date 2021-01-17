@@ -1,6 +1,6 @@
 <?php
 
-namespace MyApp\Config;
+namespace App\Config;
 use PDO;
 
 class Conexao{
