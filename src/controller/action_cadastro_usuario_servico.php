@@ -50,7 +50,7 @@ function cadastrarUsuarioServico($usuarioServicoDao, $avaliacaoDao, $servicoDao)
             'type'=>'error',
             'message' => 'Ocorreu um erro inesperado ao finalizar o serviço'
         ];
-        header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
         exit();
     }
     
@@ -61,7 +61,7 @@ function cadastrarUsuarioServico($usuarioServicoDao, $avaliacaoDao, $servicoDao)
             'type'=>'error',
             'message' => 'Ocorreu um erro inesperado ao finalizar o serviço'
         ];
-        header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
         exit();
     }
 
@@ -71,7 +71,7 @@ function cadastrarUsuarioServico($usuarioServicoDao, $avaliacaoDao, $servicoDao)
             'type'=>'error',
             'message' => 'Ocorreu um erro inesperado ao finalizar o serviço'
         ];
-        header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
         exit();
     }
 
@@ -80,7 +80,7 @@ function cadastrarUsuarioServico($usuarioServicoDao, $avaliacaoDao, $servicoDao)
         'message' => 'O serviço foi finalizado com sucesso!'
     ];
 
-    header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
+    header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
     exit();
 }
 

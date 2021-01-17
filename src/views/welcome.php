@@ -1,9 +1,4 @@
-<?php require "layouts/front/head.php";
-use App\Config\Conexao; 
-
-$s = Conexao::getInstance();
-
-?>
+<?php require "layouts/front/head.php"?>
 <header>
     <div class="position-absolute w-75">
         <div class="d-flex m-0 justify-content-center">

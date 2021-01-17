@@ -36,5 +36,5 @@ if($contratante_id && $contratado_id && $mensagem) {
     ];
 }
 
-header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobs');
+header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/jobs');
 exit();

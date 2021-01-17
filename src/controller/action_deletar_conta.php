@@ -47,7 +47,7 @@ function deletarUsuario($usuarioDao, $servicoDao, $usuarioServicoDao) {
 
         //Removendo uma foto que não seja a default-user-img.jpg
         if($usuario->getFotoPerfil() != "default-user-img.jpg") {
-            unlink($_SERVER['DOCUMENT_ROOT'].'/src/files/'.$usuario->getFotoPerfil());
+            unlink($_SERVER['DOCUMENT_ROOT'].'/jobfinder/src/files/'.$usuario->getFotoPerfil());
         }
 
         $_SESSION['auth'] = null;
@@ -65,7 +65,7 @@ function deletarUsuario($usuarioDao, $servicoDao, $usuarioServicoDao) {
             ];
         }
 
-        header('Location:http://'.$_SERVER['HTTP_HOST'].'/index.php');
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/index.php');
         exit();
         
     } else {
@@ -73,7 +73,7 @@ function deletarUsuario($usuarioDao, $servicoDao, $usuarioServicoDao) {
             'type'=>'error',
             'message' => 'A senha digita está incorreta.'
         ];
-        header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
         exit();
     }
 }

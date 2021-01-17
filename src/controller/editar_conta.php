@@ -44,7 +44,7 @@ function editarDados($usuarioDao){
         
     }
     
-    header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile'); //encaminha para a página de perfil
+    header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile'); //encaminha para a página de perfil
     exit();
 }
 

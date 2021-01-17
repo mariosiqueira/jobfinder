@@ -35,14 +35,14 @@ if($senha && $nome && $telefone && $email) {
                 'message' => 'Bem vindo ao JOBFINDER'
             ];
             $_SESSION['auth'] = serialize($novoUsuario);
-            header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
+            header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
             exit();
         } else {
             $_SESSION['message'] = (Object) [
                 'type'=>'error',
                 'message' => 'Aconteceu um erro inesperado!'
             ];
-            header('Location:http://'.$_SERVER['HTTP_HOST'].'/register');
+            header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/register');
             exit();
 
         }
@@ -51,11 +51,11 @@ if($senha && $nome && $telefone && $email) {
             'type'=>'error',
             'message' => 'Este e-mail já está cadastrado!'
         ];
-        header('Location:http://'.$_SERVER['HTTP_HOST'].'/register');
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/register');
         exit();
     }
 
 } else {
-    header('Location:http://'.$_SERVER['HTTP_HOST'].'/register');
+    header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/register');
     exit();
 }

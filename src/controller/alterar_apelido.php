@@ -20,7 +20,7 @@ function atualizarApelido($usuarioDao){
                 'type'=>'error',
                 'message' => 'Ocorreu um erro ao encontrar seu usuário. E o apelido não foi alterado!'
             ];
-            header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
+            header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
             exit();
         }
 
@@ -44,7 +44,7 @@ function atualizarApelido($usuarioDao){
         ];
     }
     
-    header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
+    header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
     exit();
 }
 

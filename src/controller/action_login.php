@@ -29,7 +29,7 @@ function autenticarUsuario($email, $senha, $usuarioDaoMysql, $lembrar) {
                     'message' => 'Olá, '.$usuarioBuscado->getNome().'.'
                 ];
 
-            header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
+            header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
             exit();
 
         } else {
@@ -39,7 +39,7 @@ function autenticarUsuario($email, $senha, $usuarioDaoMysql, $lembrar) {
                 'message' => 'E-mail e/ou senha incorretos!'
             ];
 
-            header('Location:http://'.$_SERVER['HTTP_HOST'].'/login');
+            header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/login');
             exit();
         }
 
@@ -48,7 +48,7 @@ function autenticarUsuario($email, $senha, $usuarioDaoMysql, $lembrar) {
             'type'=>'error',
             'message' => 'E-mail não cadastrado!'
         ];
-        header('Location:http://'.$_SERVER['HTTP_HOST'].'/login');
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/login');
         exit();
     }
 }

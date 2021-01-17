@@ -24,7 +24,7 @@ function deletarServico($servicoDao) {
             ];
         }
 
-    header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
+    header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
     exit();
 }
 

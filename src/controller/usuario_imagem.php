@@ -46,16 +46,16 @@ function salvarFotoPerfil($usuarioDaoMysql, $formatosImagemPermitidos){
                 'type'=>'error',
                 'message' => 'Ocorreu um erro inesperao ao atualizar sua foto do perfil'
             ];
-            header('Location:http://'.$_SERVER['HTTP_HOST'].'/profile');
+            header('Location:http://'.$_SERVER['HTTP_HOST'].'/jobfinder/profile');
             exit;
         }
         
         //move_uploaded_file move o arquivo que foi feito upload pelo formulário e salva no diretório files
-        move_uploaded_file($_FILES['foto_perfil']['tmp_name'],$_SERVER['DOCUMENT_ROOT'].'/src/files/'.$fotoPerfil);
+        move_uploaded_file($_FILES['foto_perfil']['tmp_name'],$_SERVER['DOCUMENT_ROOT'].'/jobfinder/src/files/'.$fotoPerfil);
         $usuario->setSenha(""); //Zera a senha para ser salva na sessão
         $_SESSION['auth'] = serialize($usuario); //Para que a foto seja atualizada na página é necessário renovar a sessão com a atualização da foto
 
-        unlink($_SERVER['DOCUMENT_ROOT'].'/src/files/'.$fotoAntiga);
+        unlink($_SERVER['DOCUMENT_ROOT'].'/jobfinder/src/files/'.$fotoAntiga);
 
         $_SESSION['message'] = (Object) [
             'type'=>'info',
