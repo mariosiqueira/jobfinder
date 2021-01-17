@@ -1,8 +1,6 @@
 <?php
 require __DIR__.'/vendor/autoload.php';
 session_start();
-use App\Config\Conexao; 
-$pdo = Conexao::getInstance();
 
 // tratamento da url de serviço e filtro
 $jobs_show = isset($_GET['s']) ? "?s=$_GET[s]" : "";
@@ -60,10 +58,14 @@ $routes = (Object) [ //rotas nomeadas e suas respectivas url's
 ];
 
 $req = $_SERVER['REQUEST_URI']; //pega a url 
-var_dump(array(__DIR__.'/vendor/autoload.php', $_SERVER['DOCUMENT_ROOT'], $pdo));
+var_dump(array(
+    'autoload'=> require __DIR__.'/vendor/autoload.php', 
+    $_SERVER['DOCUMENT_ROOT'],
+    __DIR__."/src/views/$routes_navigation[$req]"
+));
 
 if (array_key_exists($req, $routes_navigation)) { //verifica se a url requisitada existe nas rotas cadastrdas
-    require "/src/views/$routes_navigation[$req]"; //se existir e faz o require no arquivo da chave do array 
+    require  __DIR__."/src/views/$routes_navigation[$req]"; //se existir e faz o require no arquivo da chave do array 
 } else {
     require "/src/views/".$routes_navigation["/notFound"]; //se não existir faz o require na chave notFound
 }
