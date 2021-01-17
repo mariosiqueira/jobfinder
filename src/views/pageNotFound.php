@@ -26,8 +26,8 @@
     <div class="container">
     <?php
     require $_SERVER['DOCUMENT_ROOT']."/vendor/autoload.php";
-    use App\Dao\ServicoDaoMysql; 
-    use App\Config\Conexao; 
+    use MyApp\Dao\ServicoDaoMysql; 
+    use MyApp\Config\Conexao; 
 
 $s = new ServicoDaoMysql(Conexao::getInstance());
 
