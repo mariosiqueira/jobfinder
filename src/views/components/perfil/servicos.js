@@ -40,14 +40,14 @@ var JobComponent = {
                         <option value="aberto">Abertos</option>
                         <option value="finalizado">Finalizados</option>
                     </select>
-                    <button type="button" class="btn btn-sm btn-primary rounded-pill d-flex m-0 ml-1 align-items-center" @click="filtrarDados()">
+                    <button type="button" class="btn btn-sm btn-primary shadow-none rounded-pill d-flex m-0 ml-1 align-items-center" @click="filtrarDados()">
                         <i class="fas fa-filter    "></i>
                         <span class="ml-1">
                             Filtrar
                         </span>
                     </button>
                 </div>
-                <button class="btn btn-primary text-uppercase" data-toggle="modal" data-target="#adicionar_servico">
+                <button class="btn btn-primary text-uppercase shadow-none" data-toggle="modal" data-target="#adicionar_servico" id="perfil_servicos_btn_add_servico">
                     <i class="fas fa-plus    "></i>
                     <span class="title-md">
                         Novo
@@ -78,11 +78,11 @@ var JobComponent = {
                     <div class="d-flex m-0">   
                         <form :action="homeurl+'services/delete'" :id="data.servico.id" method="post">
                             <input type="hidden" name="id" :value="data.servico.id" />
-                            <button class="btn btn-danger btn-sm" type="button" @click="deletarServico(data.servico.id)">
+                            <button class="btn btn-danger btn-sm" type="button" :id="'deletar'+data.servico.id" @click="deletarServico(data.servico.id)">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </button>
                         </form>
-                        <router-link class="btn btn-primary btn-sm ml-1" :to="{name: 'services_show', query: {servico: JSON.stringify(data), categorias} }" v-if="data.servico.status != 'finalizado'">
+                        <router-link :id="'editar'+data.servico.id" class="btn btn-primary btn-sm ml-1" :to="{name: 'services_show', query: {servico: JSON.stringify(data), categorias} }" v-if="data.servico.status != 'finalizado'">
                             <i class="fas fa-eye"></i>
                         </router-link>
                     </div>
@@ -108,7 +108,7 @@ var JobComponent = {
                 this.data_servicos_filtro = this.data_servicos;
             } else {
                 this.data_servicos.forEach(e => {
-                    if (e.status == this.filtro) {
+                    if (e.servico.status == this.filtro) {
                         this.data_servicos_filtro.push(e);
                     }
                 });

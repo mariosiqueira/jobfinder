@@ -65,6 +65,96 @@ class ServicoDaoMysql implements ServicoDao {
         }
         return $arrayServicos;
     }
+    public function buscarTodosAbertos(){
+        $arrayServicos = [];
+
+        $sql = $this->pdo->query("SELECT * FROM servicos where status_servico = 'aberto'");
+        if($sql->rowCount() > 0){
+            $arrayDadosServiços = $sql->fetchAll(); //Pega todos os dados dos serviços encontrados e joga no arrayDados
+
+            foreach($arrayDadosServiços as $dadoServico){
+                /**
+                 * Deve-se construir objetos do tipo Servicos e preenchê-los com os dados
+                 * advindos do banco com a consulta para adicionar ao arrayServicos e retornar
+                 * **/
+                $servico = new Servico();
+                $servico->setId($dadoServico['id']);
+                $servico->setTitulo($dadoServico['titulo']);
+                $servico->setDescricao($dadoServico['descricao']);
+                $servico->setEnderecoServico($dadoServico['endereco_servico']);
+                $servico->setValor($dadoServico['valor']);
+                $servico->setUsuarioId($dadoServico['usuario_id']);
+                $servico->setDataPostagem($dadoServico['data_postagem']);
+                $servico->setStatus($dadoServico['status_servico']);
+
+                $arrayServicos[] = $servico; //Adiciona o serviço construído e preenchido no arrayServiços que ao final da iteração será devolvido para quem chamou o método.
+            }
+        }
+        return $arrayServicos;
+    }
+
+    public function filtrarTodosAbertos($filtro){
+
+        $arrayServicos = [];
+
+        if ($filtro->categoria != 'todos' && $filtro->descricao != '') {
+            $query = "SELECT * FROM servicos as s inner join servico_categorias as sc
+                                    on s.id = sc.servico_id
+                                        where sc.categoria_id = :categoria and s.status_servico = 'aberto'
+                                                and s.descricao like :descricao";
+
+            $sql = $this->pdo->prepare($query);
+            $sql->bindValue(":categoria", $filtro->categoria);
+            $sql->bindValue(":descricao", "%".$filtro->descricao."%");
+            $sql->execute();
+
+        } else {
+
+            if ($filtro->categoria == 'todos' && $filtro->descricao == '') {
+                return $this->buscarTodosAbertos();
+                
+            } else if ($filtro->categoria == 'todos' && $filtro->descricao != ''){
+                $query = "SELECT * FROM servicos as s 
+                                        where s.status_servico = 'aberto' and s.descricao like :descricao";
+
+                $sql = $this->pdo->prepare($query);
+                $sql->bindValue(":descricao", "%$filtro->descricao%");
+                $sql->execute();
+            }
+            else if ($filtro->categoria != 'todos' && $filtro->descricao == ''){
+
+                $query = "SELECT * FROM servicos as s inner join servico_categorias as sc
+                                    on s.id = sc.servico_id
+                                        where s.status_servico = 'aberto' and sc.categoria_id = :categoria";
+
+                $sql = $this->pdo->prepare($query);
+                $sql->bindValue(":categoria", $filtro->categoria);
+                $sql->execute();
+            }
+        }
+        if($sql->rowCount() > 0){
+            $arrayDadosServiços = $sql->fetchAll(); //Pega todos os dados dos serviços encontrados e joga no arrayDados
+
+            foreach($arrayDadosServiços as $dadoServico){
+                /**
+                 * Deve-se construir objetos do tipo Servicos e preenchê-los com os dados
+                 * advindos do banco com a consulta para adicionar ao arrayServicos e retornar
+                 * **/
+                $servico = new Servico();
+                $servico->setId($dadoServico['id']);
+                $servico->setTitulo($dadoServico['titulo']);
+                $servico->setDescricao($dadoServico['descricao']);
+                $servico->setEnderecoServico($dadoServico['endereco_servico']);
+                $servico->setValor($dadoServico['valor']);
+                $servico->setUsuarioId($dadoServico['usuario_id']);
+                $servico->setDataPostagem($dadoServico['data_postagem']);
+                $servico->setStatus($dadoServico['status_servico']);
+
+                $arrayServicos[] = $servico; //Adiciona o serviço construído e preenchido no arrayServiços que ao final da iteração será devolvido para quem chamou o método.
+            }
+        }
+        return $arrayServicos;
+    }
 
     public function buscarPeloId($id){
         $sql = $this->pdo->prepare("SELECT * FROM servicos WHERE id = :id");

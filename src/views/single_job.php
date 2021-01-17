@@ -88,7 +88,7 @@
                 </div>
             </div>
             <div class="form-group text-center">
-                <button type="submit" class="btn btn-outline-dark">
+                <button type="submit" class="btn btn-outline-dark" id="btn_enviar_proposta">
                     Enviar
                     <i class="fas fa-arrow-circle-right"></i>
                 </button>
