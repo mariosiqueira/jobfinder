@@ -24,14 +24,6 @@
 </head>
 <body>
     <div class="container">
-    <?php
-    require $_SERVER['DOCUMENT_ROOT']."/vendor/autoload.php";
-    use App\Dao\ServicoDaoMysql; 
-    use App\Config\Conexao; 
-
-$s = new ServicoDaoMysql(Conexao::getInstance());
-
-    ?>
         <img id="img_not_found" style="width: 400px" src="<?php echo $routes->home.'src/views/public/img/page_not_found.svg'?>" alt="" srcset="">
         <h1 class="mt-4">Desculpe :(</h1>
         <h2>Esta página não existe</h2>
