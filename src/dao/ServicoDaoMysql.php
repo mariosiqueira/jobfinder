@@ -1,5 +1,5 @@
 <?php
-namespace App\Dao;
+namespace MyApp\Dao;
 use App\VO\Servico;
 use App\VO\ServicoDao;
 use PDO;
