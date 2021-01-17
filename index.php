@@ -1,5 +1,7 @@
 <?php
-require __DIR__.'/vendor/autoload.php';
+// require __DIR__.'/vendor/autoload.php';
+require('vendor/autoload.php');
+
 session_start();
 
 // tratamento da url de serviço e filtro
@@ -58,15 +60,11 @@ $routes = (Object) [ //rotas nomeadas e suas respectivas url's
 ];
 
 $req = $_SERVER['REQUEST_URI']; //pega a url 
-var_dump(array(
-    'autoload'=> require __DIR__.'/vendor/autoload.php', 
-    $_SERVER['DOCUMENT_ROOT'],
-    __DIR__."/src/views/$routes_navigation[$req]"
-));
 
 use App\Config\Conexao; 
 
 $s = new ServicoDaoMysql(Conexao::getInstance());
+
 if (array_key_exists($req, $routes_navigation)) { //verifica se a url requisitada existe nas rotas cadastrdas
     require  __DIR__."/src/views/$routes_navigation[$req]"; //se existir e faz o require no arquivo da chave do array 
 } else {
