@@ -8,8 +8,7 @@
         }
     ],
     "require": {
-        "php": "~7.0.0",
-        "cboden/ratchet": "^0.4",
+        "php": "^7.4",
         "pusher/pusher-php-server": "^4.1"
     },
     "autoload": {
