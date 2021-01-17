@@ -1,6 +1,6 @@
 <?php require "layouts/front/head.php";
-use MyApp\Dao\ServicoDaoMysql; 
-use MyApp\Config\Conexao; 
+use App\Dao\ServicoDaoMysql; 
+use App\Config\Conexao; 
 
 $s = new ServicoDaoMysql(Conexao::getInstance());
 
