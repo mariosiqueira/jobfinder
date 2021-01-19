@@ -1,8 +1,5 @@
 var servicoClose = {
     props: {
-        contatos: {
-            required: true
-        },
         homeurl: {
             required: true
         },
@@ -15,9 +12,8 @@ var servicoClose = {
     },
     data() {
         return {
-            data_ctts: [], //contatos
+            contatos: [],
             lista_contatos: [], //deve ser buscado no banco todas as mensagens que tenha id desse usuário, e ele vai escolher qual dos usuários que ele conversou ele contratou.
-
             metodo_pagamento: '', //metodo de pagamento que foi usado nesse serviço
             servico_id: this.$route.params.id, //id do servilo que vem da url
             contratante_id: user.id, //id do usuário que criou o serviço - e usuário logado
@@ -49,7 +45,7 @@ var servicoClose = {
                 <div class="col-md-12 form-group">
                     <label for="contratado" class="required">Contratado</label>
                     <select class="form-control" id="contratado" name="contratado_id" v-model="contratado_id" required>
-                        <option :value="ctt.id" v-for="ctt in data_ctts" :key="ctt.id">
+                        <option :value="ctt.id" v-for="ctt in contatos" :key="ctt.id">
                             {{ctt.nome +' - '+ ctt.email}}
                         </option>
                     </select>
@@ -84,41 +80,18 @@ var servicoClose = {
     </div>
     `,
     mounted() {
-        this.data_ctts = JSON.parse(atob(this.contatos));
-
-        axios.get(this.url_get_servico + "/?s=" + this.servico_id) //pega o servico no banco pelo id do serviço
-            .then(res => {
-                this.data_servico = res;
-                this.valor = this.data_servico.valor
-                // console.log(this.data_servico);
-            })
-            .catch(err => {
-                console.error("erro na requisição");
-            })
-        axios.get(this.url_get_mensagens + "/?s=" + this.contratante_id) //pega os mensagens no banco pelo id do usuário, onde contratante_id seja igual ao id do usuário
-            .then(res => {
-                this.data_mensagens = res;
-                // console.log(this.data_mensagens);
-
-                if (this.data_mensagens.lenght > 0) {
-                    this.data_mensagens.forEach(e => { //percorre todas as mensagens deste usuario logado e pega todos os usuários con quem ele conversou e adiciona a uma lista de contatos pra ele escolher quem foi que ele contratou.
-                        this.lista_contatos.push({ id: e.contratado_id, nome: e.nome })
-                    });
-                } else {
-                    // window.location.href = "/jobfinder/profile"; //caso não haja nenhum contato pra escolher um contratado a págna não vai permitir que ele finalize o serviço, redirecionando ele para a pagina de perfil
-                }
-            })
-            .catch(err => {
-                console.error("erro na requisição");
-            })
+        this.getContatos();
     },
     methods: {
-        teste() {
-            console.log(this.metodo_pagamento);
-            console.log(this.valor);
-            console.log(this.comentario);
-            console.log(this.contratado_id);
-            console.log(this.contratante_id);
+        getContatos(){
+            axios.get(this.homeurl + 'usuarios/todos_contatos')
+            .then(res => {
+                this.contatos = res.data;
+            })
+            .catch(err => {
+                console.error("erro na requisição");
+                console.error(err);
+            })
         }
     }
 }

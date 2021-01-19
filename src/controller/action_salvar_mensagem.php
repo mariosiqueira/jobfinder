@@ -1,4 +1,8 @@
 <?php
+
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Content-Type");
+
 use App\Config\Conexao;//Importa o PDO
 use App\Dao\MensagemDaoMysql; //Importa MensagemDaoMysql para o CRUD
 use App\Dao\ChatDaoMysql;

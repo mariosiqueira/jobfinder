@@ -20,7 +20,6 @@ var AvaliacoesComponent = {
                     <p class="m-0 p-1">
                         <i class="fas fa-info-circle    "></i>
                         Você ainda não tem nenhuma avaliação
-                        <i class="fas fa-smile-beam    "></i>
                     </p>
                 </div>
                 <p class="p-1">

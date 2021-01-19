@@ -88,42 +88,38 @@
     <div class="container-item" id="seguranca">
         <img class="item-img" src="<?php echo $routes->home.'src/views/public/img/img1.svg'?>" alt="icon_seguranca">
         <p class="item-description">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus laboriosam nostrum obcaecati numquam
-            perspiciatis quo quibusdam, aperiam dolorum, debitis a.
+            
+            O <strong class="text-uppercase">Jobfinder</strong> garante a segurança de seus usuários e a integridade de seus dados, não permitindo a exposição dos mesmos. Todos os dados e mensagens trocadas são encriptados.
         </p>
     </div>
     <div class="container-item" id="sigilo">
         <p class="item-description">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus laboriosam nostrum obcaecati numquam
-            perspiciatis quo quibusdam, aperiam dolorum, debitis a.
+            No <strong class="text-uppercase">Jobfinder</strong> o contratante e o interessado no serviço trocam informações privadas e negociam entre sí como será o serviço. Não nos responsabilizamos sobre pagamentos e ou seus métodos.
         </p>
         <img class="item-img" src="<?php echo $routes->home.'src/views/public/img/img2.svg'?>" alt="icon_sigilo">
     </div>
     <div class="container-item" id="avaliacao">
         <img class="item-img" src="<?php echo $routes->home.'src/views/public/img/img3.svg'?>" alt="icon_avaliacao">
         <p class="item-description">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus laboriosam nostrum obcaecati numquam
-            perspiciatis quo quibusdam, aperiam dolorum, debitis a.
+            O contratante pode avaliar como foi o realizado o serviço, podendo dar estrelas e comentar sobre o contratado.
         </p>
     </div>
     <div class="container-item" id="mensageria">
         <p class="item-description">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus laboriosam nostrum obcaecati numquam
-            perspiciatis quo quibusdam, aperiam dolorum, debitis a.
+            Durante o processo de negociação, entre o contratante e o interessado pelo serviço, é possível ambos trocarem mensagens pela plataforma. Tudo isso em tempo real!
         </p>
         <img class="item-img" src="<?php echo $routes->home.'src/views/public/img/img4.svg'?>" alt="icon_mensageria">
     </div>
     <div class="container-item" id="notificacao">
         <img class="item-img" src="<?php echo $routes->home.'src/views/public/img/img5.svg'?>" alt="icon_notificacao">
         <p class="item-description">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus laboriosam nostrum obcaecati numquam
-            perspiciatis quo quibusdam, aperiam dolorum, debitis a.
+            O <strong class="text-uppercase">Jobfinder</strong> alerta para todos os usuários do sistema que, por segurança de todos, não compartilhem informações sigilosas, como cpf, rg e documentos pessoais.
         </p>
     </div>
     <div class="container-item" id="negociacao">
         <p class="item-description">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus laboriosam nostrum obcaecati numquam
-            perspiciatis quo quibusdam, aperiam dolorum, debitis a.
+            O <strong class="text-uppercase">Jobfinder</strong> não se responsabiliza por fraudes e afins.
+            Cabe diretamente ao usuário contratante verificar cada interessado e contratar o que ele achar melhor.
         </p>
         <img class="item-img" src="<?php echo $routes->home.'src/views/public/img/img6.svg'?>" alt="icon_negociacao">
     </div>

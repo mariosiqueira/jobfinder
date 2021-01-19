@@ -3,14 +3,8 @@ var MessagesComponent = {
         homeurl: {
             required: true
         },
-        mensagens: { //todas as mensagem que pertence ao usuario atual que está logado na session
-            required: true
-        },
         urlenviarmsg: { //url que a mensagem será enviada
             type: String
-        },
-        contatos: { //todas os usuarios que mandaram mensagem pra o usuário atual logado
-            required: true
         }
     },
     data() {
@@ -27,8 +21,7 @@ var MessagesComponent = {
         }
     },
     mounted() {
-        this.msgs = JSON.parse(atob(this.mensagens));
-        this.data_ctts = JSON.parse(atob(this.contatos));
+        this.getMensagens();
     },
     created() {
         this.connect();
@@ -135,8 +128,7 @@ var MessagesComponent = {
 
             this.channel = this.conn.subscribe('jobfinder-chat'); //fica escutando esse canal
             this.channel.bind('send-message', data => this.salvarMensagem(data)); //fica escultando esse canal por onde  toda mensagem recebida pelo socket passa
-        },
-        
+        },        
         async axiosSend(data) {
             await axios.post(this.homeurl + 'usuarios/salvar_mensagem', data);
         },
@@ -153,6 +145,17 @@ var MessagesComponent = {
                     this.msgs.push(data);
                 }
             }
+        },
+        getMensagens(){
+            axios.get(this.homeurl + 'usuarios/todas_mensagens')
+            .then(res => {
+                this.msgs = res.data.mensagens;
+                this.data_ctts = res.data.contatos;
+            })
+            .catch(err => {
+                console.error("erro na requisição");
+                console.error(err);
+            })
         }
     }
 }

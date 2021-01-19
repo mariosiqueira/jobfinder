@@ -1,12 +1,6 @@
 var JobComponent = {
     props: {
-        contatos: {
-            required: true,
-        },
         homeurl: {
-            required: true,
-        },
-        servicos: {
             required: true,
         },
         categorias: {
@@ -15,6 +9,8 @@ var JobComponent = {
     },
     data() {
         return {
+            
+            servicos: [],
             data_servicos: [],
             servico: "",
             data_servicos_filtro: [],
@@ -25,9 +21,7 @@ var JobComponent = {
         }
     },
     mounted() {
-        this.data_servicos = JSON.parse(atob(this.servicos));
-        this.data_servicos_filtro = this.data_servicos;
-        this.condicao = this.data_servicos_filtro.length == 0 ? true : false;
+        this.getServicos();
         this.servico = btoa(this.servicos);
     },
     template: `
@@ -66,7 +60,7 @@ var JobComponent = {
                         <span class="badge badge-danger mr-2" v-else>Finalizado</span>
                         <strong>{{data.servico.titulo}}</strong><br>
                     </span>
-                    <router-link :to="{name: 'services_close', params: {id: data.servico.id}, query: { homeurl, contatos } }" class="btn btn-sm btn-danger" v-if="data.servico.status=='aberto'">
+                    <router-link :to="{name: 'services_close', params: {id: data.servico.id}, query: { homeurl } }" class="btn btn-sm btn-danger" v-if="data.servico.status=='aberto'">
                         <i class="fa fa-window-close" aria-hidden="true"></i>
                         Finalizar
                     </router-link>
@@ -105,15 +99,27 @@ var JobComponent = {
         filtrarDados() {
             this.data_servicos_filtro = [];
             if (this.filtro == 'todos') {
-                this.data_servicos_filtro = this.data_servicos;
+                this.data_servicos_filtro = this.servicos;
             } else {
-                this.data_servicos.forEach(e => {
+                this.servicos.forEach(e => {
                     if (e.servico.status == this.filtro) {
                         this.data_servicos_filtro.push(e);
                     }
                 });
             }
             this.condicao = this.data_servicos_filtro.length == 0 ? true : false;
+        },
+        getServicos(){
+            axios.get(this.homeurl + 'usuarios/todos_servicos')
+            .then(res => {
+                this.servicos = res.data;
+                this.data_servicos_filtro = this.servicos;
+                this.condicao = this.data_servicos_filtro.length == 0 ? true : false;
+            })
+            .catch(err => {
+                console.error("erro na requisição");
+                console.error(err);
+            })
         }
     }
 }
