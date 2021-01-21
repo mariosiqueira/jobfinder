@@ -5,9 +5,6 @@ var perfilComponent = {
         },
         categorias: {
             required: true
-        },
-        avaliacoes: {
-            required: true
         }
     },
     data() {
@@ -20,7 +17,6 @@ var perfilComponent = {
     mounted() {
         this.data_categorias = btoa(this.categorias);
         this.data = btoa(this.servicos);
-        this.dataava = btoa(this.avaliacoes);
     },
     template: `
         <div class="col-lg-9 p-3">
@@ -44,7 +40,7 @@ var perfilComponent = {
                             Mensagens
                         </span>
                     </router-link>
-                    <router-link id="perfil_avaliacoes" :to="{ name: 'rating', query: { avaliacoes: dataava, homeurl }}" class="shadow-none " :class="this.$route.path == '/rating' ? 'btn btn-outline-dark active': 'btn btn-outline-dark'">
+                    <router-link id="perfil_avaliacoes" :to="{ name: 'rating', query: { homeurl }}" class="shadow-none " :class="this.$route.path == '/rating' ? 'btn btn-outline-dark active': 'btn btn-outline-dark'">
                         <i class="fas fa-star    "></i>
                         <span class="title-md">
                             Avaliações

@@ -34,7 +34,5 @@
 <body>
     <div id="app">
         <navbar-component logomarca="<?php echo $routes->home."src/views/public/img/logomarca.png";?>"
-            homeurl="<?php echo $routes->home;?>" mensagens="<?php echo $routes->mensagens;?>"
-            login="<?php echo $routes->login;?>" auth="<?php echo json_encode(auth())?>"
-            perfilurl="<?php echo $routes->perfil;?>">
+            homeurl="<?php echo $routes->home;?>" login="<?php echo $routes->login;?>" auth="<?php echo json_encode(auth())?>"  perfilurl="<?php echo $routes->perfil;?>">
         </navbar-component> <!-- Componente Vue Navbar -->

@@ -17,12 +17,12 @@ var JobComponent = {
             condicao: {
                 type: Boolean
             },
-            filtro: "todos"
+            filtro: "todos",
+            await: true
         }
     },
     mounted() {
         this.getServicos();
-        this.servico = btoa(this.servicos);
     },
     template: `
     <div>
@@ -48,40 +48,49 @@ var JobComponent = {
                     </span>
                 </button>
             </div>
-            <div v-if="this.condicao" class="alert alert-warning mt-5" role="alert">
-                <p class="p-1 m-0">
-                    <i class="fas fa-info-circle    "></i>
-                    Nenhum serviço encontrado</p>
-            </div>
-            <li v-else v-for="data in data_servicos_filtro" :key="data.servico.id" :class="data.servico.status=='finalizado' ? 'bg-grey text-white':'bg-success text-white'">
-                <p class="d-flex justify-content-between">
-                    <span>
-                        <span class="badge badge-light mr-2" v-if="data.servico.status == 'aberto'">Aberto</span>
-                        <span class="badge badge-danger mr-2" v-else>Finalizado</span>
-                        <strong>{{data.servico.titulo}}</strong><br>
-                    </span>
-                    <router-link :to="{name: 'services_close', params: {id: data.servico.id}, query: { homeurl } }" class="btn btn-sm btn-danger" v-if="data.servico.status=='aberto'">
-                        <i class="fa fa-window-close" aria-hidden="true"></i>
-                        Finalizar
-                    </router-link>
-                </p>
-                <hr>    
-                {{data.servico.descricao}}
-                <div class="d-flex m-0 justify-content-between mt-5">
-                    <strong class="text-white">{{data.servico.valor}}</strong><br>
-                    <div class="d-flex m-0">   
-                        <form :action="homeurl+'services/delete'" :id="data.servico.id" method="post">
-                            <input type="hidden" name="id" :value="data.servico.id" />
-                            <button class="btn btn-danger btn-sm" type="button" :id="'deletar'+data.servico.id" @click="deletarServico(data.servico.id)">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </button>
-                        </form>
-                        <router-link :id="'editar'+data.servico.id" class="btn btn-primary btn-sm ml-1" :to="{name: 'services_show', query: {servico: JSON.stringify(data), categorias} }" v-if="data.servico.status != 'finalizado'">
-                            <i class="fas fa-eye"></i>
-                        </router-link>
-                    </div>
+            <div class="await-request" v-if="await">
+                <div class="spinner-border text-success mt-5" role="status">
+                    <span class="sr-only">Aguarde...</span>
                 </div>
-            </li>
+            </div>
+            <div v-else>
+                <div v-if="this.condicao" class="alert alert-warning mt-5" role="alert">
+                    <p class="p-1 m-0">
+                        <i class="fas fa-info-circle    "></i>
+                        Nenhum serviço encontrado</p>
+                </div>
+                <li v-else v-for="data in data_servicos_filtro" :key="data.servico.id" :class="data.servico.status=='finalizado' ? 'bg-grey text-white':'bg-success text-white'">
+                    <p class="d-flex justify-content-between">
+                        <span>
+                            <span class="badge badge-light mr-2" v-if="data.servico.status == 'aberto'">Aberto</span>
+                            <span class="badge badge-danger mr-2" v-else>Finalizado</span>
+                            <strong>{{data.servico.titulo}}</strong><br>
+                        </span>
+                        <span>{{data.servico.dataPostagem}}</span>
+                        
+                    </p>
+                    <hr>    
+                    {{data.servico.descricao}}
+                    <div class="d-flex m-0 justify-content-between mt-5">
+                        <strong class="text-white">{{data.servico.valor}}</strong><br>
+                        <div class="d-flex m-0">   
+                            <form :action="homeurl+'services/delete'" :id="data.servico.id" method="post">
+                                <input type="hidden" name="id" :value="data.servico.id" />
+                                <button class="btn btn-danger btn-sm" type="button" :id="'deletar'+data.servico.id" @click="deletarServico(data.servico.id)">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                            <router-link :id="'editar'+data.servico.id" class="btn btn-primary btn-sm mx-1" :to="{name: 'services_show', query: {servico: JSON.stringify(data), categorias} }" v-if="data.servico.status != 'finalizado'">
+                                <i class="fas fa-eye"></i>
+                            </router-link>
+                            <router-link :to="{name: 'services_close', params: {id: data.servico.id}, query: { homeurl } }" class="btn btn-sm btn-dark" v-if="data.servico.status=='aberto'">
+                                <i class="fa fa-window-close" aria-hidden="true"></i>
+                                Finalizar
+                            </router-link>
+                        </div>
+                    </div>
+                </li>
+            </div>
         </ul>
     </div>
     `,
@@ -110,15 +119,19 @@ var JobComponent = {
             this.condicao = this.data_servicos_filtro.length == 0 ? true : false;
         },
         getServicos(){
-            axios.get(this.homeurl + 'usuarios/todos_servicos')
+            axios.post(this.homeurl + 'usuarios/todos_servicos', {id : user.id})
             .then(res => {
-                this.servicos = res.data;
-                this.data_servicos_filtro = this.servicos;
-                this.condicao = this.data_servicos_filtro.length == 0 ? true : false;
+                if (res.data.status != false) {
+                    this.servicos = res.data.servicos;
+                    this.data_servicos_filtro = this.servicos;
+                    this.condicao = this.data_servicos_filtro.length == 0 ? true : false;
+                    this.await = false;
+                }
             })
             .catch(err => {
                 console.error("erro na requisição");
                 console.error(err);
+                this.await = false;
             })
         }
     }

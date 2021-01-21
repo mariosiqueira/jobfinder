@@ -84,9 +84,11 @@ var servicoClose = {
     },
     methods: {
         getContatos(){
-            axios.get(this.homeurl + 'usuarios/todos_contatos')
+            axios.post(this.homeurl + 'usuarios/todos_contatos', {id : user.id})
             .then(res => {
-                this.contatos = res.data;
+                if (res.data.status != false) {        
+                    this.contatos = res.data.contatos;
+                }
             })
             .catch(err => {
                 console.error("erro na requisição");

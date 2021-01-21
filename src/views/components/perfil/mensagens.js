@@ -18,6 +18,7 @@ var MessagesComponent = {
             focused: false,
             conn: null,
             channel: null,
+            await: true
         }
     },
     mounted() {
@@ -30,13 +31,23 @@ var MessagesComponent = {
     <div class="mt-5">
         <div class="row m-0 profile-msg">
             <div class="col-lg-3 list-contatos">
-                <p class="alert alert-primary text-center" v-if="data_ctts.length == 0" role="alert">
-                    <strong>Nenhuma mensagem encontrada</strong>
-                </p>
-                <p class="profile-msg-contatos" v-else v-for="contato in data_ctts" :key="contato.id" @click="loadMensagens(contato.id)">
-                    <img class="profile-msg-contatos-img mr-1" :src="homeurl +'src/files/'+ contato.fotoPerfil" />
-                    <span class="profile-msg-contatos-username">{{contato.nome}}</span>
-                </p>
+                <div class="mb-3 title-md">
+                    <span class="text-uppercase font-weight-bold">Mensagens</span>
+                </div>
+                <div class="await-request" v-if="await">
+                    <div class="spinner-border text-success mt-5" role="status">
+                        <span class="sr-only">Aguarde...</span>
+                    </div>
+                </div>
+                <div v-else>
+                    <p class="alert alert-primary text-center" v-if="data_ctts.length == 0" role="alert">
+                        <strong>Nenhuma mensagem encontrada</strong>
+                    </p>
+                    <p class="profile-msg-contatos" v-else v-for="contato in data_ctts" :key="contato.id" @click="loadMensagens(contato.id)">
+                        <img class="profile-msg-contatos-img mr-1" :src="homeurl +'src/files/'+ contato.fotoPerfil" />
+                        <span class="profile-msg-contatos-username">{{contato.apelido}}</span>
+                    </p>
+                </div>
             </div>
             <div class="col-lg-9">
                 <div class="profile-msg-body" ref="profile_scrol">
@@ -50,7 +61,7 @@ var MessagesComponent = {
                         </li>
                     </ul>
                 </div>
-                <form @submit.prevent="sendMensagem()">
+                <form @submit.prevent="sendMensagem()" v-show="focused">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control shadow-none" v-model="mensagem" placeholder="Mensagem" ref="mensagem" required>
                         <div class="input-group-append">
@@ -68,7 +79,7 @@ var MessagesComponent = {
     </div>
     `,
     methods: {
-        loadMensagens(id) {
+        async loadMensagens(id) {
             this.focused = true;
             this.from = id;
             let aux = [];
@@ -78,8 +89,8 @@ var MessagesComponent = {
                 }
             });
             this.data = aux;
-            this.scrolToBottom(); //da scroll pra baixo
-            this.$refs.mensagem.focus(); //da focus no campo de input de mensagem
+            await this.scrolToBottom(); //da scroll pra baixo
+            await this.$refs.mensagem.focus(); //da focus no campo de input de mensagem
 
         },
         async sendMensagem() { //função pra o usuario enviar a mensagem
@@ -147,14 +158,22 @@ var MessagesComponent = {
             }
         },
         getMensagens(){
-            axios.get(this.homeurl + 'usuarios/todas_mensagens')
+            axios.post(this.homeurl + 'usuarios/todas_mensagens', {id : user.id})
             .then(res => {
-                this.msgs = res.data.mensagens;
-                this.data_ctts = res.data.contatos;
+                if (res.data.status != false) {
+                    this.msgs = res.data.mensagens;
+                    this.data_ctts = res.data.contatos;
+                } else {
+                    this.msgs = [];
+                    this.data_ctts = [];
+                }
+                this.await = false;
+
             })
             .catch(err => {
                 console.error("erro na requisição");
                 console.error(err);
+                this.await = false;
             })
         }
     }
