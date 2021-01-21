@@ -55,6 +55,7 @@ var AvaliacoesComponent = {
         getAvaliacoes(){
             axios.post(this.homeurl + 'usuarios/todas_avaliacoes', {id : user.id})
             .then(res => {
+                console.log(res);
                 if (res.data.status != false) {
                     this.avaliacoes = res.data.avaliacoes;
                     this.data_avaliacao = this.avaliacoes;

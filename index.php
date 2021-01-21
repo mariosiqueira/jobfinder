@@ -23,6 +23,7 @@ $routes_navigation = [
     "/jobfinder/usuarios/todos_servicos" => "../controller/pegar_todos_servicos_usuario.php",
     "/jobfinder/usuarios/todas_mensagens" => "../controller/pegar_todas_mensagens_usuario.php",
     "/jobfinder/usuarios/todos_contatos" => "../controller/pegar_todos_contatos_usuario.php",
+    "/jobfinder/usuarios/todas_avaliacoes" => "../controller/pegar_todas_avaliacoes_usuario.php",
     "/jobfinder/usuarios/salvar_mensagem" => "../controller/action_salvar_mensagem.php",
     "/jobfinder/usuarios/criar" => "../controller/action_cadastro.php",
     "/jobfinder/usuarios/editar" => "../controller/editar_conta.php",
