@@ -4,6 +4,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 
 use App\Config\Conexao; //import do pdo para utilizar na classe ServicoDaoMysql
+use App\Dao\UsuarioDaoMysql; //Import da classe ServicoDaoMysql para buscar o serviço pelo id recebido na query do GET
 use App\Dao\ServicoDaoMysql; //Import da classe ServicoDaoMysql para buscar o serviço pelo id recebido na query do GET
 use App\Dao\ServicoCategoriaDaoMysql; 
 
@@ -11,9 +12,16 @@ use App\VO\Servico;
 
 $pdo = Conexao::getInstance();
 
-if(!isset($_SESSION['auth'])){
-    echo json_encode('erro');
+$data = json_decode(file_get_contents("php://input"),true); //pegando o POST do axios
 
+$userId = intval($data['id']);
+
+$usuarioDao = new UsuarioDaoMysql($pdo);
+
+$usuarioSessao = $usuarioDao->buscarPeloId($userId);
+
+if(!$usuarioSessao){
+    echo json_encode(array('status' => false));
 }
 else {
 
@@ -22,8 +30,6 @@ else {
     $servicos = [];
 
     $servicoCategoria = new ServicoCategoriaDaoMysql($pdo);
-
-    $usuarioSessao = unserialize($_SESSION['auth']);
 
     $arrayDadosObjetosServico = $servicoDao->buscarServicoPeloIdDoUsuario($usuarioSessao->getId());
     if($arrayDadosObjetosServico != null) {
@@ -46,6 +52,6 @@ else {
         }
     }
 
-    $jsonServicos = json_encode($servicos);
+    $jsonServicos = json_encode(array('status' => true, 'servicos' => $servicos));
     echo $jsonServicos;
 }
