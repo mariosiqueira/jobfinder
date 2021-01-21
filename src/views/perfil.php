@@ -39,7 +39,7 @@
 
     //Recuperando as avaliaçoes recebidas pelo usuário da sessão
     $avaliacaoDao = new AvaliacaoDaoMysql($pdo);
-    $dataAvaliacao = $avaliacaoDao->buscarAvaliacoesUsuario(getUser()->getId());
+    $dataAvaliacao = $avaliacaoDao->buscarAvaliacoesUsuario($usuarioSessao->getId());
 
     $avaliacoes = [];
     $somaAvaliacoes = 0; //variavel pra pegar a soma de todas as avaliações deste usuario
@@ -68,8 +68,7 @@
     <perfil-descricao-component ation_profile_img="<?= $routes->alterar_imagem; ?> "
         avaliacao_usuario="<?php echo $mediaAvaliacoes?>" url='<?php echo $routes->home;?>'>
     </perfil-descricao-component>
-    <perfil-component homeurl='<?php echo $routes->home;?>' categorias='<?php echo json_encode($categorias);?>'
-        avaliacoes='<?php echo json_encode($avaliacoes);?>'>
+    <perfil-component homeurl='<?php echo $routes->home;?>' categorias='<?php echo json_encode($categorias);?>'>
     </perfil-component>
 </div>
 
@@ -197,7 +196,7 @@
                             <label for="categorias" class="required">Categoria</label>
                             <select multiple class="form-control" name="categoria[]" id="categorias" required>
                                 <?php foreach($categorias as $categoria):?>
-                                <option><?php echo $categoria->getNome()?></option>
+                                <option value="<?php echo $categoria->getId()?>"><?php echo $categoria->getNome()?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
