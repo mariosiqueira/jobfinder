@@ -1,6 +1,6 @@
 {
     "name": "jeferson/jobfinder",
-    "description": "Chat JOBFINDER realtime",
+    "description": "Sistema JOBFINDER",
     "authors": [
         {
             "name": "jeferson",
@@ -8,10 +8,9 @@
         }
     ],
     "scripts": {
-        "tests": ".\\vendor\\bin\\phpunit"
+        "test": ".\\vendor\\bin\\phpunit"
     },
     "require": {
-        "cboden/ratchet": "^0.4",
         "pusher/pusher-php-server": "^4.1"
     },
     "autoload": {
