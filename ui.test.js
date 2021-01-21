@@ -18,9 +18,9 @@ beforeEach(async () => {
     await page.goto('http://localhost:8080/jobfinder');
 });
 
-// afterEach(async () => {
-//     await browser.close();
-// });
+afterEach(async () => {
+    await browser.close();
+});
 
 // função pra fazer login
 async function login() {
@@ -247,7 +247,7 @@ test.skip('filtro de serviços', async () => {
 }, 20000);
 
 // Função pra testar a interface de proposta dos serviços
-test('proposta serviços', async () => {
+test.skip('proposta serviços', async () => {
 
     await login(); //faz login com um usuario válido
 
