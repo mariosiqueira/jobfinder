@@ -9,12 +9,19 @@ use App\Dao\UsuarioDaoMysql;
 
 $pdo = Conexao::getInstance();
 
-if(!isset($_SESSION['auth'])){
-    echo json_encode('erro');
+$data = json_decode(file_get_contents("php://input"),true); //pegando o POST do axios
+
+$userId = intval($data['id']);
+
+$usuarioDao = new UsuarioDaoMysql($pdo);
+
+$usuarioSessao = $usuarioDao->buscarPeloId($userId);
+
+if(!$usuarioSessao){
+    
+    echo json_encode(array('status' => false));
 }
 else {
-
-    $usuarioSessao = unserialize($_SESSION['auth']);
 
      //Recuperando as mensagens enviadas ou recebidas pelo usuário da sessão
      $usuarioDao = new UsuarioDaoMysql($pdo);
@@ -37,17 +44,17 @@ else {
              ]; 
  
              //pega os usuários que enviaram ou recebream mensagens do usuário logado, e armazena em contatos
-             if (!array_key_exists($m['contratado_id'], $contatos) && $m['contratado_id'] != getUser()->getId()) {
+             if (!array_key_exists($m['contratado_id'], $contatos) && $m['contratado_id'] != $usuarioSessao->getId()) {
  
                  $contatos[$m['contratado_id']] = $usuarioDao->buscarPeloId($m['contratado_id']);
              }
-             if (!array_key_exists($m['contratante_id'], $contatos) && $m['contratante_id'] != getUser()->getId()) {
+             if (!array_key_exists($m['contratante_id'], $contatos) && $m['contratante_id'] != $usuarioSessao->getId()) {
  
                  $contatos[$m['contratante_id']] = $usuarioDao->buscarPeloId($m['contratante_id']);
              }
          }   
      }
 
-    $jsonServicos = json_encode(array('mensagens' => $mensagens, 'contatos' => $contatos));
+    $jsonServicos = json_encode(array('status' => true, 'mensagens' => $mensagens, 'contatos' => $contatos));
     echo $jsonServicos;
 }
