@@ -39,7 +39,7 @@ var MessagesComponent = {
                         <span class="sr-only">Aguarde...</span>
                     </div>
                 </div>
-                <div v-else>
+                <div v-else class="list-contatos-container">
                     <p class="alert alert-primary text-center" v-if="data_ctts.length == 0" role="alert">
                         <strong>Nenhuma mensagem encontrada</strong>
                     </p>
