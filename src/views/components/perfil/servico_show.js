@@ -70,6 +70,11 @@ var servicoShow = {
         this.titulo = this.data_servico.titulo;
         this.descricao = this.data_servico.descricao;
         this.endereco_servico = this.data_servico.enderecoServico;
-        this.valor = this.data_servico.valor;
+        this.valor = this.data_servico.valor.replace('.', ',');
+
+        $('#valor').maskMoney({
+            decimal: ',',
+            thousands: '.'
+        });
     }
 }

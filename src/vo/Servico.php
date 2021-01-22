@@ -62,7 +62,7 @@ class Servico implements JsonSerializable {
     }
 
     public function setValor($valor){
-        $this->valor = trim($valor);
+        $this->valor = $valor;
     }
 
     public function getUsuarioId(){

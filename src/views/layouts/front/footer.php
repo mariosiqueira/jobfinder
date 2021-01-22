@@ -23,6 +23,13 @@
                     document.querySelector('.btn-top').style.display = 'none'
                 }
             }
+            window.onresize = (e)=>{
+                if($(document).width() <= 767){
+                    document.getElementById('navbar').style.backgroundColor = '#28a745'
+                } else {
+                    document.getElementById('navbar').style.backgroundColor = 'transparent'
+                }
+            }
         </script>
         <script>
             function scrollToDetail(id) {
@@ -36,6 +43,12 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
 
             })
+        </script>
+        <script>
+            <?php if(isset($_SESSION['message'])): ?>
+                toastr.<?php echo $_SESSION['message']->type ?>("<?php echo $_SESSION['message']->message ?>")
+                <?php unset($_SESSION['message']); ?>
+            <?php endif ?>
         </script>
         </body>
 

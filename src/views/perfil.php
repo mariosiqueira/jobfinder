@@ -36,64 +36,10 @@
     $servicos = [];
 
     $usuarioDao = new UsuarioDaoMysql($pdo);
-    $servicoCategoria = new ServicoCategoriaDaoMysql($pdo);
-
-    $arrayDadosObjetosServico = $servicoDao->buscarServicoPeloIdDoUsuario($usuarioSessao->getId());
-    if($arrayDadosObjetosServico != null) {
-        
-        foreach($arrayDadosObjetosServico as $dadoObjetoServico) {
-            $novoServico = new Servico();
-            $novoServico->setId($dadoObjetoServico->getId());
-            $novoServico->setTitulo($dadoObjetoServico->getTitulo());
-            $novoServico->setDescricao($dadoObjetoServico->getDescricao());
-            $novoServico->setEnderecoServico($dadoObjetoServico->getEnderecoServico());
-            $novoServico->setValor($dadoObjetoServico->getValor());
-            $novoServico->setUsuarioId($dadoObjetoServico->getUsuarioId());
-            $novoServico->setDataPostagem($dadoObjetoServico->getDataPostagem());
-            $novoServico->setStatus($dadoObjetoServico->getStatus());
-            // $servicos [] = $novoServico;
-            $servicos [] = array(
-                'servico' => $novoServico,
-                'categorias' => $servicoCategoria->buscarCategoriasDoServico($novoServico->getId())
-            );
-        }
-    }
-
-    //Recuperando as mensagens enviadas ou recebidas pelo usuário da sessão
-    $mensagenDao = new MensagemDaoMysql($pdo);
-    $dataMensagens = $mensagenDao->buscarMensagens(getUser()->getId());
-
-    $mensagens = [];
-    $contatos = [];
-
-    if ($dataMensagens) {
-        
-        foreach($dataMensagens as $m) {
-            
-            // pega todas as mesagens enviadas ou recebidas do usuario logado, e armazena em mensagens
-            $mensagens[] = [ 
-                "id" => $m['id'],
-                "contratante_id" => $m['contratante_id'],
-                "contratado_id" => $m['contratado_id'],
-                "mensagem" => $m['mensagem'],
-            ]; 
-
-            //pega os usuários que enviaram ou recebream mensagens do usuário logado, e armazena em contatos
-            if (!array_key_exists($m['contratado_id'], $contatos) && $m['contratado_id'] != getUser()->getId()) {
-
-                $contatos[$m['contratado_id']] = $usuarioDao->buscarPeloId($m['contratado_id']);
-            }
-            if (!array_key_exists($m['contratante_id'], $contatos) && $m['contratante_id'] != getUser()->getId()) {
-
-                $contatos[$m['contratante_id']] = $usuarioDao->buscarPeloId($m['contratante_id']);
-            }
-        }
-        
-    }
 
     //Recuperando as avaliaçoes recebidas pelo usuário da sessão
     $avaliacaoDao = new AvaliacaoDaoMysql($pdo);
-    $dataAvaliacao = $avaliacaoDao->buscarAvaliacoesUsuario(getUser()->getId());
+    $dataAvaliacao = $avaliacaoDao->buscarAvaliacoesUsuario($usuarioSessao->getId());
 
     $avaliacoes = [];
     $somaAvaliacoes = 0; //variavel pra pegar a soma de todas as avaliações deste usuario
@@ -122,10 +68,7 @@
     <perfil-descricao-component ation_profile_img="<?= $routes->alterar_imagem; ?> "
         avaliacao_usuario="<?php echo $mediaAvaliacoes?>" url='<?php echo $routes->home;?>'>
     </perfil-descricao-component>
-    <perfil-component homeurl='<?php echo $routes->home;?>' servicos='<?php echo json_encode($servicos);?>'
-        categorias='<?php echo json_encode($categorias);?>'
-        mensagens='<?php echo json_encode($mensagens);?>' contatos='<?php echo json_encode($contatos);?>'
-        avaliacoes='<?php echo json_encode($avaliacoes);?>'>
+    <perfil-component homeurl='<?php echo $routes->home;?>' categorias='<?php echo json_encode($categorias);?>'>
     </perfil-component>
 </div>
 
@@ -253,7 +196,7 @@
                             <label for="categorias" class="required">Categoria</label>
                             <select multiple class="form-control" name="categoria[]" id="categorias" required>
                                 <?php foreach($categorias as $categoria):?>
-                                <option><?php echo $categoria->getNome()?></option>
+                                <option value="<?php echo $categoria->getId()?>"><?php echo $categoria->getNome()?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
