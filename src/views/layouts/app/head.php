@@ -8,6 +8,8 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href='<?php echo $routes->home."src/views/public/app.css";?>'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css">
+    <link rel="stylesheet" href="https://raw.githack.com/ttskch/select2-bootstrap4-theme/master/dist/select2-bootstrap4.css">
     <link rel="apple-touch-icon" sizes="57x57" href="<?php echo $routes->home?>src/views/public/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="<?php echo $routes->home?>src/views/public/favicon/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="<?php echo $routes->home?>src/views/public/favicon/apple-icon-72x72.png">
