@@ -194,7 +194,7 @@
                         </div>
                         <div class="col-md-12 form-group">
                             <label for="categorias" class="required">Categoria</label>
-                            <select multiple class="form-control" name="categoria[]" id="categorias" required>
+                            <select multiple class="form-control select-cat" style="width:100%;" name="categoria[]" id="categorias" required>
                                 <?php foreach($categorias as $categoria):?>
                                 <option value="<?php echo $categoria->getId()?>"><?php echo $categoria->getNome()?></option>
                                 <?php endforeach ?>

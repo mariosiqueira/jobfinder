@@ -45,7 +45,7 @@ var servicoShow = {
                 </div>
                 <div class="col-md-12 form-group">
                     <label for="c" class="required">Categoria</label>
-                    <select multiple class="form-control" name="categoria[]" id="c" required>
+                    <select multiple class="form-control select-ctt" name="categoria[]" id="c" required>
                         <option v-for="categoria in data_categorias" 
                             :value="categoria.id" :selected="categorias_servico.find(e => e.id == categoria.id) != undefined">
                                 {{categoria.nome}}
@@ -75,6 +75,10 @@ var servicoShow = {
         $('#valor').maskMoney({
             decimal: ',',
             thousands: '.'
+        });
+        $(".select-ctt").select2({
+            closeOnSelect: false,
+            theme: 'bootstrap4'
         });
     }
 }

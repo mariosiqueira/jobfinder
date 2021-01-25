@@ -41,7 +41,7 @@ var JobComponent = {
                         </span>
                     </button>
                 </div>
-                <button class="btn btn-primary text-uppercase shadow-none" data-toggle="modal" data-target="#adicionar_servico" id="perfil_servicos_btn_add_servico">
+                <button class="btn btn-primary text-uppercase shadow-none ml-5 mr-4" data-toggle="modal" data-target="#adicionar_servico" id="perfil_servicos_btn_add_servico">
                     <i class="fas fa-plus    "></i>
                     <span class="title-md">
                         Novo

@@ -10,6 +10,8 @@
             crossorigin="anonymous"></script>
         <script src="https://cdn.rawgit.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+        
         <script>
             var user = <?php echo json_encode(getUser())?>;
         </script>
@@ -78,6 +80,14 @@
                 toastr.<?php echo $_SESSION['message']->type ?>("<?php echo $_SESSION['message']->message ?>")
                 <?php unset($_SESSION['message']); ?>
             <?php endif ?>
+        </script>
+        <script>
+            $(document).ready(function(){
+                $(".select-cat").select2({
+                    closeOnSelect: false,
+                    theme: 'bootstrap4',
+                });
+            })
         </script>
         </body>
 

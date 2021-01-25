@@ -44,8 +44,8 @@ var servicoClose = {
             <div class="form-row">
                 <div class="col-md-12 form-group">
                     <label for="contratado" class="required">Contratado</label>
-                    <select class="form-control" id="contratado" name="contratado_id" v-model="contratado_id" required>
-                        <option :value="ctt.id" v-for="ctt in contatos" :key="ctt.id">
+                    <select class="form-control select-ctt" style="width:100%;" id="contratado" name="contratado_id" v-model="contratado_id" required>
+                        <option :value="ctt.id" v-for="ctt in contatos" :key="ctt.id" :data-foto="ctt.fotoPerfil">
                             {{ctt.nome +' - '+ ctt.email}}
                         </option>
                     </select>
@@ -81,6 +81,11 @@ var servicoClose = {
     `,
     mounted() {
         this.getContatos();
+        $(".select-ctt").select2({
+            closeOnSelect: false,
+            templateResult: this.formatState,
+            theme: 'bootstrap4'
+        });
     },
     methods: {
         getContatos(){
@@ -94,6 +99,17 @@ var servicoClose = {
                 console.error("erro na requisição");
                 console.error(err);
             })
+        },
+        formatState(state) {
+
+            if (!state.id) {
+                return state.text;
+            }
+
+            var $state = $(
+                '<span><img src="' + this.homeurl + 'src/files/' + state.element.dataset.foto + '" class="profile-msg-contatos-img" /> ' + state.text + '</span>'
+            );
+            return $state;
         }
     }
 }
