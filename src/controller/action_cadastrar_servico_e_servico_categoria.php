@@ -25,10 +25,10 @@ function cadastrarServico($servicoDao, $categoriaDao, $servicoCategoriaDao) {
     $enderecoServico = filter_input(INPUT_POST, 'endereco_servico', FILTER_SANITIZE_STRING);
     $valor = floatval(filter_input(INPUT_POST, 'valor'));
     $usuarioId = intval(filter_input(INPUT_POST, 'usuario_id'));
-    $nomesDasCategoriasDoServico = $_POST['categoria'];
+    $idsDasCategoriasDoServico = $_POST['categoria'];
     $categoriasDoServico = [];
-    foreach($nomesDasCategoriasDoServico as $nomeDaCategoriaDoServico) {
-        $categoriasDoServico[] = $categoriaDao->buscarPeloNome($nomeDaCategoriaDoServico);
+    foreach($idsDasCategoriasDoServico as $idDaCategoriaDoServico) {
+        $categoriasDoServico[] = $categoriaDao->buscarPeloId($idDaCategoriaDoServico);
     }
     $servico = new Servico();
     $servico->setTitulo($titulo);
@@ -38,7 +38,6 @@ function cadastrarServico($servicoDao, $categoriaDao, $servicoCategoriaDao) {
     $servico->setUsuarioId($usuarioId);
     $servico->setStatus("aberto");
 
-    session_start();
     $servico = $servicoDao->salvar($servico);
 
     if (!is_null($servico)) {
@@ -51,7 +50,7 @@ function cadastrarServico($servicoDao, $categoriaDao, $servicoCategoriaDao) {
         foreach($categoriasDoServico as $categoria) {
             $servicoCategoria = new ServicoCategoria();
             $servicoCategoria->setServicoId($servico->getId());
-            $servicoCategoria->setCategoriaId($categoria[0]->getId());
+            $servicoCategoria->setCategoriaId($categoria->getId());
             $servicoCategoriaDao->salvar($servicoCategoria);
         }
         
